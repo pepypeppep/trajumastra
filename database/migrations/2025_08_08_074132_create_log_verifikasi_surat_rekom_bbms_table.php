@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('log_verifikasi_surat_rekomendasi_bbms', function (Blueprint $table) {
+        Schema::create('log_verifikasi_surat_rekom_bbms', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_surat_rekomendasi_bbms')->index();
             $table->unsignedBigInteger('id_user')->index();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('log_verifikasi_surat_rekomendasi_bbms');
+        Schema::dropIfExists('log_verifikasi_surat_rekom_bbms');
     }
 };
