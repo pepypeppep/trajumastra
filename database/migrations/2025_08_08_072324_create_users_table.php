@@ -13,12 +13,26 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_userlevel')->index()->nullable();
+            $table->unsignedBigInteger('id_bidang')->index()->nullable();
+            $table->unsignedBigInteger('id_penyuluh')->index()->nullable();
+            $table->unsignedBigInteger('id_pelaku_usaha')->index()->nullable();
+            $table->unsignedBigInteger('id_koordinator')->index();
+            $table->unsignedBigInteger('id_uptd')->index()->nullable();
+            $table->foreign('id_uptd')->references('id')->on('uptd');
             $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_userlevel')->references('id')->on('user_levels');
+            $table->foreign('id_bidang')->references('id')->on('bidang');
+            $table->foreign('id_penyuluh')->references('id')->on('penyuluh');
+            $table->foreign('id_pelaku_usaha')->references('id')->on('pelaku_usaha');
+            $table->foreign('id_koordinator')->references('id')->on('koordinator');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
