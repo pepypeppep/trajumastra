@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class LogStokIkan extends Model
 {
-    //
+    protected $guarded = ['id'];
 }

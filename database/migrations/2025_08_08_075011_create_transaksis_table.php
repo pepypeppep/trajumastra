@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('transaction_type')->nullable();
             $table->string('name');
             $table->string('label'); // uptd : alamat/ tpi : kapal
-            $table->bigInteger('ammount')->default(0);
+            $table->bigInteger('amount')->default(0);
             $table->bigInteger('retribution')->default(0);
             $table->bigInteger('total')->default(0);
             $table->timestamps();

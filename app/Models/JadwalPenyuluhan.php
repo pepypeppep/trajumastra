@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class JadwalPenyuluhan extends Model
 {
-    //
+    protected $guarded = ['id'];
 }

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterRangePenghasilan extends Model
 {
-    //
+    protected $guarded = ['id'];
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('spbus', function (Blueprint $table) {
             $table->id();
-            $table->string('kode');
+            $table->string('code');
             $table->string('name');
             $table->longText('address')->nullable();
             $table->softDeletes();

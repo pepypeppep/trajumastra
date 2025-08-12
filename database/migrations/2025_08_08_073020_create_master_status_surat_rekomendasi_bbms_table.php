@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('actor');
             $table->integer('before')->nullable();
             $table->integer('after')->nullable();
-            $table->longText('routes');
+            $table->longText('routes')->nullable();
             $table->integer('is_done');
-            $table->longText('button_label');
+            $table->longText('button_label')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

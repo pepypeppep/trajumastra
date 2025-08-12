@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('desas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_kecamatan')->index();
-            $table->string('kode_bps')->unique();
-            $table->string('name')->unique();
+            $table->bigInteger('id_desa')->index()->nullable();
+            $table->string('name');
             $table->timestamps();
         });
     }

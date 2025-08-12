@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MasterBentukUsaha extends Model
 {
-    //
+    protected $guarded = ['id'];
 }
