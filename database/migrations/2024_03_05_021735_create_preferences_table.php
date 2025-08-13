@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('group');
             $table->string('name');
+            $table->boolean('is_asset')->default(false);
             $table->string('value');
             $table->timestamps();
         });

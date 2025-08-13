@@ -13,7 +13,7 @@
 
     @include('layouts.head-css')
     <!-- Styles -->
-    @livewireStyles
+    {{-- @livewireStyles --}}
 </head>
 
 @include('layouts.body')

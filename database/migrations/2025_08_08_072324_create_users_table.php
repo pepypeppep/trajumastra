@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user_level')->index()->nullable();
             $table->unsignedBigInteger('id_bidang')->index()->nullable();
             $table->unsignedBigInteger('id_penyuluh')->index()->nullable();
             $table->unsignedBigInteger('id_pelaku_usaha')->index()->nullable();
             $table->unsignedBigInteger('id_koordinator_uptds')->index()->nullable();
             $table->unsignedBigInteger('id_uptd')->index()->nullable();
-            // $table->string('name');
+            $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -29,6 +28,7 @@ return new class extends Migration
             $table->integer('status')->default(1); // 1: active, 0: inactive
             $table->string('reset_password')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             // $table->foreign('id_user_level')->references('id')->on('user_levels');
             // $table->foreign('id_bidang')->references('id')->on('master_bidangs');
