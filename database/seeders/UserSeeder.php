@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 use App\Models\User;
-use App\Models\Navigation as ModelsNavigation;
+use App\Models\Navigation;
 
 
 class UserSeeder extends Seeder
@@ -19,9 +19,8 @@ class UserSeeder extends Seeder
     {
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        
         // create permissions for navigation
-        $navSlug = ModelsNavigation::pluck('slug')->toArray();
+        $navSlug = Navigation::pluck('slug')->toArray();
         $this->generatePermissions($navSlug);
 
         // create roles and assign existing permissions

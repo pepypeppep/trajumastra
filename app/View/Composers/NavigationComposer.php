@@ -19,6 +19,7 @@ class NavigationComposer
                 ->orderBy('order', 'asc');
         }])
             ->whereNull('parent_id')
+            ->where('page', 'admin')
             ->where('active', true)
             ->where('display', true)
             ->orderBy('order')
@@ -38,7 +39,6 @@ class NavigationComposer
             // put dashboard at the beginning of the array
             array_unshift($filteredNavs, $dashNavs);
         }
-
         $view->with('navs',  $filteredNavs);
     }
 

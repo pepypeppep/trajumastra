@@ -173,13 +173,13 @@ function handleDropdownMenu() {
 }
 
 function removeActiveMenu(content) {
-    document.querySelector("#scrollbar")?.querySelectorAll('.dropdown-button.show').forEach((aTag) => {
-        if (!Object.is(aTag?.nextElementSibling, content)) {
-            aTag?.classList.remove('show');
-            aTag?.nextElementSibling?.classList.add('opacity-100');
-            aTag?.nextElementSibling?.classList.add('hidden');
-        }
-    });
+    // document.querySelector("#scrollbar")?.querySelectorAll('.dropdown-button.show').forEach((aTag) => {
+    //     if (!Object.is(aTag?.nextElementSibling, content)) {
+    //         aTag?.classList.remove('show');
+    //         aTag?.nextElementSibling?.classList.add('opacity-100');
+    //         aTag?.nextElementSibling?.classList.add('hidden');
+    //     }
+    // });
 }
 function updateParentActive(button) {
     if (button?.closest(".dropdown-content")) {

@@ -37,6 +37,7 @@ trait DisplayTrait
         return $new;
     }
 
+    /* Function for check user role permissions */
     protected function setRule($role=null) {
         auth()->user()->hasRole('developer') || auth()->user()->can($role) || abort(403);
     }

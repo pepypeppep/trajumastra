@@ -13,7 +13,7 @@
 
     @include('layouts.head-css')
     <!-- Styles -->
-    {{-- @livewireStyles --}}
+    @livewireStyles
 </head>
 
 @include('layouts.body')
@@ -28,8 +28,20 @@
         @include('layouts.page-wrapper')
 
             <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
-                <!-- content -->
-                @yield('content')
+                <!-- Start Page Title Breadcrumb -->
+                <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
+                    <div class="grow">
+                        <h5 class="text-16">@yield('title')</h5>
+                    </div>
+                    <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
+                        @yield('breadcrumb')
+                    </ul>
+                </div>
+                <!-- End Page Title Breadcrumb -->
+
+                <!-- Start content -->
+                @yield('content-admin')
+                <!-- End content -->
             </div>
         </div>
         <!-- End Page-content -->
@@ -40,7 +52,7 @@
 <!-- end main content -->
 @stack('modals')
 @include('layouts.customizer')
-@include('layouts.vendor-scripts')
+@include('layouts.footer-scripts')
 
 @livewireScripts
 </body>

@@ -25,7 +25,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // View::composer(['layouts.custom-template.sidebar.sidebar'], CounterActiveTransactions::class);
+        View::composer(['layouts.sidebar'], NavigationComposer::class);
         // View::composer(['layouts.custom-template.sidebar.sidebar'], NavigationComposer::class);
         // View::composer(['layouts.custom-template.topbar.topbar'], NavigationComposer::class);
         // View::composer(['layouts.custom-template.main'], PreferenceComposer::class);
