@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('navigations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->enum('page', ['admin', 'guest']);
             $table->string('slug')->comment('digunakan sebagai identifier pada permisson');
             $table->string('url');
             $table->string('icon')->nullable();

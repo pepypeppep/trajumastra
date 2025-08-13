@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Settings;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,13 +29,19 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        // Email Verification if email is changed
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
+        // Profile Photo Upload & Update
+        if ($request->hasFile('profile_photo')) {
+            $request->user()->updateProfilePhoto($request->file('profile_photo'));
+        }
+
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('success', 'Profile data updated successfully.');
     }
 
     /**

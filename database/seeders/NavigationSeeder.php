@@ -12,242 +12,591 @@ class NavigationSeeder extends Seeder
      * Run the database seeds.
      */
     // The structure of each navigation item is as follows:
-    /* [
-        'id' => null,
-        'name' => '',
-        'url' => '',
-        'slug' => '',
-        'icon' => '',
-        'order' => 1,
-        'parent_id' => null,
-        'active' => true,
-        'display' => true,
-    ], */
+        // [
+        //     'id' => null,
+        //     'name' => '',
+        //     'page' => 'admin', // or 'guest'
+        //     'url' => '',
+        //     'slug' => '',
+        //     'icon' => '',
+        //     'order' => 1,
+        //     'parent_id' => null,
+        //     'active' => true,
+        //     'display' => true,
+        // ],
     public function run(): void
     {
-        $navigations = [
-            /* Dashboard */
+        $navigationsAdmin = [
+            /* --------------------------------------------------------- 
+            *                      ADMIN PAGE 
+            ---------------------------------------------------------*/
+            /*
+            ! ============== Dashboard 
+            */
             [
                 'id' => 1,
                 'name' => 'Dashboard',
+                'page' => 'admin',
                 'url' => 'dashboard',
                 'slug' => 'dashboard',
-                'icon' => 'bi bi-house',
+                'icon' => 'ri-dashboard-line',
                 'order' => 1,
                 'parent_id' => null,
-                'active' => true,
-                'display' => true,
-            ],
-            /* Transaksi */
-            [
-                'id' => 2,
-                'name' => 'Transaksi',
-                'url' => 'transactions.index',
-                'slug' => 'transactions',
-                'icon' => 'bi bi-coin',
-                'order' => 2,
-                'parent_id' => null,
-                'active' => true,
-                'display' => true,
-            ],
-            /* Transaksi Aktif */
-            [
-                'id' => 13,
-                'name' => 'Transaksi Aktif',
-                'url' => 'active-transactions.index',
-                'slug' => 'active-transactions',
-                'icon' => 'bi bi-cart4',
-                'order' => 3,
-                'parent_id' => null,
-                'active' => true,
-                'display' => true,
-            ],
-            /* Kartu RFID */
-            [
-                'id' => 3,
-                'name' => 'Kartu RFID',
-                'url' => 'rfid.index',
-                'slug' => 'rfid',
-                'icon' => 'bi bi-credit-card',
-                'order' => 4,
-                'parent_id' => null,
-                'active' => true,
-                'display' => true,
-            ],
-            /* Top Up Saldo */
-            [
-                'id' => 4,
-                'name' => 'Top Up Saldo',
-                'url' => 'topup.index',
-                'slug' => 'topup',
-                'icon' => 'bi bi-wallet2',
-                'order' => 5,
-                'parent_id' => null,
-                'active' => true,
-                'display' => true,
-            ],
-            /* Master Data */
-            [
-                'id' => 5,
-                'name' => 'Master Data',
-                'url' => '#',
-                'slug' => 'master',
-                'icon' => 'bi bi-database',
-                'order' => 6,
-                'parent_id' => null,
-                'active' => true,
-                'display' => true,
-            ],
-            [
-                'id' => 6,
-                'name' => 'Kategori Produk',
-                'url' => 'master.categories.index',
-                'slug' => 'categories',
-                'icon' => 'bi bi-tags',
-                'order' => 1,
-                'parent_id' => 5,
-                'active' => true,
-                'display' => true,
-            ],
-            [
-                'id' => 7,
-                'name' => 'Produk',
-                'url' => 'master.products.index',
-                'slug' => 'products',
-                'icon' => 'bi bi-box-seam',
-                'order' =>  2,
-                'parent_id' => 5,
-                'active' => true,
-                'display' => true,
-            ],
-            [
-                'id' => 8,
-                'name' => 'Siswa',
-                'url' => 'master.students.index',
-                'slug' => 'students',
-                'icon' => 'bi bi-person-badge',
-                'order' => 3,
-                'parent_id' => 5,
-                'active' => true,
-                'display' => true,
-            ],
-            [
-                'id' => 9,
-                'name' => 'Wali Siswa',
-                'url' => 'master.parents.index',
-                'slug' => 'parents',
-                'icon' => 'bi bi-person-hearts',
-                'order' => 4,
-                'parent_id' => 5,
                 'active' => true,
                 'display' => true,
             ],
             
-            /* Laporan */
+            /*
+            ! ============== Master Data (Parent) 
+            */
             [
-                'id' => 10,
-                'name' => 'Laporan',
-                'url' => '#',
-                'slug' => 'report',
-                'icon' => 'bi bi-file-earmark-text',
-                'order' =>  7,
+                'id' => 100,
+                'name' => 'Master Data',
+                'page' => 'admin', // or 'guest'
+                'url' => 'javascript:void(0)',
+                'slug' => 'master',
+                'icon' => 'ri-database-2-line',
+                'order' => 1,
                 'parent_id' => null,
                 'active' => true,
                 'display' => true,
             ],
+            // Asset Digunakan
             [
-                'id' => 11,
-                'name' => 'Riwayat Transaksi',
-                'url' => 'report.transactions.index',
-                'slug' => 'report-transactions',
-                'icon' => 'bi bi-clock-history',
+                'id' => 101,
+                'name' => 'Asset ',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.asset-digunakan.index',
+                'slug' => 'asset-digunakan',
+                'icon' => '',
                 'order' => 1,
-                'parent_id' => 10,
+                'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
+            // Range Penghasilan
             [
-                'id' => 12,
-                'name' => 'Riwayat Top Up',
-                'url' => 'report.topup.index',
-                'slug' => 'report-topup',
-                'icon' => 'bi bi-arrow-clockwise',
+                'id' => 102,
+                'name' => 'Range Penghasilan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.range-penghasilan.index',
+                'slug' => 'range-penghasilan',
+                'icon' => '',
                 'order' => 2,
-                'parent_id' => 10,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Jenis Penyuluhan
+            [
+                'id' => 103,
+                'name' => 'Kelola Jenis Penyuluhan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-penyuluhan.index',
+                'slug' => 'jenis-penyuluhan',
+                'icon' => '',
+                'order' => 3,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Bentuk Usaha
+            [
+                'id' => 104,
+                'name' => 'Bentuk Usaha',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.bentuk-usaha.index',
+                'slug' => 'bentuk-usaha',
+                'icon' => '',
+                'order' => 4,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Bidang
+            [
+                'id' => 105,
+                'name' => 'Bidang',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.bidang.index',
+                'slug' => 'bidang',
+                'icon' => '',
+                'order' => 5,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Alat Tangkap
+            [
+                'id' => 106,
+                'name' => 'Alat Tangkap',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.alat-tangkap.index',
+                'slug' => 'alat-tangkap',
+                'icon' => '',
+                'order' => 6,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Asset
+            [
+                'id' => 107,
+                'name' => 'Jenis Asset',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-asset.index',
+                'slug' => 'jenis-asset',
+                'icon' => '',
+                'order' => 7,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Ikan
+            [
+                'id' => 108,
+                'name' => 'Jenis Ikan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-ikan.index',
+                'slug' => 'jenis-ikan',
+                'icon' => '',
+                'order' => 8,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Pendaratan
+            [
+                'id' => 109,
+                'name' => 'Jenis Pendaratan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-pendaratan.index',
+                'slug' => 'jenis-pendaratan',
+                'icon' => '',
+                'order' => 9,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Perairan
+            [
+                'id' => 110,
+                'name' => 'Jenis Perairan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-perairan.index',
+                'slug' => 'jenis-perairan',
+                'icon' => '',
+                'order' => 10,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Transaksi
+            [
+                'id' => 111,
+                'name' => 'Jenis Transaksi',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-transaksi.index',
+                'slug' => 'jenis-transaksi',
+                'icon' => '',
+                'order' => 11,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Usaha Sarana
+            [
+                'id' => 112,
+                'name' => 'Jenis Usaha Sarana',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-usaha-sarana.index',
+                'slug' => 'jenis-usaha-sarana',
+                'icon' => '',
+                'order' => 12,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Klasifikasi Usaha
+            [
+                'id' => 113,
+                'name' => 'Jenis Klasifikasi Usaha',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-klasifikasi-usaha.index',
+                'slug' => 'jenis-klasifikasi-usaha',
+                'icon' => '',
+                'order' => 13,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Perahu
+            [
+                'id' => 114,
+                'name' => 'Perahu',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.perahu.index',
+                'slug' => 'perahu',
+                'icon' => '',
+                'order' => 14,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // SPBU
+            [
+                'id' => 115,
+                'name' => 'SPBU',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.spbu.index',
+                'slug' => 'spbu',
+                'icon' => '',
+                'order' => 15,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // UU Rekomendasi
+            [
+                'id' => 116,
+                'name' => 'UU Rekomendasi',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.uu-rekomendasi.index',
+                'slug' => 'uu-rekomendasi',
+                'icon' => '',
+                'order' => 16,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Persyaratan Pengajuan
+            [
+                'id' => 117,
+                'name' => 'Persyaratan Pengajuan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.persyaratan-pengajuan.index',
+                'slug' => 'persyaratan-pengajuan',
+                'icon' => '',
+                'order' => 17,
+                'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
 
-            /* Settings */
+            /*
+            ! ============== Kelola (Parent) 
+            */
             [
-                'id' => 100,
+                'id' => 200,
+                'name' => 'Kelola',
+                'page' => 'admin',
+                'url' => 'javascript:void(0)',
+                'slug' => 'kelola',
+                'icon' => 'ri-dna-line',
+                'order' => 200,
+                'parent_id' => null,
+                'active' => true,
+                'display' => true,
+            ],
+
+            // Permohonan Rekomendasi BBM
+            [
+                'id' => 201,
+                'name' => 'Permohonan Rekomendasi BBM',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.permohonan-rekomendasi-bbm.index',
+                'slug' => 'permohonan-rekomendasi-bbm',
+                'icon' => '',
+                'order' => 1,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Pengguna
+            [
+                'id' => 202,
+                'name' => 'Kelola Pengguna',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.pengguna.index',
+                'slug' => 'kelola-pengguna',
+                'icon' => '',
+                'order' => 2,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Penyuluh
+            [
+                'id' => 203,
+                'name' => 'Kelola Penyuluh',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.penyuluh.index',
+                'slug' => 'kelola-penyuluh',
+                'icon' => '',
+                'order' => 3,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Kelompok Binaan
+            [
+                'id' => 204,
+                'name' => 'Kelola Kelompok Binaan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.kelompok-binaan.index',
+                'slug' => 'kelola-kelompok-binaan',
+                'icon' => '',
+                'order' => 4,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Berita
+            [
+                'id' => 205,
+                'name' => 'Kelola Berita',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.berita.index',
+                'slug' => 'kelola-berita',
+                'icon' => '',
+                'order' => 5,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Jadwal Pendampingan
+            [
+                'id' => 206,
+                'name' => 'Kelola Jadwal Pendampingan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.jadwal-pendampingan.index',
+                'slug' => 'kelola-jadwal-pendampingan',
+                'icon' => '',
+                'order' => 6,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola UPTD
+            [
+                'id' => 207,
+                'name' => 'Kelola UPTD',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.uptd.index',
+                'slug' => 'kelola-uptd',
+                'icon' => '',
+                'order' => 7,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Koordinator UPTD/TPI
+            [
+                'id' => 208,
+                'name' => 'Kelola Koordinator UPTD/TPI',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.koordinator-uptd-tpi.index',
+                'slug' => 'kelola-koordinator-uptd-tpi',
+                'icon' => '',
+                'order' => 8,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola TPI
+            [
+                'id' => 209,
+                'name' => 'Kelola TPI',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.tpi.index',
+                'slug' => 'kelola-tpi',
+                'icon' => '',
+                'order' => 9,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Stok Ikan
+            [
+                'id' => 210,
+                'name' => 'Kelola Stok Ikan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.stok-ikan.index',
+                'slug' => 'kelola-stok-ikan',
+                'icon' => '',
+                'order' => 10,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Harga Ikan
+            [
+                'id' => 211,
+                'name' => 'Kelola Harga Ikan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.harga-ikan.index',
+                'slug' => 'kelola-harga-ikan',
+                'icon' => '',
+                'order' => 11,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Materi
+            [
+                'id' => 212,
+                'name' => 'Kelola Materi',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.materi.index',
+                'slug' => 'kelola-materi',
+                'icon' => '',
+                'order' => 12,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+
+            /*
+            ! ============== Laporan (Parent) 
+            */
+            [
+                'id' => 300,
+                'name' => 'Laporan',
+                'page' => 'admin',
+                'url' => 'javascript:void(0)',
+                'slug' => 'laporan',
+                'icon' => 'ri-file-chart-line',
+                'order' => 300,
+                'parent_id' => null,
+                'active' => true,
+                'display' => true,
+            ],
+            // Transaksi TPI
+            [
+                'id' => 301,
+                'name' => 'Transaksi TPI',
+                'page' => 'admin', // or 'guest'
+                'url' => 'transaksi.tpi.index',
+                'slug' => 'transaksi-tpi',
+                'icon' => '',
+                'order' => 1,
+                'parent_id' => 300,
+                'active' => true,
+                'display' => true,
+            ],
+            // Transaksi UPTD
+            [
+                'id' => 302,
+                'name' => 'Transaksi UPTD',
+                'page' => 'admin', // or 'guest'
+                'url' => 'transaksi.uptd.index',
+                'slug' => 'transaksi-uptd',
+                'icon' => '',
+                'order' => 2,
+                'parent_id' => 300,
+                'active' => true,
+                'display' => true,
+            ],
+
+            /*
+            ! ============== Setting (Parent) 
+            */
+            [
+                'id' => 500,
                 'name' => 'Profil Saya',
+                'page' => 'admin',
                 'url' => 'profile.edit',
                 'slug' => 'profile',
-                'icon' => 'bi bi-person-bounding-box',
-                'order' => 100,
+                'icon' => 'ri-id-card-line',
+                'order' => 500,
                 'parent_id' => null,
                 'active' => true,
                 'display' => true,
             ],
             [
-                'id' => 101,
+                'id' => 501,
                 'name' => 'Pengaturan',
+                'page' => 'admin',
                 'url' => '#',
                 'slug' => 'settings',
-                'icon' => 'bi bi-sliders',
-                'order' => 101,
+                'icon' => 'ri-settings-5-line',
+                'order' => 501,
                 'parent_id' => null,
                 'active' => true,
                 'display' => true,
             ],
             [
-                'id' => 102,
+                'id' => 502,
                 'name' => 'Pengguna',
+                'page' => 'admin',
                 'url' => 'users.index',
                 'slug' => 'users',
                 'icon' => '', // Assuming no icon specified
-                'order' => 1,
-                'parent_id' => 101, // Nested under Settings
+                'order' => 501,
+                'parent_id' => 501, // Nested under Settings
                 'active' => true,
                 'display' => true,
             ],
             [
-                'id' => 103,
+                'id' => 503,
                 'name' => 'Peran',
+                'page' => 'admin',
                 'url' => 'roles.index',
                 'slug' => 'roles',
                 'icon' => '', // Assuming no icon specified
-                'order' => 2,
-                'parent_id' => 101, // Nested under Settings
+                'order' => 502,
+                'parent_id' => 501, // Nested under Settings
                 'active' => true,
                 'display' => true,
             ],
             [
-                'id' => 104,
+                'id' => 504,
                 'name' => 'Menu',
+                'page' => 'admin',
                 'url' => 'navs.index',
                 'slug' => 'navs',
                 'icon' => '', // Assuming no icon specified
-                'order' => 3,
-                'parent_id' => 101, // Nested under Settings
+                'order' => 503,
+                'parent_id' => 501, // Nested under Settings
                 'active' => true,
                 'display' => true,
             ],
             [
-                'id' => 105,
+                'id' => 505,
                 'name' => 'Preferensi',
+                'page' => 'admin',
                 'url' => 'preferences.index',
                 'slug' => 'preferences',
                 'icon' => '', // Assuming no icon specified
-                'order' => 4,
-                'parent_id' => 101, // Nested under Settings
+                'order' => 504,
+                'parent_id' => 501, // Nested under Settings
                 'active' => true,
                 'display' => true,
             ],
             
         ];
+
+        $navigationGuest = [
+            /* --------------------------------------------------------- 
+            *                      GUEST PAGE 
+            ---------------------------------------------------------*/
+            /* Dashboard */
+            [
+                'id' => 600,
+                'name' => 'Beranda',
+                'page' => 'guest',
+                'url' => 'beranda.index',
+                'slug' => 'beranda',
+                'icon' => 'bi bi-house',
+                'order' => 600,
+                'parent_id' => null,
+                'active' => true,
+                'display' => true,
+            ],
+        ];
+
         // Insert data into the 'navigations' table
-        DB::table('navigations')->insert($navigations);
+        DB::table('navigations')->insert($navigationsAdmin);
+        DB::table('navigations')->insert($navigationGuest);
     }
 }
