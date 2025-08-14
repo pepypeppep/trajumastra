@@ -42,12 +42,14 @@ use App\Http\Controllers\Admin\Kelola\PermohonanRekomendasiBbmController;
 
 
 /* ======================== GUEST */
-Route::resource('beranda', BerandaController::class)->names(['beranda']);
+
+Route::resource('/', BerandaController::class)->names(['beranda']);
+Route::get('/register', [BerandaController::class, 'create'])->name('pendaftaran');
 /* ======================== ADMIN */
 Route::middleware('auth', 'verified')->group(function () {
     /* ---- Dashboard */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::redirect('/', '/dashboard');
+    // Route::redirect('/', '/dashboard');
 
     /* ---- Master Data */
     Route::group(['prefix' => 'master', 'as' => 'master.'], function () {
@@ -134,4 +136,4 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::put('/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('roles.permissions');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

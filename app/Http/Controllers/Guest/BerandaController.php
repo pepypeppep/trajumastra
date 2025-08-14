@@ -12,7 +12,7 @@ class BerandaController extends Controller
      */
     public function index()
     {
-        //
+        return view('guest.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class BerandaController extends Controller
      */
     public function create()
     {
-        //
+        return view('guest.create');
     }
 
     /**
