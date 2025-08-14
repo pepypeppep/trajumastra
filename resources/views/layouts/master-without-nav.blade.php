@@ -21,7 +21,7 @@
 
 
 <!-- Vendor Script -->
-@include('layouts.vendor-scripts')
+{{-- @include('layouts.vendor-scripts') --}}
 <!-- Livewire cript -->
 @livewireScripts
 

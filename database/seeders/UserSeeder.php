@@ -41,17 +41,17 @@ class UserSeeder extends Seeder
 
         // Create Developer User Account
         $developerAccount = User::factory()->create([
-            'name' => 'Trajumastra Developer',
-            'username' => 'trajumastra_developer',
-            'email' => 'trajumastra@developer.com',
-            'password' => Hash::make('123456789'),
+            'name' => 'Trajumastra',
+            'username' => 'admin',
+            'email' => 'admin@admin.net',
+            'password' => Hash::make('password'),
         ]);
         $developerAccount->assignRole($developerRole);
     }
-    
+
     /**
      * Fungsi untuk menghasilkan permission berdasarkan slug navigasi
-    */
+     */
     public function generatePermissions($navSlugs)
     {
         $permissionsList = [];
