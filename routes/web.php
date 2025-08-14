@@ -39,12 +39,15 @@ use App\Http\Controllers\Admin\Kelola\KelolaJadwalPendampinganController;
 use App\Http\Controllers\Admin\Kelola\KelolaKoordinatorUptdTpiController;
 use App\Http\Controllers\Admin\Kelola\PermohonanRekomendasiBbmController;
 
-
+/** ======================== BYPASS SSO
+* !!! TOLONG ROUTE INI DIHAPUS JIKA SUDAH DI PRODUCTION !!!
+*/
+Route::get('ssobypass', App\Http\Controllers\Auth\SSOBypass::class);
 
 /* ======================== GUEST */
-
 Route::resource('/', BerandaController::class)->names(['beranda']);
 Route::get('/register', [BerandaController::class, 'create'])->name('pendaftaran');
+
 /* ======================== ADMIN */
 Route::middleware('auth', 'verified')->group(function () {
     /* ---- Dashboard */

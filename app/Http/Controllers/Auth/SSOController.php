@@ -16,11 +16,10 @@ class SSOController extends Controller
     public function redirect(Request $request): RedirectResponse
     {
         $driver = Socialite::driver('keycloak');
-        $redirect = $driver->redirect();
+        $redirect = $driver->redirect(); // Arahkan browser ke laman login Keycloak SSO (KEYCLOAK_BASE_URL). Setelah berhasil login Keycloak --> arahkan balik ke KEYCLOAK_REDIRECT_URI (Endpoint Callback yang ada laravel ini)    
 
         return $redirect;
     }
-
 
     public function callback(Request $request)
     {

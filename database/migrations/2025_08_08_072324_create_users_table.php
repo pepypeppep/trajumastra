@@ -20,13 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_uptd')->index()->nullable();
             $table->string('name');
             $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamp('last_login')->nullable();
             $table->integer('status')->default(1); // 1: active, 0: inactive
-            $table->string('reset_password')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
