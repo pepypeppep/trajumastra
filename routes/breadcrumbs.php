@@ -265,30 +265,30 @@ Breadcrumbs::for('navigation-edit', function (BreadcrumbTrail $trail, $nav, $tit
 
 Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push('Pengguna', route('users.index'));
+    $trail->push('Pengguna', route('settings.users.index'));
 });
 
 Breadcrumbs::for('users-create', function (BreadcrumbTrail $trail) {
     $trail->parent('users');
-    $trail->push('Tambah Pengguna', route('users.create'));
+    $trail->push('Tambah Pengguna', route('settings.users.create'));
 });
 
 Breadcrumbs::for('users-edit', function (BreadcrumbTrail $trail, $user, $name = null) {
     $trail->parent('users');
-    $trail->push("Edit Pengguna $name", route('users.edit', $user));
+    $trail->push("Edit Pengguna $name", route('settings.users.edit', $user));
 });
 
 Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push('Peran', route('roles.index'));
+    $trail->push('Peran', route('settings.roles.index'));
 });
 
 Breadcrumbs::for('roles-permissions', function (BreadcrumbTrail $trail, $roleId, $name) {
     $trail->parent('roles');
-    $trail->push("Hak Akses Peran $name", route('roles.show', $roleId));
+    $trail->push("Hak Akses Peran $name", route('settings.roles.show', $roleId));
 });
 
 Breadcrumbs::for('preferences', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push('Preferensi', route('preferences.index'));
+    $trail->push('Preferensi', route('settings.preferences.index'));
 });

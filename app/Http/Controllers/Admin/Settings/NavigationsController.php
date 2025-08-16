@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Navigation;
 use Illuminate\Http\Request;
 
-class NavigationController extends Controller
+class NavigationsController extends Controller
 {
     /**
      * Display a listing of the resource.

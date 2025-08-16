@@ -5,7 +5,10 @@
 <script src="{{ URL::asset('assets/libs/prismjs/prism.js') }}"></script>
 <script src="{{ URL::asset('assets/libs/lucide/umd/lucide.js') }}"></script>
 <script src="{{ URL::asset('assets/js/tailwick.bundle.js') }}"></script>
+<script src="{{ URL::asset('assets/js/datatables/jquery-3.7.0.js') }}"></script>
 
 <!-- App js -->
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<!-- Sweet Alert Template Script -->
+@include('layouts.sweet-alerts')
 @stack('scripts')

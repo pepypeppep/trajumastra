@@ -516,8 +516,8 @@ class NavigationSeeder extends Seeder
                 'id' => 502,
                 'name' => 'Pengguna',
                 'page' => 'admin',
-                'url' => 'users.index',
-                'slug' => 'users',
+                'url' => 'settings.users.index',
+                'slug' => 'settings-users',
                 'icon' => '', // Assuming no icon specified
                 'order' => 501,
                 'parent_id' => 501, // Nested under Settings
@@ -528,8 +528,8 @@ class NavigationSeeder extends Seeder
                 'id' => 503,
                 'name' => 'Peran',
                 'page' => 'admin',
-                'url' => 'roles.index',
-                'slug' => 'roles',
+                'url' => 'settings.roles.index',
+                'slug' => 'settings-roles',
                 'icon' => '', // Assuming no icon specified
                 'order' => 502,
                 'parent_id' => 501, // Nested under Settings
@@ -540,8 +540,8 @@ class NavigationSeeder extends Seeder
                 'id' => 504,
                 'name' => 'Menu',
                 'page' => 'admin',
-                'url' => 'navs.index',
-                'slug' => 'navs',
+                'url' => 'settings.navs.index',
+                'slug' => 'settings-navs',
                 'icon' => '', // Assuming no icon specified
                 'order' => 503,
                 'parent_id' => 501, // Nested under Settings
@@ -552,8 +552,8 @@ class NavigationSeeder extends Seeder
                 'id' => 505,
                 'name' => 'Preferensi',
                 'page' => 'admin',
-                'url' => 'preferences.index',
-                'slug' => 'preferences',
+                'url' => 'settings.preferences.index',
+                'slug' => 'settings-preferences',
                 'icon' => '', // Assuming no icon specified
                 'order' => 504,
                 'parent_id' => 501, // Nested under Settings

@@ -6,4 +6,5 @@ return [
     App\Providers\ViewComposerServiceProvider::class,
     Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     \SocialiteProviders\Manager\ServiceProvider::class,
+    Yajra\DataTables\DataTablesServiceProvider::class,
 ];

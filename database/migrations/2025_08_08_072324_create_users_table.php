@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_uptd')->index()->nullable();
             $table->string('name');
             $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->integer('status')->default(1); // 1: active, 0: inactive
             $table->timestamps();
             $table->softDeletes();

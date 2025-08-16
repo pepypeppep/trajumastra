@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Preference;
 use Illuminate\Http\Request;
 
-class PreferenceController extends Controller
+class PreferencesController extends Controller
 {
     /**
      * Display a listing of the resource.

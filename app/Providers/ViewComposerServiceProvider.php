@@ -26,18 +26,5 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer(['layouts.sidebar'], NavigationComposer::class);
-        // View::composer(['layouts.custom-template.sidebar.sidebar'], NavigationComposer::class);
-        // View::composer(['layouts.custom-template.topbar.topbar'], NavigationComposer::class);
-        // View::composer(['layouts.custom-template.main'], PreferenceComposer::class);
-        // View::composer(['layouts.custom-template.main'], ThemeModeComposer::class);
-        // View::composer(['landingpage.welcome'], PreferenceComposer::class);
-
-        // Auth
-        // View::composer(['auth.login'], PreferenceComposer::class);
-        // View::composer(['auth.register'], PreferenceComposer::class);
-        // View::composer(['auth.verify-email'], PreferenceComposer::class);
-        // View::composer(['auth.forgot-password'], PreferenceComposer::class);
-        // View::composer(['auth.reset-password'], PreferenceComposer::class);
-        // View::composer(['components.mail-layout'], PreferenceComposer::class);
     }
 }

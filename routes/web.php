@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Guest\BerandaController;
-use App\Http\Controllers\Settings\RoleController;
-use App\Http\Controllers\Settings\UserController;
+use App\Http\Controllers\Settings\RolesController;
+use App\Http\Controllers\Admin\Settings\UsersController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Settings\ProfileController;
 use App\Http\Controllers\Admin\Master\SpbuController;
 use App\Http\Controllers\Admin\Master\BidangController;
 use App\Http\Controllers\Admin\Master\PerahuController;
-use App\Http\Controllers\Settings\NavigationController;
-use App\Http\Controllers\Settings\PreferenceController;
+use App\Http\Controllers\Admin\Settings\NavigationsController;
+use App\Http\Controllers\Admin\Settings\PreferencesController;
 use App\Http\Controllers\Admin\Kelola\KelolaTpiController;
 use App\Http\Controllers\Admin\Master\JenisIkanController;
 use App\Http\Controllers\Admin\Kelola\KelolaUptdController;
@@ -132,11 +132,16 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     /* ---- Settings */
-    Route::resource('/users', UserController::class);
-    Route::resource('/roles', RoleController::class);
-    Route::resource('/navs', NavigationController::class);
-    Route::resource('/preferences', PreferenceController::class);
-    Route::put('/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('roles.permissions');
+    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+        /* Users */
+        Route::resource('users', UsersController::class)->names('users');
+        /* Roles */
+        Route::resource('roles', RolesController::class)->names('roles');
+        /* Navigation */
+        Route::resource('navs', NavigationsController::class)->names('navs');
+        /* Preferences */
+        Route::resource('preferences', PreferencesController::class)->names('preferences');
+    });
 });
 
 require __DIR__ . '/auth.php';
