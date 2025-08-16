@@ -39,7 +39,17 @@ class SSOController extends Controller
             $user = User::where('username', $keycloakUsername)->first();
             // check if user exists
             if ($user) {
+                // Check user account status
+                if ($user->status !== 1) {
+                    return view('auth.message', [
+                        'message' => 'Akun Anda Tidak Aktif',
+                        'email' => $keycloakUserEmail,
+                        'username' => $keycloakUsername,
+                    ]); 
+                }
+                // Login
                 Auth::login($user);
+                // Create session storage
                 session([
                     'sso' => true,
                     'access_token' => $accessToken,
@@ -47,7 +57,7 @@ class SSOController extends Controller
                 ]);
 
                 // Redirect user to dashboard based on role
-                $notification = __('Logged in successfully.');
+                $notification = __('Berhasil Masuk.');
                 $notification = ['message' => $notification, 'alert-type' => 'success'];
 
                 return redirect()->intended(route('dashboard'))->with($notification);

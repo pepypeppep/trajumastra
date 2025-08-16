@@ -1,65 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Settings\Navigations\CreateRequest;
+use App\Http\Services\Settings\NavigationsService;
 use App\Models\Navigation;
 use Illuminate\Http\Request;
 
 class NavigationsController extends Controller
 {
+    public function __construct(protected NavigationsService $navigationsService){}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->setRule('navs.read');
+        $this->setRule('settings-navs.read');
 
-        $navigations = Navigation::where('parent_id', null)->with('child')->get();
-        return view('settings.navigation.index', compact('navigations'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $this->setRule('navs.create');
-
-        $create = true;
-        $navigations = Navigation::all();
-        return view('settings.navigation.edit', compact('create', 'navigations'));
+        $navigations = $this->navigationsService->getAllNavigations();
+        $parentNavigations = $navigations->where('parent_id', null);
+        return view('admin.settings.navs.index', compact('navigations', 'parentNavigations'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $this->setRule('navs.create');
-
-        $request->validate([
-            'name' => 'required',
-            'url' => 'required',
-            'slug' => 'required',
-            'icon' => 'nullable',
-            'parent_id' => 'nullable',
-            'order' => 'nullable',
-            'active' => 'nullable',
-            'display' => 'nullable',
-        ]);
-        //
-        $navigation = new Navigation();
-        $navigation->name = $request->name;
-        $navigation->url = $request->url;
-        $navigation->slug = $request->slug;
-        $navigation->icon = $request->icon;
-        $navigation->parent_id = $request->parent_id;
-        $navigation->order = $request->order;
-        $navigation->active = $request->active == 1 ? 1 : 0;
-        $navigation->display = $request->display == 1 ? 1 : 0;
-        $navigation->save();
-        return redirect()->back()->with('success', __('app.notif.successSave'));
+        $this->setRule('settings-navs.create');
+        // Create process
+        return $this->navigationsService->store($request->validated());
     }
 
     /**
@@ -67,7 +39,7 @@ class NavigationsController extends Controller
      */
     public function edit(string $id)
     {
-        $this->setRule('navs.update');
+        $this->setRule('settings-navs.update');
 
         $navigation = Navigation::find($id);
         $navigations = Navigation::all();
@@ -80,7 +52,7 @@ class NavigationsController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($request->all());
-        $this->setRule('navs.update');
+        $this->setRule('settings-navs.update');
 
         $request->validate([
             'name' => 'required',
@@ -116,7 +88,7 @@ class NavigationsController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->setRule('navs.delete');
+        $this->setRule('settings-navs.delete');
 
         $navigation = Navigation::find($id);
         $navigation->delete();

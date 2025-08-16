@@ -27,20 +27,32 @@ class UsersService
             ->addColumn('role', function ($row) {
                 return $row->getRoleNames()->isNotEmpty() ? $row->getRoleNames()->implode(', ') : '-';
             })
+            ->addColumn('status', function ($row) {
+                if ($row->status == 1) {
+                    return '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Aktif</span>';
+                }
+                return '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Tidak Aktif</span>';
+            })
             ->addColumn('aksi', function ($row) {
+                $btnEdit = '';
+                $btnDelete = '';
                 // Btn Edit
-                $btnEdit = '<button href="javascript:void(0);" title="Edit data pengguna" id="btn-modal-edit-user"
+                if (auth()->user()->can('settings-users.update')) {
+                    $btnEdit = '<button href="javascript:void(0);" title="Edit data pengguna" id="btn-modal-edit-user"
                         data-id="' . $row->id . '"  data-url-action="' . route('settings.users.update', $row->id) . '" data-url-get="' . route('settings.users.edit', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
                         <i class="ri-edit-line"></i>
                         </button>';
+                }
 
                 // Btn Delete
-                $btnDelete = '<button href="javascript:void(0);" title="Hapus data pengguna" id="btn-modal-delete-user" onclick="confirmDelete(this)"
+                if (auth()->user()->can('settings-users.delete')) {
+                    $btnDelete = '<button href="javascript:void(0);" title="Hapus data pengguna" id="btn-delete-user" onclick="confirmDelete(this)"
                         data-id="' . $row->id . '"  data-url-action="' . route('settings.users.destroy', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
                         <i class="ri-delete-bin-line"></i>
                         </button>';
+                }
 
                 return $btnEdit . ' ' . $btnDelete;
             })
@@ -91,17 +103,20 @@ class UsersService
     }
 
     /* Update user data */
-    public function update(User $user, array $data)
+    public function update($userId, array $data)
     {
         try {
             // DB Transaction
             \DB::beginTransaction();
 
+            // Get data user
+            $user = User::findOrFail($userId);
             // Update user data
             $user->update([
-                'name' => $data['name'],
-                'username' => $data['username'],
-                'email' => $data['email'],
+                'name' => $data['name'] ?? $user->name,
+                'username' => $data['username'] ?? $user->username,
+                'email' => $data['email'] ?? $user->email,
+                'status' => isset($data['status']) ? (int) $data['status'] : $user->status,
             ]);
 
             // Assign roles
@@ -116,6 +131,27 @@ class UsersService
             // Return error response
             \DB::rollBack();
             return redirect()->back()->withInput()->withErrors(['error' => 'Pengguna gagal diperbarui. Error :' . $e->getMessage()]);
+        }
+    }
+
+    /* Delete user data */
+    public function delete($userId)
+    {
+        try {
+            // DB Transaction
+            \DB::beginTransaction();
+
+            // Get data user
+            $user = User::findOrFail($userId);
+            $user->delete();
+
+            // Return success response
+            \DB::commit();
+            return redirect()->route('settings.users.index')->with('success', 'Pengguna berhasil dihapus');
+        } catch (\Exception $e) {
+            // Return error response
+            \DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Pengguna gagal dihapus. Error :' . $e->getMessage()]);
         }
     }
 }

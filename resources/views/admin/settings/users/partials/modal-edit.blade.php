@@ -17,6 +17,7 @@
         </div>
         <form action="{{ route('settings.users.store') }}" method="POST" id="form-edit">
             @csrf
+            @method('PUT')
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                 <div class="grid grid-cols-2 gap-4 mb-1">
@@ -41,22 +42,46 @@
                         </div>
                     </div>
                 </div>
-                {{-- Email --}}
-                <div class="mb-1">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Email <strong
-                            class="text-red-500">*</strong></label>
-                    <input type="email" id="email" name="email"
-                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        placeholder="Masukkan email pengguna" required>
+                <div class="row grid grid-cols-2 gap-4 mb-1">
+                    {{-- Email --}}
+                    <div class="col-span">
+                        <label for="email" class="inline-block mb-2 text-base font-medium">
+                            Email <strong class="text-red-500">*</strong>
+                        </label>
+                        <input type="email" id="email" name="email"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 
+                                disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 
+                                dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 
+                                dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 
+                                placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Masukkan email pengguna" required>
+                    </div>
+
+                    {{-- Toggle Status --}}
+                    <div class="col-span">
+                        <label for="status" class="inline-block mb-2 text-base font-medium">
+                            Status Akun <strong class="text-red-500">*</strong>
+                        </label>
+                        <select name="status" id="status"
+                            class="form-select border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 
+                                disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 
+                                dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 
+                                dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 
+                                placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            required>
+                            <option value="1">Aktif</option>
+                            <option value="0">Tidak Aktif</option>
+                        </select>
+                    </div>
                 </div>
+
                 {{-- Peran --}}
-                <div class="mb-[100px]" style="margin-bottom: 19rem !important;">
+                <div class="" >
                     <label for="" class="inline-block mb-2 text-base font-medium">Peran <strong
                             class="text-red-500">*</strong></label>
                     <select name="roles[]" id="role-select-edit"
-                        class="w-full select2-multiple form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        class="select2-multiple form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         multiple required>
-                        <option value="">Pilih peran pengguna, bisa lebih dari satu peran</option>
                         @foreach ($roles as $role)
                             @if ($role->name !== \App\Enums\RoleEnum::DEVELOPER->value)
                                 <option value="{{ $role->name }}">{{ $role->name }}</option>
@@ -79,19 +104,20 @@
 </div>
 
 @push('scripts')
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-
+    {{-- Start Select 2 --}}
     <script>
         $(document).ready(function() {
-            $('.select2-multiple').select2({
-                theme: 'classic',
+            $('#role-select-edit').select2({
+                width: '100%',
                 placeholder: "Pilih peran pengguna, bisa lebih dari satu peran",
                 allowClear: true
             });
         });
     </script>
+    {{-- End Select 2 --}}
+
+    <!-- Start Edit User (Modal) -->
     <script>
-        // -- End Edit User (Modal)
         $(document).on('click', '#btn-modal-edit-user', function(e) {
             e.preventDefault();
 
@@ -115,9 +141,8 @@
                     $('#form-edit').find('#name').val(response.name);
                     $('#form-edit').find('#username').val(response.username);
                     $('#form-edit').find('#email').val(response.email);
-                    $('#form-edit').find('#role-select-edit').prop("selected", function () {
-                        return ~$.inArray(this.text, response.role_names);
-                    });
+                    $('#form-edit').find('#role-select-edit').val(response.role_names).trigger('change');
+                    $('#form-edit').find('#status').val(response.status).trigger('change');
                 },
                 error: function(xhr) {
                     Swal.fire({
@@ -128,6 +153,6 @@
                 }
             });
         });        
-        // -- End Edit User (Modal)
-    </script>
+        </script>
+        <!-- End Edit User (Modal) -->
 @endpush

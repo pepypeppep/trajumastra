@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\Users\CreateRequest;
+use App\Http\Requests\Settings\Users\UpdateRequest;
 use App\Http\Services\Settings\UsersService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
@@ -52,37 +53,20 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateRequest $request, $userId)
     {
         $this->setRule('settings-users.update');
-
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email:rfc,dns|unique:users,email,' . $user->id,
-            'role' => 'required',
-        ]);
-        //
-        if ($request->has('password') && $request->password != '') {
-            $request->validate([
-                'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
-            ]);
-            $user->password = bcrypt($request->password);
-        }
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->update();
-        $user->syncRoles($request->role);
-        return redirect()->back()->with('success', __('app.notif.successUpdate'));
+        // Update process
+        return $this->usersService->update($userId, $request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy($userId = null)
     {
         $this->setRule('settings-users.delete');
-
-        $user->delete();
-        return redirect('users')->with('success', __('app.notif.successDelete'));
+        // Delete Process
+        return $this->usersService->delete($userId);
     }
 }

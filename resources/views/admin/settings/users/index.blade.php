@@ -24,6 +24,7 @@
                         <th class="text-center">Username</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Peran</th>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Dibuat Pada</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -46,6 +47,11 @@
     @include('admin.settings.users.partials.modal-add')
     {{-- Modal Edit User --}}
     @include('admin.settings.users.partials.modal-edit')
+    {{-- Form Delete --}}
+    <form id="form-delete-user" action="" method="POST" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form>
 @endsection
 
 @push('scripts')
@@ -58,7 +64,7 @@
     <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
 
-    {{-- Implement datatable --}}
+    {{-- Start Implement datatable --}}
     <script>
         // -- Start Load Datatable
         var filter = {
@@ -115,6 +121,13 @@
                         className: 'text-center'
                     },
                     {
+                        data: 'status',
+                        name: 'status',
+                        searchable: true,
+                        orderable: true,
+                        className: 'text-center'
+                    },
+                    {
                         data: 'created_at',
                         name: 'created_at',
                         searchable: true,
@@ -134,4 +147,31 @@
         }
         // -- End Load Datatable
     </script>
+    {{-- End Implement datatable --}}
+
+    {{-- Start action delete data --}}
+    <script>
+        $(document).on('click', '#btn-delete-user', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var urlFormAction = $(this).data('url-action');
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data tidak bisa dikembalikan setelah dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e3342f',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan ke form delete
+                    const form = $('#form-delete-user');
+                    form.attr('action', urlFormAction);
+                    form.submit();
+                }
+            })
+        });
+    </script>
+    {{-- End action delete data --}}
 @endpush

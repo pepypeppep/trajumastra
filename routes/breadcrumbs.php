@@ -255,12 +255,12 @@ Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('navigations', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push('Menu', route('navs.index'));
+    $trail->push('Menu', route('settings.navs.index'));
 });
 
 Breadcrumbs::for('navigation-edit', function (BreadcrumbTrail $trail, $nav, $title = null) {
     $trail->parent('navigation');
-    $trail->push("Edit Menu $title", route('navs.edit', $nav));
+    $trail->push("Edit Menu $title", route('settings.navs.edit', $nav));
 });
 
 Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {

@@ -42,13 +42,12 @@
                         placeholder="Masukkan email pengguna" required>
                 </div>
                 {{-- Peran --}}
-                <div class="mb-[100px]" style="margin-bottom: 19rem !important;">
+                <div class="">
                     <label for="" class="inline-block mb-2 text-base font-medium">Peran <strong
                             class="text-red-500">*</strong></label>
-                    <select name="roles[]" id="role-select"
-                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        data-choices data-choices-removeItem multiple required>
-                        <option value="">Pilih peran pengguna, bisa lebih dari satu peran</option>
+                    <select name="roles[]" id="role-select-add"
+                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        multiple required>
                         @foreach ($roles as $role)
                             @if ($role->name !== \App\Enums\RoleEnum::DEVELOPER->value)
                                 <option value="{{ $role->name }}">{{ $role->name }}</option>
@@ -71,7 +70,11 @@
 </div>
 
 @push('scripts')
-    <script>
-        
-    </script>
+<script>
+    $('#role-select-add').select2({
+        width: '100%',
+        placeholder: "Pilih peran pengguna, bisa lebih dari satu peran",
+        allowClear: true
+    });
+</script>
 @endpush

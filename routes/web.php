@@ -5,7 +5,7 @@ use App\Http\Controllers\Guest\BerandaController;
 use App\Http\Controllers\Settings\RolesController;
 use App\Http\Controllers\Admin\Settings\UsersController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\Settings\ProfileController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\Master\SpbuController;
 use App\Http\Controllers\Admin\Master\BidangController;
 use App\Http\Controllers\Admin\Master\PerahuController;

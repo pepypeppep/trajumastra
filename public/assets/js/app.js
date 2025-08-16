@@ -342,6 +342,7 @@ function setDefaultAttribute() {
             "data-navbar",
             "data-sidebar",
             "data-topbar",
+            "data-theme-select2"
         ];
         if (sessionStorage.getItem("data-layout") === "horizontal") {
             attributesToRetrieve = attributesToRetrieve.filter(attribute => attribute !== "data-sidebar" && attribute !== "data-sidebar-size");
@@ -364,6 +365,15 @@ function setAttrItemAndTag(attr, val) {
     sessionStorage.setItem(attr, val);
 }
 
+/* Load select2 theme from session storage */
+document.addEventListener("DOMContentLoaded", () => {
+    // ambil theme terakhir dari session, default ke light
+    let savedTheme = sessionStorage.getItem("data-theme-select2") || "light";
+
+    // set attribute di <html>
+    document.documentElement.setAttribute("data-theme-select2", savedTheme);
+});
+
 /*** remove active class ***/
 
 function removeActiveClass(selector) {
@@ -385,6 +395,9 @@ function lightDarkMode() {
             updateActiveBtn("sidebarColorTwo");
             updateActiveBtn("topbarColorTwo");
             updateActiveBtn("dataModeTwo");
+
+            // set attribute for select2 dark theme
+            setAttrItemAndTag("data-theme-select2", "dark");
         } else {
             // set attributes
             setAttrItemAndTag("data-mode", "light");
@@ -395,6 +408,9 @@ function lightDarkMode() {
             updateActiveBtn("sidebarColorOne");
             updateActiveBtn("topbarColorOne");
             updateActiveBtn("dataModeOne");
+
+            // set attribute for select2 light theme
+            setAttrItemAndTag("data-theme-select2", "light");
         }
     })
 }
@@ -530,15 +546,18 @@ function layoutSwitch(isLayoutAttributes) {
             switch (isLayoutAttributes["data-mode"]) {
                 case "dark":
                     setAttrItemAndTag("data-mode", "dark");
+                    setAttrItemAndTag("data-theme-select2", "dark");
                     updateActiveBtn("dataModeTwo")
                     break;
                 case "light":
                     setAttrItemAndTag("data-mode", "light");
+                    setAttrItemAndTag("data-theme-select2", "light");
                     updateActiveBtn("dataModeOne")
                     break;
                 default:
                     setAttrItemAndTag("data-mode", "light");
-                    updateActiveBtn("dataModeTwo")
+                    setAttrItemAndTag("data-theme-select2", "light");
+                    updateActiveBtn("dataModeOne")
                     break;
             }
             switch (isLayoutAttributes["data-layout"]) {
