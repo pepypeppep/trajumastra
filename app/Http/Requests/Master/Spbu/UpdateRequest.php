@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Master\JenisIkan;
+namespace App\Http\Requests\Master\Spbu;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code' => 'required',
             'name' => 'required',
+            'address' => 'required',
         ];
     }
 }

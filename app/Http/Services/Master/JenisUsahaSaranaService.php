@@ -62,11 +62,11 @@ class JenisUsahaSaranaService
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Jenis usaha-sarana berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Jenis usaha sarana berhasil ditambahkan');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Jenis usaha-sarana gagal ditambahkan. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Jenis usaha sarana gagal ditambahkan. Error :' . $e->getMessage()]);
         }
     }
 
@@ -86,11 +86,11 @@ class JenisUsahaSaranaService
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Jenis usaha-sarana berhasil diperbarui');
+            return redirect()->back()->with('success', 'Jenis usaha sarana berhasil diperbarui');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Jenis usaha-sarana gagal diperbarui. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Jenis usaha sarana gagal diperbarui. Error :' . $e->getMessage()]);
         }
     }
 
@@ -107,11 +107,11 @@ class JenisUsahaSaranaService
 
             // Return success response
             DB::commit();
-            return redirect()->route('master.jenis-usaha-sarana.index')->with('success', 'Jenis usaha-sarana berhasil dihapus');
+            return redirect()->route('master.jenis-usaha-sarana.index')->with('success', 'Jenis usaha sarana berhasil dihapus');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'Jenis usaha-sarana gagal dihapus. Error :' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Jenis usaha sarana gagal dihapus. Error :' . $e->getMessage()]);
         }
     }
 }

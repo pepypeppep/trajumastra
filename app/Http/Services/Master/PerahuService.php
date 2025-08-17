@@ -62,11 +62,11 @@ class PerahuService
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Jenis perairan berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Perahu berhasil ditambahkan');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Jenis perairan gagal ditambahkan. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Perahu gagal ditambahkan. Error :' . $e->getMessage()]);
         }
     }
 
@@ -86,11 +86,11 @@ class PerahuService
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Jenis perairan berhasil diperbarui');
+            return redirect()->back()->with('success', 'Perahu berhasil diperbarui');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Jenis perairan gagal diperbarui. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Perahu gagal diperbarui. Error :' . $e->getMessage()]);
         }
     }
 
@@ -107,11 +107,11 @@ class PerahuService
 
             // Return success response
             DB::commit();
-            return redirect()->route('master.perahu.index')->with('success', 'Jenis perairan berhasil dihapus');
+            return redirect()->route('master.perahu.index')->with('success', 'Perahu berhasil dihapus');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'Jenis perairan gagal dihapus. Error :' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Perahu gagal dihapus. Error :' . $e->getMessage()]);
         }
     }
 }
