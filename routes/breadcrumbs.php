@@ -137,7 +137,7 @@ Breadcrumbs::for('master.uu-rekomendasi', function (BreadcrumbTrail $trail) {
 /* Persyaratan Pengajuan */
 Breadcrumbs::for('master.persyaratan-pengajuan', function (BreadcrumbTrail $trail) {
     $trail->parent('master');
-    $trail->push('persyaratan-pengajuan', route('master.persyaratan-pengajuan.index'));
+    $trail->push('Persyaratan Pengajuan', route('master.persyaratan-pengajuan.index'));
 });
 
 /**

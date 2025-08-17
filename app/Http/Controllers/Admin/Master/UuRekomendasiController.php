@@ -3,16 +3,26 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Services\Master\UuRekomendasiService;
+use App\Http\Requests\Master\UuRekomendasi\CreateRequest;
+use App\Http\Requests\Master\UuRekomendasi\UpdateRequest;
 
 class UuRekomendasiController extends Controller
 {
+    public function __construct(protected UuRekomendasiService $service) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->setRule('uu-rekomendasi.read');
+
+        // Get data jenis ikan for data table
+        if (request()->ajax()) {
+            return $this->service->getAll();
+        }
+
         return view('admin.masters.uu-rekomendasi.index');
     }
 
@@ -27,40 +37,41 @@ class UuRekomendasiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
-    }
+        $this->setRule('uu-rekomendasi.create');
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        // Store process
+        return $this->service->store($request->validated());
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $this->setRule('uu-rekomendasi.update');
+
+        return $this->service->getById($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $this->setRule('uu-rekomendasi.update');
+        // Update process
+        return $this->service->update($id, $request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $this->setRule('uu-rekomendasi.delete');
+        // Delete Process
+        return $this->service->delete($id);
     }
 }
