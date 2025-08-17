@@ -9,7 +9,7 @@
     class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
     <div class="w-screen md:w-[40rem] bg-white shadow rounded-md dark:bg-zink-600 flex flex-col h-full">
         <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
-            <h5 class="text-16" id="modal-title">Edit Jenis Perairan</h5>
+            <h5 class="text-16" id="modal-title">Ubah Jenis Perairan</h5>
             <button data-modal-close="modal-edit"
                 class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
                     data-lucide="x" class="size-5"></i></button>
@@ -72,16 +72,11 @@
                 type: 'GET',
                 success: function(response) {
                     // Modal title
-                    $('#modal-title').text('Edit Data Jenis Perairan - ' + response.name);
+                    $('#modal-title').text('Ubah Data Jenis Perairan - ' + response.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
                     $('#form-edit').find('#name').val(response.name);
-                    $('#form-edit').find('#username').val(response.username);
-                    $('#form-edit').find('#email').val(response.email);
-                    $('#form-edit').find('#role-select-edit').val(response.role_names).trigger(
-                        'change');
-                    $('#form-edit').find('#status').val(response.status).trigger('change');
                 },
                 error: function(xhr) {
                     Swal.fire({
