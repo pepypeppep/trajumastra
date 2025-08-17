@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Master\JenisIkan;
+namespace App\Http\Requests\Master\PersayaratanPengajuanBbm;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,6 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'type' => 'required',
         ];
     }
 }
