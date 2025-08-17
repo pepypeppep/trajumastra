@@ -8,9 +8,18 @@
     // Show error by type
     @foreach (['success', 'error', 'warning', 'info'] as $type)
         @if ($message = Session::get($type))
+            @php
+                $title = match ($type) {
+                    'success' => 'Berhasil',
+                    'error' => 'Gagal',
+                    'warning' => 'Peringatan',
+                    'info' => 'Informasi',
+                    default => null,
+                };
+            @endphp
             Swal.fire({
-                title: '{{ ucfirst($type) }}',
-                text: ' @json($message)',
+                title: '{{ $title }}',
+                text: '{{ $message }}',
                 icon: '{{ $type }}',
                 timer: 3000,
                 confirmButtonText: 'OK'

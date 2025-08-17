@@ -43,8 +43,7 @@ class UserSeeder extends Seeder
         $developerAccount = User::factory()->create([
             'name' => 'Trajumastra',
             'username' => 'admin',
-            'email' => 'admin@admin.net',
-            'password' => Hash::make('password'),
+            'email' => 'admin@admin.net'
         ]);
         $developerAccount->assignRole($developerRole);
     }
