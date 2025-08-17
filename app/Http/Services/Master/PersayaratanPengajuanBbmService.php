@@ -2,11 +2,14 @@
 
 namespace App\Http\Services\Master;
 
+use App\Enums\RoleEnum;
 use App\Models\MasterJenisIkan;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Illuminate\Container\AttributesDB;
 use Yajra\DataTables\Facades\DataTables;
 
-class JenisIkanService
+class JenisPerairanService
 {
     /* Get alls */
     public function getAll()

@@ -1,19 +1,19 @@
 @extends('layouts.master')
 
-@section('title', 'Jenis Ikan')
+@section('title', 'Jenis Pendaratan')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('ikan') }}
+    {{ Breadcrumbs::render('users') }}
 @endsection
 
 @section('content-admin')
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Jenis Ikan</h5>
+                <h5 class="mb-0">Daftar Jenis Pendaratan</h5>
                 <button type="button" href="" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Jenis Ikan
+                    <i class="ri-user-add-line"></i> Tambah Jenis Pendaratan
                 </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
@@ -38,9 +38,9 @@
     </div>
 
     {{-- Modal Add User --}}
-    @include('admin.masters.jenis-ikan.partials.modal-add')
+    @include('admin.masters.jenis-pendaratan.partials.modal-add')
     {{-- Modal Edit User --}}
-    @include('admin.masters.jenis-ikan.partials.modal-edit')
+    @include('admin.masters.jenis-pendaratan.partials.modal-edit')
     {{-- Form Delete --}}
     <form id="form-delete-user" action="" method="POST" class="hidden">
         @csrf
@@ -76,7 +76,7 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('master.jenis-ikan.index') }}",
+                    url: "{{ route('master.jenis-pendaratan.index') }}",
                     type: 'GET',
                 },
                 columns: [{
@@ -107,7 +107,7 @@
             var urlFormAction = $(this).data('url-action');
             Swal.fire({
                 title: 'Yakin ingin menghapus?',
-                text: "Data tidak bisa dikembalikan setelah dihapus!",
+                text: "Data tidak bisa dikembalpendaratan setelah dihapus!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e3342f',
