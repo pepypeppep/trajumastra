@@ -70,7 +70,7 @@
 
     <!-- Start Edit User (Modal) -->
     <script>
-        $(document).on('click', '#btn-modal-edit-user', function(e) {
+        $(document).on('click', '#btn-modal-edit', function(e) {
             e.preventDefault();
 
             // Trigger button to open modal

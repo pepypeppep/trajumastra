@@ -42,7 +42,7 @@
     {{-- Modal Edit User --}}
     @include('admin.masters.perahu.partials.modal-edit')
     {{-- Form Delete --}}
-    <form id="form-delete-user" action="" method="POST" class="hidden">
+    <form id="form-delete" action="" method="POST" class="hidden">
         @csrf
         @method('DELETE')
     </form>
@@ -101,7 +101,7 @@
 
     {{-- Start action delete data --}}
     <script>
-        $(document).on('click', '#btn-delete-user', function(e) {
+        $(document).on('click', '#btn-delete', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
             var urlFormAction = $(this).data('url-action');
@@ -116,7 +116,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Lanjutkan ke form delete
-                    const form = $('#form-delete-user');
+                    const form = $('#form-delete');
                     form.attr('action', urlFormAction);
                     form.submit();
                 }
