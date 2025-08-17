@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('koordinator_uptds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_uptd')->index()->nullable();
+            $table->unsignedBigInteger('uptd_id')->index()->nullable();
             $table->string('nik')->unique();
             $table->string('name');
             $table->string('phone');
