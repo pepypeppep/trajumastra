@@ -3,7 +3,7 @@
 @section('title', 'Kelola Koordinator UPTD TPI')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('master.jenis-ikan') }}
+    {{ Breadcrumbs::render('kelola.uptd-tpi') }}
 @endsection
 
 @section('content-admin')
