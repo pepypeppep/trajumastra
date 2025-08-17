@@ -37,9 +37,9 @@
         </div>
     </div>
 
-    {{-- Modal Add User --}}
+    {{-- Modal Add --}}
     @include('admin.masters.uu-rekomendasi.partials.modal-add')
-    {{-- Modal Edit User --}}
+    {{-- Modal Edit --}}
     @include('admin.masters.uu-rekomendasi.partials.modal-edit')
     {{-- Form Delete --}}
     <form id="form-delete" action="" method="POST" class="hidden">

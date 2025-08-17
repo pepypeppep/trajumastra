@@ -187,7 +187,7 @@ Breadcrumbs::for('kelola.uptd', function (BreadcrumbTrail $trail) {
 /* Kelola Koordinator UPTD TPI */
 Breadcrumbs::for('kelola.uptd-tpi', function (BreadcrumbTrail $trail) {
     $trail->parent('kelola');
-    $trail->push('UPTD TPI', route('kelola.uptd-tpi.index'));
+    $trail->push('UPTD TPI', route('kelola.koordinator-uptd-tpi.index'));
 });
 
 /* Kelola TPI */
