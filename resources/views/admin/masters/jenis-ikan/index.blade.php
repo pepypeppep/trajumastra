@@ -3,7 +3,7 @@
 @section('title', 'Jenis Ikan')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('users') }}
+    {{ Breadcrumbs::render('master.jenis-ikan') }}
 @endsection
 
 @section('content-admin')

@@ -3,7 +3,7 @@
 @section('title', 'Syarat BBM')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('users') }}
+    {{ Breadcrumbs::render('master.persyaratan-pengajuan') }}
 @endsection
 
 @section('content-admin')

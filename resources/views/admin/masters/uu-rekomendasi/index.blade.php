@@ -3,7 +3,7 @@
 @section('title', 'UU Rekomendasi BBM')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('users') }}
+    {{ Breadcrumbs::render('master.uu-rekomendasi') }}
 @endsection
 
 @section('content-admin')

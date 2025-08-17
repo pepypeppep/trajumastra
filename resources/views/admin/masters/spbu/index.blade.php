@@ -3,7 +3,7 @@
 @section('title', 'SPBU')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('users') }}
+    {{ Breadcrumbs::render('master.spbu') }}
 @endsection
 
 @section('content-admin')

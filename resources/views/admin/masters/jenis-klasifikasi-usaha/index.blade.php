@@ -3,7 +3,7 @@
 @section('title', 'Jenis Klasifikasi Usaha')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('users') }}
+    {{ Breadcrumbs::render('master.jenis-klasifikasi-usaha') }}
 @endsection
 
 @section('content-admin')
