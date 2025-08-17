@@ -107,7 +107,7 @@
             var urlFormAction = $(this).data('url-action');
             Swal.fire({
                 title: 'Yakin ingin menghapus?',
-                text: "Data tidak bisa dikembaltransaksi setelah dihapus!",
+                text: "Data tidak bisa dikembalikan setelah dihapus!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e3342f',

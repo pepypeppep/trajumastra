@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Master\JenisIkan;
+namespace App\Http\Requests\Master\JenisUsahaSarana;
 
 use Illuminate\Foundation\Http\FormRequest;
 
