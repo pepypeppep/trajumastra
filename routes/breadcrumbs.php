@@ -199,7 +199,7 @@ Breadcrumbs::for('kelola.tpi', function (BreadcrumbTrail $trail) {
 /* Kelola Stok Ikan */
 Breadcrumbs::for('kelola.stok-ikan', function (BreadcrumbTrail $trail) {
     $trail->parent('kelola');
-    $trail->push('stok-ikan', route('kelola.stok-ikan.index'));
+    $trail->push('Stok Ikan', route('kelola.stok-ikan.index'));
 });
 
 /* Kelola Harga Ikan */

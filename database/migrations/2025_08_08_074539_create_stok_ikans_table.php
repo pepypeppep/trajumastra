@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('log_stok_ikans', function (Blueprint $table) {
+        Schema::create('stok_ikans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_uptd')->index()->nullable();
-            $table->unsignedBigInteger('id_jenis_ikan')->index()->nullable();
-            $table->unsignedBigInteger('id_user')->index()->nullable();
+            $table->unsignedBigInteger('uptd_id')->index()->nullable();
+            $table->unsignedBigInteger('jenis_ikan_id')->index()->nullable();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->integer('stock');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('log_stok_ikans');
+        Schema::dropIfExists('stok_ikans');
     }
 };

@@ -40,8 +40,8 @@ use App\Http\Controllers\Admin\Kelola\KelolaKoordinatorUptdTpiController;
 use App\Http\Controllers\Admin\Kelola\PermohonanRekomendasiBbmController;
 
 /** ======================== BYPASS SSO
-* !!! TOLONG ROUTE INI DIHAPUS JIKA SUDAH DI PRODUCTION !!!
-*/
+ * !!! TOLONG ROUTE INI DIHAPUS JIKA SUDAH DI PRODUCTION !!!
+ */
 Route::get('ssobypass', App\Http\Controllers\Auth\SSOBypass::class);
 
 /* ======================== GUEST */
@@ -115,6 +115,7 @@ Route::middleware('auth', 'verified')->group(function () {
         /* Kelola Harga Ikan */
         Route::resource('harga-ikan', KelolaHargaIkanController::class)->names('harga-ikan');
         /* Kelola Materi */
+        Route::get('/materi/attachment/{id}', [KelolaMateriController::class, 'attachment'])->name('materi.attachment');
         Route::resource('materi', KelolaMateriController::class)->names('materi');
     });
 

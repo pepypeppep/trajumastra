@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('materis', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('tag')->nullable();
             $table->longText('description')->nullable();
             $table->longText('attachment')->nullable();
             $table->integer('attachment_type')->nullable();

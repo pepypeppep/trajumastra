@@ -1,13 +1,291 @@
 @extends('layouts.master')
 
-@section('title', 'UPTD')
+@section('title', 'Kelola UPTD')
 
 @section('breadcrumb')
     {{ Breadcrumbs::render('kelola.uptd') }}
 @endsection
 
 @section('content-admin')
+    <div class="card">
+        <div class="card-body">
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="mb-0">Daftar UPTD</h5>
+                <button type="button" href="" data-modal-target="modal-add"
+                    class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
+                    <i class="ri-user-add-line"></i> Tambah UPTD
+                </button>
+            </div>
+            <table id="data-table" class="display stripe group" style="width:100%">
+                <thead>
+                    <tr>
+                        <th class="ltr:!text-left rtl:!text-right">Nama</th>
+                        <th class="ltr:!text-left rtl:!text-right">Dusun</th>
+                        <th class="ltr:!text-left rtl:!text-right">Kalurahan</th>
+                        <th class="ltr:!text-left rtl:!text-right">Kapanewon</th>
+                        <th class="ltr:!text-left rtl:!text-right">Kabupaten</th>
+                        <th class="ltr:!text-left rtl:!text-right">Alamat</th>
+                        <th class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Data will be loaded here by DataTables --}}
+                    <tr class="data-row">
+                        <td colspan="7">
+                            <div class="flex justify-center items-center">
+                                <span class="text-gray-500 dark:text-zink-300">Memuat data ...</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Modal Add --}}
+    @include('admin.kelolas.uptd.partials.modal-add')
+    {{-- Modal Edit --}}
+    @include('admin.kelolas.uptd.partials.modal-edit')
+    {{-- Modal Map --}}
+    {{-- @include('admin.kelolas.uptd.partials.modal-map') --}}
+    {{-- Form Delete --}}
+    <form id="form-delete" action="" method="POST" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form>
 @endsection
 
+@push('css')
+    <!-- leaflet plugin -->
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.css') }}">
+@endpush
 @push('scripts')
+    <script src="{{ URL::asset('assets/js/datatables/data-tables.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
+    <!--buttons dataTables-->
+    <script src="{{ URL::asset('assets/js/datatables/datatables.buttons.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/datatables/jszip.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
+    <!-- leaflet plugin -->
+    <script src="{{ URL::asset('assets/libs/leaflet/leaflet.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.js') }}"></script>
+
+    <script>
+        // const MAPS = {};
+
+        // function initMap(containerId, modalSelector) {
+        //     // If already created, just fix size
+        //     if (MAPS[containerId]) {
+        //         setTimeout(() => MAPS[containerId].map.invalidateSize(), 100);
+        //         return;
+        //     }
+
+        //     const lat0 = -7.868823,
+        //         lng0 = 110.341187;
+
+        //     const map = L.map(containerId, {
+        //         center: [lat0, lng0],
+        //         zoom: 11,
+        //         doubleClickZoom: false
+        //     });
+
+        //     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //         maxZoom: 19,
+        //         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        //     }).addTo(map);
+
+        //     delete L.Icon.Default.prototype._getIconUrl;
+
+        //     // Default icons (CDN paths)
+        //     L.Icon.Default.mergeOptions({
+        //         iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        //         iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        //         shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        //     });
+
+        //     const marker = L.marker([lat0, lng0]).addTo(map);
+
+        //     // Esri Geosearch
+        //     L.esri.Geocoding.geosearch({
+        //         position: "topright",
+        //         placeholder: "Masukkan alamat atau nama lokasi",
+        //         useMapBounds: false,
+        //     }).addTo(map);
+
+        //     // One dblclick handler per map: move marker instead of creating a new one
+        //     map.on('dblclick', function(e) {
+        //         const {
+        //             lat,
+        //             lng
+        //         } = e.latlng;
+        //         marker.setLatLng(e.latlng)
+        //             .bindPopup(`${lat.toFixed(6)}, ${lng.toFixed(6)}`)
+        //             .openPopup();
+
+        //         // Update inputs only inside the current modal
+        //         $(modalSelector).find('input[name="latitude"]').val(lat.toFixed(6));
+        //         $(modalSelector).find('input[name="longitude"]').val(lng.toFixed(6));
+        //     });
+
+        //     MAPS[containerId] = {
+        //         map,
+        //         marker
+        //     };
+
+        //     // Fix initial render inside hidden modal
+        //     setTimeout(() => map.invalidateSize(), 100);
+        // }
+    </script>
+
+    {{-- Start Select 2 --}}
+    <script>
+        // Init global Select2
+        function initSelect2Kalurahan(context) {
+            $(context).find('[name="kalurahan_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Kalurahan",
+                allowClear: true
+            });
+        }
+
+        function initSelect2JenisIkan(context) {
+            $(context).find('[name="jenis_ikan_id[]"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Jenis Ikan",
+                allowClear: true,
+                tags: true,
+                tokenSeparators: [',', ' '],
+                multiple: true
+            });
+        }
+
+        // Modal ADD
+        $(document).on('click', '[data-modal-target="modal-add"]', function() {
+            initSelect2Kalurahan('#modal-add');
+            initSelect2JenisIkan('#modal-add');
+
+            setTimeout(() => {
+                if (mapAdd) {
+                    mapAdd.invalidateSize();
+                }
+            }, 100);
+            // initMap('map-add', '#modal-add');
+        });
+
+        // Modal EDIT
+        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
+            initSelect2Kalurahan('#modal-edit');
+            initSelect2JenisIkan('#modal-edit');
+
+            setTimeout(() => {
+                if (mapEdit) {
+                    mapEdit.invalidateSize();
+                }
+            }, 100);
+            // initMap('map-edit', '#modal-edit');
+        });
+    </script>
+    {{-- End Select 2 --}}
+
+    {{-- Start Implement datatable --}}
+    <script>
+        // -- Start Load Datatable
+        var filter = {
+            status: '',
+            pilar: '',
+            keyword: ''
+        }
+        loadTable(filter);
+
+        function loadTable(filter) {
+            var tbl = $('#data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                language: {
+                    url: "{{ asset('assets/js/datatables/lang/id.json') }}",
+                },
+                ajax: {
+                    url: "{{ route('kelola.uptd.index') }}",
+                    type: 'GET',
+                },
+                columns: [{
+                        data: 'name',
+                        name: 'name',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'dusun',
+                        name: 'dusun',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'kalurahan.name',
+                        name: 'kalurahan.name',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'kalurahan.kecamatan.name',
+                        name: 'kalurahan.kecamatan.name',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'kalurahan.kecamatan.kabupaten.name',
+                        name: 'kalurahan.kecamatan.kabupaten.name',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'address',
+                        name: 'address',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'aksi',
+                        name: 'aksi',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center'
+                    },
+                ],
+            })
+        }
+        // -- End Load Datatable
+    </script>
+    {{-- End Implement datatable --}}
+
+    {{-- Start action delete data --}}
+    <script>
+        $(document).on('click', '#btn-delete', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var urlFormAction = $(this).data('url-action');
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data tidak bisa dikembalikan setelah dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e3342f',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan ke form delete
+                    const form = $('#form-delete');
+                    form.attr('action', urlFormAction);
+                    form.submit();
+                }
+            })
+        });
+    </script>
+    {{-- End action delete data --}}
 @endpush
