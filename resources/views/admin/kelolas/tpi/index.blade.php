@@ -3,7 +3,7 @@
 @section('title', 'Kelola TPI')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('kelola.stok-ikan') }}
+    {{ Breadcrumbs::render('kelola.tpi') }}
 @endsection
 
 @section('content-admin')
@@ -31,7 +31,7 @@
                 <tbody>
                     {{-- Data will be loaded here by DataTables --}}
                     <tr class="data-row">
-                        <td colspan="6">
+                        <td colspan="7">
                             <div class="flex justify-center items-center">
                                 <span class="text-gray-500 dark:text-zink-300">Memuat data ...</span>
                             </div>
@@ -43,9 +43,9 @@
     </div>
 
     {{-- Modal Add --}}
-    {{-- @include('admin.kelolas.stok-ikan.partials.modal-add') --}}
+    @include('admin.kelolas.tpi.partials.modal-add')
     {{-- Modal Edit --}}
-    {{-- @include('admin.kelolas.stok-ikan.partials.modal-edit') --}}
+    @include('admin.kelolas.tpi.partials.modal-edit')
     {{-- Form Delete --}}
     <form id="form-delete" action="" method="POST" class="hidden">
         @csrf
@@ -53,6 +53,10 @@
     </form>
 @endsection
 
+@push('css')
+    <!-- leaflet plugin -->
+    <link rel="stylesheet" href="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.css') }}">
+@endpush
 @push('scripts')
     <script src="{{ URL::asset('assets/js/datatables/data-tables.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
@@ -62,38 +66,59 @@
     <script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
+    <!-- leaflet plugin -->
+    <script src="{{ URL::asset('assets/libs/leaflet/leaflet.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.js') }}"></script>
 
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2
-        function initSelect2(context) {
-            $(context).find('[name="uptd_id"]').select2({
+        function initSelect2Kalurahan(context) {
+            $(context).find('[name="kalurahan_id"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
-                placeholder: "Pilih UPTD",
+                placeholder: "Pilih Kalurahan",
                 allowClear: true
             });
         }
 
         function initSelect2JenisIkan(context) {
-            $(context).find('[name="jenis_ikan_id"]').select2({
+            $(context).find('[name="jenis_ikan_id[]"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
                 placeholder: "Pilih Jenis Ikan",
-                allowClear: true
+                allowClear: true,
+                tags: true,
+                tokenSeparators: [',', ' '],
+                multiple: true
             });
         }
 
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2('#modal-add');
+            initSelect2Kalurahan('#modal-add');
             initSelect2JenisIkan('#modal-add');
+
+            setTimeout(() => {
+                if (mapAdd) {
+                    mapAdd.invalidateSize();
+                }
+            }, 100);
+            // initMap('map-add', '#modal-add');
         });
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2('#modal-edit');
+            initSelect2Kalurahan('#modal-edit');
             initSelect2JenisIkan('#modal-edit');
+
+            setTimeout(() => {
+                if (mapEdit) {
+                    mapEdit.invalidateSize();
+                }
+            }, 100);
+            // initMap('map-edit', '#modal-edit');
         });
     </script>
     {{-- End Select 2 --}}
@@ -116,7 +141,7 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('kelola.stok-ikan.index') }}",
+                    url: "{{ route('kelola.tpi.index') }}",
                     type: 'GET',
                 },
                 columns: [{
@@ -124,21 +149,28 @@
                         name: 'name',
                         searchable: true,
                         orderable: true,
-                    }, {
+                    },
+                    {
+                        data: 'dusun',
+                        name: 'dusun',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
                         data: 'kalurahan.name',
                         name: 'kalurahan.name',
                         searchable: true,
                         orderable: true,
                     },
                     {
-                        data: 'kalurahan.kapanewon.name',
-                        name: 'kalurahan.kapanewon.name',
+                        data: 'kalurahan.kecamatan.name',
+                        name: 'kalurahan.kecamatan.name',
                         searchable: true,
                         orderable: true,
                     },
                     {
-                        data: 'kalurahan.kapanewon.kabupaten.name',
-                        name: 'kalurahan.kapanewon.kabupaten.name',
+                        data: 'kalurahan.kecamatan.kabupaten.name',
+                        name: 'kalurahan.kecamatan.kabupaten.name',
                         searchable: true,
                         orderable: true,
                     },
