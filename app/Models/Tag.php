@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Materi extends Model
+class Tag extends Model
 {
     protected $guarded = ['id'];
 
     /**
-     * The tags that belong to the user.
+     * The materis that belong to the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function tags(): BelongsToMany
+    public function materis(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'materi_tag');
+        return $this->belongsToMany(Materi::class, 'materi_tag');
     }
 }

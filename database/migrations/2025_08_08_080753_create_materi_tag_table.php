@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materis', function (Blueprint $table) {
+        Schema::create('materi_tag', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->longText('description')->nullable();
-            $table->longText('attachment')->nullable();
-            $table->integer('attachment_type')->nullable();
+            $table->foreignId('materi_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materis');
+        Schema::dropIfExists('materi_tag');
     }
 };
