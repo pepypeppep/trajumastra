@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('desas', function (Blueprint $table) {
+        Schema::create('kalurahans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_kecamatan')->index();
-            $table->bigInteger('id_desa')->index()->nullable();
+            $table->unsignedBigInteger('kecamatan_id')->index();
+            $table->string('kode_bps');
+            $table->string('kode_kemendagri');
             $table->string('name');
             $table->timestamps();
         });
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('desas');
+        Schema::dropIfExists('kalurahans');
     }
 };

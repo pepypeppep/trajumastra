@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('uptds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user')->index()->nullable();
-            $table->unsignedBigInteger('id_desa')->index()->nullable();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
             $table->string('name');
             $table->string('dusun')->nullable();
             $table->longText('address')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->integer('flag')->nullable(); //1: tpi; 2: uptd
+            $table->integer('type')->nullable(); //1: tpi; 2: uptd
             $table->tinyInteger('status')->default(1); // 1: aktif, 0: nonaktif
             $table->timestamps();
         });

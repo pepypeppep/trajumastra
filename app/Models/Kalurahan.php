@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Kecamatan extends Model
+class Kalurahan extends Model
 {
     protected $guarded = ['id'];
 
     /**
-     * Get the kabupaten that owns the Kecamatan
+     * Get the kecamatan that owns the Kalurahan
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function kabupaten(): BelongsTo
+    public function kecamatan(): BelongsTo
     {
-        return $this->belongsTo(Kabupaten::class);
+        return $this->belongsTo(Kecamatan::class);
     }
 }

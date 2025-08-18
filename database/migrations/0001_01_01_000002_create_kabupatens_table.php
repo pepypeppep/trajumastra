@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('kabupatens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_provinsi')->index();
-            $table->bigInteger('id_kabupaten')->index()->nullable();
+            $table->unsignedBigInteger('provinsi_id')->index();
+            $table->string('kode_bps');
+            $table->string('kode_kemendagri');
             $table->string('name');
             $table->timestamps();
         });
