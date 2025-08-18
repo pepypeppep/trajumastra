@@ -92,6 +92,8 @@
                         </div>
                     </div>
                 </div>
+                <small class="text-red-500">*Klik 2 kali untuk menambahkan lokasi</small>
+                <div class="leaflet-map w-full h-[300px]" id="map-edit"></div>
             </div>
             {{-- End Modal Body --}}
             {{-- Start Modal Footer --}}
@@ -109,6 +111,69 @@
 @push('scripts')
     <!-- Start Edit User (Modal) -->
     <script>
+        let mapEdit = null;
+        let markerEdit = null;
+
+        function initMapEdit(lat, lng) {
+            // If map already exists, destroy it first
+            if (mapEdit) {
+                mapEdit.off();
+                mapEdit.remove();
+                mapEdit = null;
+                markerEdit = null;
+            }
+
+            // var theMarker = {};
+            var latitude = lat;
+            var longitude = lng;
+            mapEdit = L.map('map-edit', {
+                center: [latitude, longitude],
+                zoom: 11,
+                doubleClickZoom: false
+            });
+
+            const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(mapEdit);
+
+            delete L.Icon.Default.prototype._getIconUrl;
+
+            L.Icon.Default.mergeOptions({
+                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+            });
+
+            markerEdit = L.marker([latitude, longitude]).addTo(mapEdit);
+            // var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+            const searchControl = L.esri.Geocoding.geosearch({
+                position: "topright",
+                placeholder: "Masukkan alamat atau nama lokasi",
+                useMapBounds: false,
+            }).addTo(mapEdit);
+
+            var results = L.layerGroup().addTo(mapEdit);
+
+            mapEdit.on('dblclick',
+                function(e) {
+                    var coord = e.latlng.toString().split(',');
+                    var lat = coord[0].split('(');
+                    var lng = coord[1].split(')');
+                    if (markerEdit != undefined || results != undefined) {
+                        mapEdit.removeLayer(markerEdit);
+                        mapEdit.removeLayer(results);
+                    };
+
+                    //Add a marker to show where you clicked.
+                    markerEdit = L.marker([lat[1], lng[0]]).addTo(mapEdit)
+                        .bindPopup('' + coord + '')
+                        .openPopup();
+                    $('#form-edit').find('#latitude').val(lat[1]);
+                    $('#form-edit').find('#longitude').val(lng[0]);
+                });
+        }
+
         $(document).on('click', '#btn-modal-edit', function(e) {
             e.preventDefault();
 
@@ -125,7 +190,7 @@
                 type: 'GET',
                 success: function(response) {
                     // Modal title
-                    $('#modal-title').text('Ubah Data Koordinator UPTD TPI - ' + response.name);
+                    $('#modal-title').text('Ubah Data UPTD - ' + response.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
@@ -147,6 +212,8 @@
 
                     // Refresh select2
                     $jenisIkanSelect.trigger('change');
+
+                    initMapEdit(response.latitude, response.longitude);
                 },
                 error: function(xhr) {
                     Swal.fire({

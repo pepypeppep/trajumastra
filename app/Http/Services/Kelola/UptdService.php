@@ -48,7 +48,7 @@ class UptdService
                         </button>';
                 }
 
-                return $btnMap . ' ' . $btnEdit . ' ' . $btnDelete;
+                return $btnEdit . ' ' . $btnDelete;
             })
             ->escapeColumns([])
             ->make(true);

@@ -84,6 +84,8 @@
                         </div>
                     </div>
                 </div>
+                <small class="text-red-500">*Klik 2 kali untuk menambahkan lokasi</small>
+                <div class="leaflet-map w-full h-[300px]" id="map-add"></div>
             </div>
             {{-- End Modal Body --}}
             {{-- Start Modal Footer --}}
@@ -97,3 +99,70 @@
         </form>
     </div>
 </div>
+@push('scripts')
+    <script>
+        let mapAdd;
+
+        function initMapAdd() {
+            var theMarker = {};
+            var latitude = -7.868823;
+            var longitude = 110.341187;
+            mapAdd = L.map('map-add', {
+                center: [latitude, longitude],
+                zoom: 11,
+                doubleClickZoom: false
+            });
+
+            const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(mapAdd);
+
+            delete L.Icon.Default.prototype._getIconUrl;
+
+            L.Icon.Default.mergeOptions({
+                iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+                iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+                shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+            });
+
+            theMarker = L.marker([latitude, longitude]).addTo(mapAdd);
+            // var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+            const searchControl = L.esri.Geocoding.geosearch({
+                position: "topright",
+                placeholder: "Masukkan alamat atau nama lokasi",
+                useMapBounds: false,
+            }).addTo(mapAdd);
+
+            var results = L.layerGroup().addTo(mapAdd);
+
+            // searchControl.on('results', function(data) {
+            //     results.clearLayers();
+            //     for (var i = data.results.length - 1; i >= 0; i--) {
+            //         results.addLayer(L.marker(data.results[i].latlng));
+            //     }
+            // });
+
+            mapAdd.on('dblclick',
+                function(e) {
+                    var coord = e.latlng.toString().split(',');
+                    var lat = coord[0].split('(');
+                    var lng = coord[1].split(')');
+                    if (theMarker != undefined || results != undefined) {
+                        mapAdd.removeLayer(theMarker);
+                        mapAdd.removeLayer(results);
+                    };
+
+                    //Add a marker to show where you clicked.
+                    theMarker = L.marker([lat[1], lng[0]]).addTo(mapAdd)
+                        .bindPopup('' + coord + '')
+                        .openPopup();
+                    document.getElementById("latitude").value = lat[1];
+                    document.getElementById("longitude").value = lng[0];
+                });
+        }
+        $(document).ready(function() {
+            initMapAdd();
+        });
+    </script>
+@endpush

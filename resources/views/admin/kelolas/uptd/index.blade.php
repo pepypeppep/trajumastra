@@ -16,7 +16,6 @@
                     <i class="ri-user-add-line"></i> Tambah UPTD
                 </button>
             </div>
-            <div id="map" class="leaflet-map"></div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
@@ -75,42 +74,70 @@
     <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.js') }}"></script>
 
     <script>
-        var latitude = -7.868823;
-        var longitude = 110.341187;
-        const map = L.map('map', {
-            center: [latitude, longitude],
-            zoom: 11,
-        });
+        // const MAPS = {};
 
-        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-
-        delete L.Icon.Default.prototype._getIconUrl;
-
-        L.Icon.Default.mergeOptions({
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        });
-
-        const marker = L.marker([latitude, longitude]).addTo(map);
-        // var searchControl = L.esri.Geocoding.geosearch().addTo(map);
-        const searchControl = L.esri.Geocoding.geosearch({
-            position: "topright",
-            placeholder: "Masukkan alamat atau nama lokasi",
-            useMapBounds: false,
-        }).addTo(map);
-
-        var results = L.layerGroup().addTo(map);
-
-        // searchControl.on('results', function(data) {
-        //     results.clearLayers();
-        //     for (var i = data.results.length - 1; i >= 0; i--) {
-        //         results.addLayer(L.marker(data.results[i].latlng));
+        // function initMap(containerId, modalSelector) {
+        //     // If already created, just fix size
+        //     if (MAPS[containerId]) {
+        //         setTimeout(() => MAPS[containerId].map.invalidateSize(), 100);
+        //         return;
         //     }
-        // });
+
+        //     const lat0 = -7.868823,
+        //         lng0 = 110.341187;
+
+        //     const map = L.map(containerId, {
+        //         center: [lat0, lng0],
+        //         zoom: 11,
+        //         doubleClickZoom: false
+        //     });
+
+        //     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //         maxZoom: 19,
+        //         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        //     }).addTo(map);
+
+        //     delete L.Icon.Default.prototype._getIconUrl;
+
+        //     // Default icons (CDN paths)
+        //     L.Icon.Default.mergeOptions({
+        //         iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        //         iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        //         shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        //     });
+
+        //     const marker = L.marker([lat0, lng0]).addTo(map);
+
+        //     // Esri Geosearch
+        //     L.esri.Geocoding.geosearch({
+        //         position: "topright",
+        //         placeholder: "Masukkan alamat atau nama lokasi",
+        //         useMapBounds: false,
+        //     }).addTo(map);
+
+        //     // One dblclick handler per map: move marker instead of creating a new one
+        //     map.on('dblclick', function(e) {
+        //         const {
+        //             lat,
+        //             lng
+        //         } = e.latlng;
+        //         marker.setLatLng(e.latlng)
+        //             .bindPopup(`${lat.toFixed(6)}, ${lng.toFixed(6)}`)
+        //             .openPopup();
+
+        //         // Update inputs only inside the current modal
+        //         $(modalSelector).find('input[name="latitude"]').val(lat.toFixed(6));
+        //         $(modalSelector).find('input[name="longitude"]').val(lng.toFixed(6));
+        //     });
+
+        //     MAPS[containerId] = {
+        //         map,
+        //         marker
+        //     };
+
+        //     // Fix initial render inside hidden modal
+        //     setTimeout(() => map.invalidateSize(), 100);
+        // }
     </script>
 
     {{-- Start Select 2 --}}
@@ -141,12 +168,26 @@
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
             initSelect2Kalurahan('#modal-add');
             initSelect2JenisIkan('#modal-add');
+
+            setTimeout(() => {
+                if (mapAdd) {
+                    mapAdd.invalidateSize();
+                }
+            }, 100);
+            // initMap('map-add', '#modal-add');
         });
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
             initSelect2Kalurahan('#modal-edit');
             initSelect2JenisIkan('#modal-edit');
+
+            setTimeout(() => {
+                if (mapEdit) {
+                    mapEdit.invalidateSize();
+                }
+            }, 100);
+            // initMap('map-edit', '#modal-edit');
         });
     </script>
     {{-- End Select 2 --}}
