@@ -24,4 +24,28 @@ class NavigationsService
             return redirect()->back()->with('error', 'Gagal membuat navigasi. Error: ' . $e->getMessage());
         }
     }
+
+    /* Update navigation */
+    public function update($id, $data)
+    {
+        try {
+            $navigation = Navigation::findOrFail($id);
+            $navigation->update($data);
+            return redirect()->back()->with('success', 'Navigasi ' . $navigation->name . ' berhasil diperbarui');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal memperbarui navigasi. Error: ' . $e->getMessage());
+        }
+    }
+
+    /* Destroy navigation */
+    public function destroy($id)
+    {
+        try {
+            $navigation = Navigation::findOrFail($id);
+            $navigation->delete();
+            return redirect()->back()->with('success', 'Navigasi ' . $navigation->name . ' berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus navigasi. Error: ' . $e->getMessage());
+        }
+    }
 }

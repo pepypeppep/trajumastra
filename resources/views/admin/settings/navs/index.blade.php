@@ -62,7 +62,7 @@
                                 <td class="text-center">
                                     <div class="grid grid-cols-2 gap-2 justify-center">
                                         @can('settings-navs.update')
-                                            <button type="button" data-modal-target="modal-edit_{{ $nav->id }}"
+                                            <button type="button" data-modal-target="modal-edit-menu_{{ $nav->id }}"
                                                 class="btn bg-yellow-500 text-white hover:bg-yellow-600 focus:bg-yellow-600">
                                                 <i class="ri-edit-line"></i>
                                             </button>
@@ -127,7 +127,7 @@
                                         <td class="text-center">
                                             <div class="grid grid-cols-2 gap-2 justify-center">
                                                 @can('settings-navs.update')
-                                                    <button type="button" data-modal-target="modal-edit_{{ $child->id }}"
+                                                    <button type="button" data-modal-target="modal-edit-menu_{{ $child->id }}"
                                                         class="btn bg-yellow-500 text-white hover:bg-yellow-600 focus:bg-yellow-600">
                                                         <i class="ri-edit-line"></i>
                                                     </button>

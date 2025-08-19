@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Settings;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Settings\Navigations\CreateRequest;
-use App\Http\Services\Settings\NavigationsService;
 use App\Models\Navigation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Settings\NavigationsService;
+use App\Http\Requests\Settings\Navigations\CreateRequest;
+use App\Http\Requests\Settings\Navigations\UpdateRequest;
 
 class NavigationsController extends Controller
 {
@@ -35,52 +36,13 @@ class NavigationsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $this->setRule('settings-navs.update');
-
-        $navigation = Navigation::find($id);
-        $navigations = Navigation::all();
-        return view('settings.navigation.edit', compact('navigation', 'navigations'));
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        // dd($request->all());
         $this->setRule('settings-navs.update');
-
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required',
-            'url' => 'required',
-            'icon' => 'nullable',
-            'parent_id' => 'nullable',
-            'order' => 'nullable',
-            'active' => 'nullable',
-            'display' => 'nullable',
-        ]);
-        //
-        $navigation = Navigation::find($id);
-        $navigation->name = $request->name;
-        $navigation->url = $request->url;
-        $navigation->icon = $request->icon;
-        $navigation->parent_id = $request->parent_id;
-        $navigation->order = $request->order;
-        $navigation->active = $request->active;
-        $navigation->display = $request->display;
-        if(!$request->has('active')){
-            $navigation->active = 0;
-        }
-        if(!$request->has('display')){
-            $navigation->display = 0;
-        }
-        $navigation->save();
-        return redirect()->back()->with('success', __('app.notif.successUpdate'));
+        // Update Process
+        return $this->navigationsService->update($id, $request->validated());
     }
 
     /**
@@ -89,9 +51,7 @@ class NavigationsController extends Controller
     public function destroy(string $id)
     {
         $this->setRule('settings-navs.delete');
-
-        $navigation = Navigation::find($id);
-        $navigation->delete();
-        return redirect('navs')->with('success', __('app.notif.successDelete'));
+        // Destroy Process
+        return $this->navigationsService->destroy($id);
     }
 }
