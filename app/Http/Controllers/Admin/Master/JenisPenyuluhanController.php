@@ -10,7 +10,7 @@ use App\Http\Requests\Master\JenisPenyuluhan\UpdateRequest;
 
 class JenisPenyuluhanController extends Controller
 {
-    public function __construct(protected JenisPenyuluhanService $rangePenghasilanService) {}
+    public function __construct(protected JenisPenyuluhanService $janisPenyuluhanService) {}
 
     /**
      * Display a listing of the resource.
@@ -21,7 +21,7 @@ class JenisPenyuluhanController extends Controller
 
         // Get data jenis penyuluhan for data table
         if (request()->ajax()) {
-            return $this->rangePenghasilanService->getAll();
+            return $this->janisPenyuluhanService->getAll();
         }
 
         return view('admin.masters.jenis-penyuluhan.index');
@@ -35,7 +35,7 @@ class JenisPenyuluhanController extends Controller
         $this->setRule('jenis-penyuluhan.create');
 
         // Store process
-        return $this->rangePenghasilanService->store($request->validated());
+        return $this->janisPenyuluhanService->store($request->validated());
     }
 
     /**
@@ -45,7 +45,7 @@ class JenisPenyuluhanController extends Controller
     {
         $this->setRule('jenis-penyuluhan.update');
 
-        return $this->rangePenghasilanService->getById($id);
+        return $this->janisPenyuluhanService->getById($id);
     }
     /**
      * Update the specified resource in storage.
@@ -54,7 +54,7 @@ class JenisPenyuluhanController extends Controller
     {
         $this->setRule('jenis-penyuluhan.update');
         // Update process
-        return $this->rangePenghasilanService->update($id, $request->validated());
+        return $this->janisPenyuluhanService->update($id, $request->validated());
     }
 
     /**
@@ -64,6 +64,6 @@ class JenisPenyuluhanController extends Controller
     {
         $this->setRule('jenis-penyuluhan.delete');
         // Delete Process
-        return $this->rangePenghasilanService->delete($id);
+        return $this->janisPenyuluhanService->delete($id);
     }
 }
