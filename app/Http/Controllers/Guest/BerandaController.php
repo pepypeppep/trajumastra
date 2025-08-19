@@ -3,16 +3,24 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\LandingService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class BerandaController extends Controller
 {
+    public function __construct(protected LandingService $service) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('guest.index');
+        $news = $this->service->getNews();
+        $bbis = $this->service->getBbi();
+        $tpis = $this->service->getTpi();
+
+        return view('guest.index', compact('news', 'bbis', 'tpis'));
     }
 
     /**
