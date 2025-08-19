@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Guest\BerandaController;
-use App\Http\Controllers\Settings\RolesController;
+use App\Http\Controllers\Admin\Settings\RolesController;
 use App\Http\Controllers\Admin\Settings\UsersController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -138,6 +138,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('users', UsersController::class)->names('users');
         /* Roles */
         Route::resource('roles', RolesController::class)->names('roles');
+        Route::put('/roles/{role}/permissions', [RolesController::class, 'givePermission'])->name('roles.permissions');
         /* Navigation */
         Route::resource('navs', NavigationsController::class)->names('navs');
         /* Preferences */

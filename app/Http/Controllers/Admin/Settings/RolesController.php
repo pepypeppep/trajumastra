@@ -1,25 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\Settings;
+namespace App\Http\Controllers\Admin\Settings;
 
-use App\Models\User;
-use App\Http\Controllers\Controller;
-use App\Models\Navigation;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
+use App\Http\Services\Settings\RolesService;
+use App\Http\Requests\Settings\Roles\CreateRequest;
+use App\Http\Requests\Settings\Roles\UpdateRequest;
 
 class RolesController extends Controller
 {
+    public function __construct(protected RolesService $rolesService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->setRule('roles.read');
+        $this->setRule('settings-roles.read');
 
-        $roles = Role::all();
-        return view('settings.role.index', compact('roles'));
+        $roles = $this->rolesService->getAllRoles();
+        return view('admin.settings.roles.index', compact('roles'));
     }
 
     /**
@@ -27,85 +31,63 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $this->setRule('roles.create');
+        $this->setRule('settings-roles.create');
 
         $create = true;
-        return view('settings.role.edit', compact('create'));
+        return view('settings.roles.edit', compact('create'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $this->setRule('roles.create');
-
-        $request->validate([
-            'name' => 'required',
-        ]);
-        //
-        Role::create(['name' => $request->name]);
-        return redirect()->back()->with('success', __('app.notif.successSave'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
-    {
-        $this->setRule('roles.update');
-
-        return view('settings.role.edit', compact('role'));
+        $this->setRule('settings-roles.create');
+        // Store Process
+        return $this->rolesService->create($request->validated());
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRequest $request, $roleId)
     {
-        $this->setRule('roles.update');
+        $this->setRule('settings-roles.update');
 
-        $request->validate([
-            'name' => 'required',
-        ]);
-        //
-        $role->name = $request->name;
-        $role->save();
-        return redirect()->back()->with('success', __('app.notif.successUpdate'));
+        // Update Process
+        return $this->rolesService->update($roleId, $request->validated());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Role $role)
+    public function destroy($roleId)
     {
-        $this->setRule('roles.delete');
-
-        $role->delete();
-        return redirect('roles')->with('success', __('app.notif.successDelete'));
+        $this->setRule('settings-roles.delete');
+        
+        // Delete process
+        return $this->rolesService->delete($roleId);
     }
 
     /**
      * Display a listing of the permission.
      */
-    public function show(Role $role)
+    public function show($roleId)
     {
-        $this->setRule('roles.read');
+        $this->setRule('settings-roles.update');
 
-        $permissions = $role->permissions->pluck('name')->toArray();
-        $navigations = Navigation::where('parent_id', null)->with('child')->get();
-        return view('settings.role.show', compact('role', 'permissions', 'navigations'));
+        // Get data
+        $permissions = $this->rolesService->getAllPermissions($roleId);
+        $navigations = $this->rolesService->getAllNavigations();
+        $role = $this->rolesService->getRoleById($roleId);
+        return view('admin.settings.roles.show-permissions', compact('role', 'permissions', 'navigations'));
         
     }
 
-    public function givePermission(Request $request, Role $role)
+    public function givePermission(Request $request, $roleId)
     {
-        $this->setRule('roles.update');
-        // remove premission
-        foreach ($request->permission ?? [] as $key => $permission) {
-            $permission = Permission::firstOrCreate(['name' => $permission]);
-        }
-        $role->syncPermissions($request->permission);
-        return redirect()->back()->with('success', 'Permission given successfully');
+        $this->setRule('settings-roles.update');
+        // Give Permissions Process
+        return $this->rolesService->givePermission($roleId, $request->all());
     }
 }

@@ -86,5 +86,21 @@
             })
         }
         // -- End Load Datatable
+
+
+        // Untuk mengatur kolom (lebar dan align)
+        $(document).ready(function() {
+            $('#data-table').DataTable({
+                "columnDefs": [
+                    { "targets": [2], "className": "text-center" }
+                ],
+                columns: [
+                    { width: "5%" },
+                    { width: "75%" },
+                    { width: "20%" }
+                ],
+                autoWidth: false
+            });
+        });
     </script>
 @endpush

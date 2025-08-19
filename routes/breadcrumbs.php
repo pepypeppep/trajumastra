@@ -283,9 +283,9 @@ Breadcrumbs::for('roles', function (BreadcrumbTrail $trail) {
     $trail->push('Peran', route('settings.roles.index'));
 });
 
-Breadcrumbs::for('roles-permissions', function (BreadcrumbTrail $trail, $roleId, $name) {
+Breadcrumbs::for('roles-permissions', function (BreadcrumbTrail $trail, $role) {
     $trail->parent('roles');
-    $trail->push("Hak Akses Peran $name", route('settings.roles.show', $roleId));
+    $trail->push("Hak Akses Peran {$role->name}", route('settings.roles.show', $role->id));
 });
 
 Breadcrumbs::for('preferences', function (BreadcrumbTrail $trail) {
