@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Uptd;
 use Illuminate\Support\Facades\Http;
 
 class LandingService
@@ -18,5 +19,21 @@ class LandingService
         }
 
         return $news;
+    }
+
+    /* Get data bbi */
+    public function getBbi()
+    {
+        $data = Uptd::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans')->where('type', Uptd::UPTD)->orderByDesc('created_at')->get();
+
+        return $data;
+    }
+
+    /* Get data tpi */
+    public function getTpi()
+    {
+        $data = Uptd::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans')->where('type', Uptd::TPI)->orderByDesc('created_at')->get();
+
+        return $data;
     }
 }

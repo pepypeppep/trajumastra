@@ -17,8 +17,10 @@ class BerandaController extends Controller
     public function index()
     {
         $news = $this->service->getNews();
+        $bbis = $this->service->getBbi();
+        $tpis = $this->service->getTpi();
 
-        return view('guest.index', compact('news'));
+        return view('guest.index', compact('news', 'bbis', 'tpis'));
     }
 
     /**

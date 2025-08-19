@@ -25,9 +25,12 @@
                         Usaha</a>
                 </li>
                 <li>
-                    <a href="/#tpi-bbi"
-                        class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">TPI
-                        / BBI</a>
+                    <a href="/#bbi"
+                        class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">BBI</a>
+                </li>
+                <li>
+                    <a href="/#tpi"
+                        class="block md:inline-block px-4 md:px-3 py-2.5 md:py-0.5 text-15 font-medium text-slate-800 transition-all duration-300 ease-linear hover:text-custom-500 [&.active]:text-custom-500 dark:text-zinc-200 dark:hover:text-custom-500 dark:[&.active]:text-custom-500">TPI</a>
                 </li>
                 <li>
                     <a href="/#transaksi"
