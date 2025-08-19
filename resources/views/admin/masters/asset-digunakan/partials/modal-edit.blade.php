@@ -70,7 +70,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Gagal memuat data desa.',
+                        text: 'Gagal memuat asset digunakan.',
                     });
                 }
             });
