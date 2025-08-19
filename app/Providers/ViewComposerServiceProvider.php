@@ -25,6 +25,12 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Navigation
         View::composer(['layouts.sidebar'], NavigationComposer::class);
+
+        // Preference
+        View::composer(['layouts.master-without-nav'], PreferenceComposer::class);
+        View::composer(['layouts.master'], PreferenceComposer::class);
+        View::composer(['layouts.footer'], PreferenceComposer::class);
     }
 }

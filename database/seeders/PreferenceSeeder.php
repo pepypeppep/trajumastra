@@ -30,7 +30,7 @@ class PreferenceSeeder extends Seeder
                 'group' => 'site',
                 'name' => 'copyright',
                 'is_asset' => false,
-                'value' => '&copy; Copyright <strong><span>Trajumastra</span></strong>. All Rights Reserved',
+                'value' => '2025 &copy; Copyright <strong><span>Trajumastra</span></strong>. All Rights Reserved',
             ],
             [
                 'group' => 'site',
@@ -42,13 +42,13 @@ class PreferenceSeeder extends Seeder
                 'group' => 'site',
                 'name' => 'logo',
                 'is_asset' => true,
-                'value' => 'assets/logo/logo.png',
+                'value' => 'assets/images/trajumastra_logo.svg',
             ],
             [
                 'group' => 'site',
                 'name' => 'favicon',
                 'is_asset' => true,
-                'value' => 'assets/favicon/favicon.png',
+                'value' => 'assets/images/trajumastra.svg',
             ]
         ];
         
