@@ -1,0 +1,8 @@
+﻿name;public_status;actor;before;after;routes;is_done;button_label
+Permohonan;Permohonan;|102|100|;0;2;;0;Verifikasi
+Permohonan 2 oleh 201, 100;Verifiikasi;|100|201|;1;3;permohonan/verifikasi;0;Verifikasi
+Permohanan 3 oleh 301, 100;Verifiikasi;|301|100|201|;2;4;permohonan/verifikasi;0;Verifikasi
+Permohonan 4, oleh 401, 100;Verifiikasi;|401|100|301|;3;5;permohonan/verifikasi;0;Verifikasi
+Permohonan 5;Verifiikasi;|101|100|401|;4;6;permohonan/verifikasi;0;Verifikasi
+Isi SPBU dan Nomor, Selesai;Disetujui;|100|;5;;permohonan/finalisasi;2;
+Di Tolak;Ditolak;|100|;6;;permohonan/ditolak;1;
