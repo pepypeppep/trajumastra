@@ -28,7 +28,8 @@
                         class="absolute h-40 left-10 xl:-left-10 top-32" data-aos="fade-down-right" data-aos-delay="900"
                         data-aos-easing="linear"> --}}
                     <div class="relative" data-aos="zoom-in" data-aos-delay="500">
-                        <img src="{{ asset('assets/images/trajumastra_logo.svg') }}" alt="" class="mx-auto">
+                        <img src="{{ asset('assets/images/trajumastra.svg') }}" alt="" class="mx-auto"
+                            style="max-height: 35rem;">
                     </div>
                 </div>
             </div>
