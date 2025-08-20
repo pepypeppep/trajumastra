@@ -28,9 +28,11 @@ class ViewComposerServiceProvider extends ServiceProvider
         // Navigation
         View::composer(['layouts.sidebar'], NavigationComposer::class);
 
-        // Preference
+        /* Preference */
+        // Admin
         View::composer(['layouts.master-without-nav'], PreferenceComposer::class);
         View::composer(['layouts.master'], PreferenceComposer::class);
-        View::composer(['layouts.footer'], PreferenceComposer::class);
+        // Guest
+        View::composer(['layouts.guest.master'], PreferenceComposer::class);
     }
 }

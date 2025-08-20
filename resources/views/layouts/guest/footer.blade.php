@@ -8,7 +8,7 @@
                             class="hidden h-7 dark:block"></a>
                     <a href="#!"><img src="./assets/images/logo-dark.png" alt=""
                             class="block h-7 dark:hidden"></a> --}}
-                    <a href="#!"><img src="{{ asset('assets/images/logo.svg') }}" alt=""
+                    <a href="#!"><img src="{{ $prefs_composer['logo'] }}" alt=""
                             class="block h-32 dark:hidden"></a>
                 </div>
                 <h3 class="mt-5 dark:text-zinc-400  flex items-center justify-center">Dinas Kelautan dan
@@ -47,10 +47,7 @@
     </div>
     <div class="pt-10 mt-16 text-center border-t text-slate-500 dark:text-zinc-400 dark:border-zinc-800 text-16">
         <p>
-            <script>
-                document.write(new Date().getFullYear())
-            </script> © Trajumastra. Design & Develop by <a href="#!"
-                class="underline text-slate-800 dark:text-zinc-100">AlienTech</a>
+            {!! $prefs_composer['copyright'] !!} {!! $prefs_composer['credits'] !!}
         </p>
     </div>
 </footer>

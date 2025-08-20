@@ -3,9 +3,7 @@
     <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto flex items-center self-center w-full">
         <div class="shrink-0">
             <a href="/#!">
-                {{-- <img src="./assets/images/logo-dark.png" alt="" class="block h-6 dark:hidden">
-                <img src="./assets/images/logo-light.png" alt="" class="hidden h-6 dark:block"> --}}
-                <img src="{{ asset('assets/images/logo.svg') }}" alt="" class="block h-16 mx-auto dark:hidden">
+                <img src="{{ $prefs_composer['logo'] }}" alt="Logo" class="block h-16 mx-auto dark:hidden">
             </a>
         </div>
         <div class="mx-auto">

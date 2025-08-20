@@ -42,7 +42,8 @@ class PreferenceSeeder extends Seeder
                 'group' => 'site',
                 'name' => 'logo',
                 'is_asset' => true,
-                'value' => 'assets/images/trajumastra_logo.svg',
+                // 'value' => 'assets/images/trajumastra_logo.svg', // (Bentuk persegi)
+                'value' => 'assets/images/logo.svg',
             ],
             [
                 'group' => 'site',
