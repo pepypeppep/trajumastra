@@ -154,6 +154,12 @@ Breadcrumbs::for('kelola.permohonan-rekomendasi-bbm', function (BreadcrumbTrail 
     $trail->push('Permohonan Rekomendasi BBM', route('kelola.permohonan-rekomendasi-bbm.index'));
 });
 
+/* Kelola Pelaku Usaha */
+Breadcrumbs::for('kelola.pelaku-usaha', function (BreadcrumbTrail $trail) {
+    $trail->parent('kelola');
+    $trail->push('Pelaku Usaha', route('kelola.pelaku-usaha.index'));
+});
+
 /* Kelola Penyuluh */
 Breadcrumbs::for('kelola.penyuluh', function (BreadcrumbTrail $trail) {
     $trail->parent('kelola');

@@ -312,6 +312,18 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
+            [
+                'id' => 202,
+                'name' => 'Kelola Pelaku Usaha',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.pelaku-usaha.index',
+                'slug' => 'kelola-pelaku-usaha',
+                'icon' => '',
+                'order' => 2,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
             // Kelola Penyuluh
             [
                 'id' => 203,

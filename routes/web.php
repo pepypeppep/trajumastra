@@ -1,16 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Guest\BerandaController;
-use App\Http\Controllers\Admin\Settings\RolesController;
-use App\Http\Controllers\Admin\Settings\UsersController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Guest\BerandaController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Master\SpbuController;
 use App\Http\Controllers\Admin\Master\BidangController;
 use App\Http\Controllers\Admin\Master\PerahuController;
-use App\Http\Controllers\Admin\Settings\NavigationsController;
-use App\Http\Controllers\Admin\Settings\PreferencesController;
+use App\Http\Controllers\Admin\Settings\RolesController;
+use App\Http\Controllers\Admin\Settings\UsersController;
 use App\Http\Controllers\Admin\Kelola\KelolaTpiController;
 use App\Http\Controllers\Admin\Master\JenisIkanController;
 use App\Http\Controllers\Admin\Kelola\KelolaUptdController;
@@ -22,6 +20,8 @@ use App\Http\Controllers\Admin\Kelola\KelolaMateriController;
 use App\Http\Controllers\Admin\Laporan\TransaksiTpiController;
 use App\Http\Controllers\Admin\Master\JenisPerairanController;
 use App\Http\Controllers\Admin\Master\UuRekomendasiController;
+use App\Http\Controllers\Admin\Settings\NavigationsController;
+use App\Http\Controllers\Admin\Settings\PreferencesController;
 use App\Http\Controllers\Admin\Kelola\KelolaPenyuluhController;
 use App\Http\Controllers\Admin\Kelola\KelolaStokIkanController;
 use App\Http\Controllers\Admin\Laporan\TransaksiUptdController;
@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\Master\JenisPendaratanController;
 use App\Http\Controllers\Admin\Master\JenisPenyuluhanController;
 use App\Http\Controllers\Admin\Master\JenisUsahaSaranaController;
 use App\Http\Controllers\Admin\Master\RangePenghasilanController;
+use App\Http\Controllers\Admin\Kelola\KelolaPelakuUsahaController;
 use App\Http\Controllers\Admin\Kelola\KelolaKelompokBinaanController;
 use App\Http\Controllers\Admin\Master\PersyaratanPengajuanController;
 use App\Http\Controllers\Admin\Master\JenisKlasifikasiUsahaController;
@@ -96,6 +97,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::group(['prefix' => 'kelola', 'as' => 'kelola.'], function () {
         /* Permohonan Rekomendasi BBM */
         Route::resource('permohonan-rekomendasi-bbm', PermohonanRekomendasiBbmController::class)->names('permohonan-rekomendasi-bbm');
+        /* Kelola Pelaku Usaha */
+        Route::resource('pelaku-usaha', KelolaPelakuUsahaController::class)->names('pelaku-usaha');
         /* Kelola Penyuluh */
         Route::resource('penyuluh', KelolaPenyuluhController::class)->names('penyuluh');
         /* Kelola Kelompok Binaan */
