@@ -3,16 +3,28 @@
 namespace App\Http\Controllers\Admin\Kelola;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\Kelola\PelakuUsahaService;
 use Illuminate\Http\Request;
 
 class KelolaPelakuUsahaController extends Controller
 {
+    public function __construct(protected PelakuUsahaService $pelakuUsahaService)
+    {
+        
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $this->setRule('kelola-pelaku-usaha.read');
+
+        // Load data for data table (server side - AJAX)
+        if (request()->ajax()) {
+            return $this->pelakuUsahaService->getAll();
+        }
+
+        return view('admin.kelolas.pelaku-usaha.index');
     }
 
     /**

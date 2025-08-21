@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('pelaku_usahas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_desa')->index()->nullable();
-            $table->unsignedBigInteger('id_kelompok_binaan')->index()->nullable();
-            $table->unsignedBigInteger('id_bentuk_usaha')->index()->nullable();
-            $table->unsignedBigInteger('id_jenis_usaha')->index()->nullable();
+            $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
+            $table->foreign('kalurahan_id')->references('id')->on('kalurahans')->onDelete('set null');
+            $table->unsignedBigInteger('kelompok_binaan_id')->index()->nullable();
+            $table->foreign('kelompok_binaan_id')->references('id')->on('kelompok_binaans')->onDelete('set null');
+            $table->unsignedBigInteger('bentuk_usaha_id')->index()->nullable();
+            $table->foreign('bentuk_usaha_id')->references('id')->on('bentuk_usahas')->onDelete('set null');
+            $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
+            $table->foreign('jenis_usaha_id')->references('id')->on('jenis_usahas')->onDelete('set null');
             $table->integer('type'); //1.nelayan, 0.pembudidaya
             $table->string('nik')->unique();
             $table->string('name');

@@ -10,21 +10,22 @@
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Harga Ikan</h5>
-                <button type="button" href="" data-modal-target="modal-add"
+                <h5 class="mb-0">Daftar Pelaku Usaha</h5>
+                <a href=""
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Harga Ikan
-                </button>
+                    <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
+                </a>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="ltr:!text-left rtl:!text-right">Jenis Ikan</th>
-                        <th class="ltr:!text-left rtl:!text-right">UPTD</th>
-                        <th class="ltr:!text-left rtl:!text-right">Stok</th>
-                        <th class="ltr:!text-left rtl:!text-right">Ukuran</th>
-                        <th class="ltr:!text-left rtl:!text-right">Harga</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-left" style="width: 30%;">Nama Pelaku Usaha</th>
+                        <th class="text-center" style="width: 15%;">Kelompok Binaan</th>
+                        <th class="text-center" style="width: 10%;">Email</th>
+                        <th class="text-center" style="width: 10%;">NIB</th>
+                        <th class="text-center" style="width: 10%;">NPWP</th>
+                        <th class="text-left" style="width: 15%;">Alamat</th>
+                        <th class="text-center" style="width: 10%;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,16 +41,6 @@
             </table>
         </div>
     </div>
-
-    {{-- Modal Add --}}
-    @include('admin.kelolas.harga-ikan.partials.modal-add')
-    {{-- Modal Edit --}}
-    @include('admin.kelolas.harga-ikan.partials.modal-edit')
-    {{-- Form Delete --}}
-    <form id="form-delete" action="" method="POST" class="hidden">
-        @csrf
-        @method('DELETE')
-    </form>
 @endsection
 
 @push('scripts')
@@ -62,53 +53,8 @@
     <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
 
-    {{-- Start Select 2 --}}
-    <script>
-        // Init global Select2
-        function initSelect2(context) {
-            $(context).find('[name="uptd_id"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih UPTD",
-                allowClear: true
-            });
-        }
-
-        function initSelect2JenisIkan(context) {
-            $(context).find('[name="jenis_ikan_id"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih Jenis Ikan",
-                allowClear: true
-            });
-        }
-
-        function initSelect2Satuan(context) {
-            $(context).find('[name="unit"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih Jenis Ikan",
-                allowClear: true
-            });
-        }
-
-        // Modal ADD
-        $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2('#modal-add');
-            initSelect2JenisIkan('#modal-add');
-            initSelect2Satuan('#modal-add');
-        });
-
-        // Modal EDIT
-        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2('#modal-edit');
-            initSelect2JenisIkan('#modal-edit');
-            initSelect2Satuan('#modal-edit');
-        });
-    </script>
-    {{-- End Select 2 --}}
-
-    {{-- Start Implement datatable --}}
+        
+    {{-- Implement datatable --}}
     <script>
         // -- Start Load Datatable
         var filter = {
@@ -126,50 +72,75 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('kelola.harga-ikan.index') }}",
+                    url: "{{ route('kelola.pelaku-usaha.index') }}",
                     type: 'GET',
                 },
-                columns: [{
-                        data: 'jenis_ikan.name',
-                        name: 'jenis_ikan.name',
-                        searchable: true,
-                        orderable: true,
-                    }, {
-                        data: 'uptd.name',
-                        name: 'uptd.name',
-                        searchable: true,
-                        orderable: true,
-                    },
+                columns: [
                     {
-                        data: 'stock',
-                        name: 'stock',
+                        data: 'name',
+                        name: 'name',
                         searchable: true,
                         orderable: true,
-                    },
-                    {
-                        data: 'size',
-                        name: 'size',
+                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                    },{
+                        data: 'kelompok_binaan.name',
+                        name: 'kelompok_binaan.name',
                         searchable: true,
                         orderable: true,
-                    },
-                    {
-                        data: 'price',
-                        name: 'price',
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'email',
+                        name: 'email',
                         searchable: true,
                         orderable: true,
-                    }, {
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'siup',
+                        name: 'siup',
+                        searchable: true,
+                        orderable: true,
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'npwp',
+                        name: 'npwp',
+                        searchable: true,
+                        orderable: true,
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'address',
+                        name: 'address',
+                        searchable: true,
+                        orderable: true,
+                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                    },{
                         data: 'aksi',
                         name: 'aksi',
                         searchable: false,
                         orderable: false,
-                        className: 'text-center'
+                        className: 'border border-gray-300 dark:border-zink-50 text-left'
                     },
+                    // etc ...
                 ],
             })
         }
         // -- End Load Datatable
+
+
+        // Untuk mengatur kolom (lebar dan align)
+        // $(document).ready(function() {
+        //     $('#data-table').DataTable({
+        //         "columnDefs": [
+        //             { "targets": [2], "className": "text-center" }
+        //         ],
+        //         columns: [
+        //             { width: "5%" },
+        //             { width: "75%" },
+        //             { width: "20%" }
+        //         ],
+        //         autoWidth: false
+        //     });
+        // });
     </script>
-    {{-- End Implement datatable --}}
 
     {{-- Start action delete data --}}
     <script>
