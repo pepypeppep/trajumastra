@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Kelola;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Kelola\JadwalPendampinganService;
 
 class KelolaJadwalPendampinganController extends Controller
 {
+    public function __construct(protected JadwalPendampinganService $jadwalPendampinganService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */

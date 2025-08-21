@@ -103,4 +103,30 @@
             });
         });
     </script>
+
+    {{-- Start action delete data --}}
+    <script>
+        $(document).on('click', '#btn-delete', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var urlFormAction = $(this).data('url-action');
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: "Data tidak bisa dikembalikan setelah dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e3342f',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan ke form delete
+                    const form = $('#form-delete');
+                    form.attr('action', urlFormAction);
+                    form.submit();
+                }
+            })
+        });
+    </script>
+    {{-- End action delete data --}}
 @endpush

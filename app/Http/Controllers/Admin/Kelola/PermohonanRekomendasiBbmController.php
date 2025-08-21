@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PermohonanRekomendasiBbmController extends Controller
 {
+    public function __construct(protected PermohonanRekomendasiBbm $permohonanRekomendasiBbm)
+    {
+        
+    }
+    
     /**
      * Display a listing of the resource.
      */

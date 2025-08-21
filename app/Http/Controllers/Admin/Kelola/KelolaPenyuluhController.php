@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Admin\Kelola;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Kelola\PenyuluhService;
 
 class KelolaPenyuluhController extends Controller
 {
+    public function __construct(protected PenyuluhService $penyuluhService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */

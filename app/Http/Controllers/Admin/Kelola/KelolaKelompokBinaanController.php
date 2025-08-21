@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Kelola;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Kelola\KelompokBinaanService;
 
 class KelolaKelompokBinaanController extends Controller
 {
+    public function __construct(protected KelompokBinaanService $kelompokBinaanService)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
