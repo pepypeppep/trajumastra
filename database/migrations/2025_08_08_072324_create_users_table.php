@@ -17,11 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penyuluh')->index()->nullable();
             $table->unsignedBigInteger('id_pelaku_usaha')->index()->nullable();
             $table->unsignedBigInteger('id_koordinator_uptds')->index()->nullable();
-            $table->unsignedBigInteger('id_uptd')->index()->nullable();
+            $table->unsignedBigInteger('uptd_id')->index()->nullable();
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->integer('status')->default(1); // 1: active, 0: inactive
+            $table->boolean('is_active')->default(1); // 1: active, 0: inactive
             $table->timestamps();
             $table->softDeletes();
 

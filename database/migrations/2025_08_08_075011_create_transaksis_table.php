@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user')->index()->nullable();
-            $table->unsignedBigInteger('id_uptd')->index()->nullable();
-            $table->string('transaction_type')->nullable();
-            $table->string('name');
-            $table->string('label'); // uptd : alamat/ tpi : kapal
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('uptd_id')->index()->nullable();
+            $table->string('transaction_type')->default('cash'); // cash / qris / transfer
+            $table->string('fish_name')->nullable();
+            $table->integer('fish_price')->default(0);
+            $table->integer('number_of_fish')->default(0);
+            $table->string('abk_name')->nullable();
+            // $table->string('label'); // uptd : alamat/ tpi : kapal
             $table->bigInteger('amount')->default(0);
             $table->bigInteger('retribution')->default(0);
             $table->bigInteger('total')->default(0);

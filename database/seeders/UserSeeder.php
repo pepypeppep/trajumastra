@@ -39,6 +39,23 @@ class UserSeeder extends Seeder
         $developerPermissions = Permission::all();
         $developerRole->syncPermissions($developerPermissions);
 
+        // Sync permissions for petugas role
+        $transaksiPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
+            'transaksi.read',
+            'transaksi.create',
+            'transaksi.update',
+            'transaksi.delete'
+        ]));
+        $petugasTPIRole->syncPermissions($transaksiPermissions);
+
+        // Sync permissions for pelakuusaha role
+        $rekomendasiBbmPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
+            'permohonan-rekomendasi-bbm.read',
+            'permohonan-rekomendasi-bbm.create',
+            'permohonan-rekomendasi-bbm.update',
+        ]));
+        $pelakuUsahaRole->syncPermissions($rekomendasiBbmPermissions);
+
         // Create Developer User Account
         $developerAccount = User::factory()->create([
             'name' => 'Trajumastra',
@@ -46,6 +63,29 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.net'
         ]);
         $developerAccount->assignRole($developerRole);
+
+        $petugasUPTDAccount = User::factory()->create([
+            'uptd_id' => 1,
+            'name' => 'Petugas UPTD',
+            'username' => 'petugas_uptd',
+            'email' => 'petugas_uptd@petugas_uptd.net'
+        ]);
+        $petugasUPTDAccount->assignRole($petugasTPIRole);
+
+        $petugasTPIAccount = User::factory()->create([
+            'uptd_id' => 7,
+            'name' => 'Petugas TPI',
+            'username' => 'petugas_tpi',
+            'email' => 'petugas_tpi@petugas_tpi.net'
+        ]);
+        $petugasTPIAccount->assignRole($petugasTPIRole);
+
+        $pelakuUsahaAccount = User::factory()->create([
+            'name' => 'Pengusaha',
+            'username' => 'pengusaha',
+            'email' => 'pengusaha@pengusaha.net'
+        ]);
+        $pelakuUsahaAccount->assignRole($pelakuUsahaRole);
     }
 
     /**
@@ -60,6 +100,13 @@ class UserSeeder extends Seeder
             $permissionsList[] = ['name' => $slug . '.update', 'guard_name' => 'web'];
             $permissionsList[] = ['name' => $slug . '.delete', 'guard_name' => 'web'];
         }
+
+        // Transaksi
+        $permissionsList[] = ['name' => 'transaksi.read', 'guard_name' => 'web'];
+        $permissionsList[] = ['name' => 'transaksi.create', 'guard_name' => 'web'];
+        $permissionsList[] = ['name' => 'transaksi.update', 'guard_name' => 'web'];
+        $permissionsList[] = ['name' => 'transaksi.delete', 'guard_name' => 'web'];
+
         return Permission::insert($permissionsList);
     }
 }
