@@ -2,8 +2,13 @@
 
 namespace App\Http\Services\Kelola;
 
+use App\Models\Kalurahan;
 use App\Models\PelakuUsaha;
+use App\Models\KelompokBinaan;
+use App\Models\MasterJenisUsaha;
+use App\Models\MasterBentukUsaha;
 use Illuminate\Support\Facades\DB;
+use App\Models\MasterRangePenghasilan;
 use Yajra\DataTables\Facades\DataTables;
 
 class PelakuUsahaService
@@ -41,6 +46,61 @@ class PelakuUsahaService
             ->escapeColumns([])
             ->make(true);
     }
+
+    /* Get kalurahan */
+    public function getAllKalurahan()
+    {
+        $data = Kalurahan::with('kecamatan.kabupaten')->orderBy('name')->get();
+        return $data;
+    }
+
+    /* Get all jenis usaha */
+    public function getAllJenisUsaha()
+    {
+        $data = MasterJenisUsaha::orderBy('name')->get();
+        return $data;
+    }
+
+    /* Get all Bentuk usaha */
+    public function getAllBentukUsaha()
+    {
+        $data = MasterBentukUsaha::orderBy('name')->get();
+        return $data;
+    }
+
+    /* Get all Kelompok Binaan */
+    public function getAllKelompokBinaan()
+    {
+        $data = KelompokBinaan::orderBy('name')->get();
+        return $data;
+    }
+
+    /* Get all range penghasilan */
+    public function getAllRangePenghasilan()
+    {
+        $data = MasterRangePenghasilan::orderBy('name')->get();
+        return $data;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
     /* Get uptd */
     public function getAllUptd()

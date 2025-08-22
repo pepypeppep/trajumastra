@@ -11,10 +11,10 @@
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
                 <h5 class="mb-0">Daftar Pelaku Usaha</h5>
-                <a href=""
+                <button type="button" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
                     <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
-                </a>
+                </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
@@ -41,6 +41,9 @@
             </table>
         </div>
     </div>
+
+    {{-- Include Modal Add --}}
+    @include('admin.kelolas.pelaku-usaha.partials.modal-add')
 @endsection
 
 @push('scripts')
@@ -124,22 +127,6 @@
             })
         }
         // -- End Load Datatable
-
-
-        // Untuk mengatur kolom (lebar dan align)
-        // $(document).ready(function() {
-        //     $('#data-table').DataTable({
-        //         "columnDefs": [
-        //             { "targets": [2], "className": "text-center" }
-        //         ],
-        //         columns: [
-        //             { width: "5%" },
-        //             { width: "75%" },
-        //             { width: "20%" }
-        //         ],
-        //         autoWidth: false
-        //     });
-        // });
     </script>
 
     {{-- Start action delete data --}}
@@ -167,4 +154,13 @@
         });
     </script>
     {{-- End action delete data --}}
+
+    {{-- Implement Select2 --}}
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                width: '100%',
+            });
+        });
+    </script>
 @endpush

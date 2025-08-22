@@ -24,7 +24,18 @@ class KelolaPelakuUsahaController extends Controller
             return $this->pelakuUsahaService->getAll();
         }
 
-        return view('admin.kelolas.pelaku-usaha.index');
+        /* Get all kalurahan */
+        $kalurahans = $this->pelakuUsahaService->getAllKalurahan();
+        /* Get all jenis usaha */
+        $jenisUsahas = $this->pelakuUsahaService->getAllJenisUsaha();
+        /* Get all bentuk usaha */
+        $bentukUsahas = $this->pelakuUsahaService->getAllBentukUsaha();
+        /* Get all kelompok usaha */
+        $kelompokBinaans = $this->pelakuUsahaService->getAllKelompokBinaan();
+        /* Get all range penghasilan */
+        $rangePenghasilans = $this->pelakuUsahaService->getAllRangePenghasilan();
+
+        return view('admin.kelolas.pelaku-usaha.index', compact('kalurahans', 'jenisUsahas', 'bentukUsahas', 'kelompokBinaans', 'rangePenghasilans'));
     }
 
     /**
