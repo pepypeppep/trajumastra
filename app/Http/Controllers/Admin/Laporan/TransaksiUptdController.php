@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\Admin\Laporan;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Laporan\TransaksiService;
 
 class TransaksiUptdController extends Controller
 {
+    public function __construct(protected TransaksiService $service) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $this->setRule('laporan-transaksi-uptd.read');
+
+        if (request()->ajax()) {
+            return $this->service->getAll();
+        }
+
         return view('admin.laporans.transaksi-uptd.index');
     }
 
@@ -37,7 +45,11 @@ class TransaksiUptdController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $this->setRule('laporan-transaksi-uptd.read');
+
+        $data = $this->service->getById($id);
+
+        return view('admin.laporans.transaksi-uptd.partials.invoice', compact('data'));
     }
 
     /**

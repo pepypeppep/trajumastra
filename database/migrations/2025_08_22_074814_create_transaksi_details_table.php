@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('log_transaksis', function (Blueprint $table) {
+        Schema::create('transaksi_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_transaksi')->index()->nullable();
-            $table->unsignedBigInteger('id_jenis_ikan')->index()->nullable();
-            $table->string('fish_name')->nullable();
+            $table->unsignedBigInteger('transaksi_id')->index()->nullable();
+            $table->unsignedBigInteger('master_jenis_ikans_id')->index()->nullable();
+            $table->string('name')->nullable();
             $table->string('unit')->nullable();
             $table->string('size')->nullable();
-            $table->bigInteger('price')->nullable();
+            $table->integer('price')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('amount')->nullable();
             $table->integer('total')->nullable();
-            $table->longText('description')->nullable();
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('log_transaksis');
+        Schema::dropIfExists('transaksi_details');
     }
 };

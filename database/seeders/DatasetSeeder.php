@@ -12,6 +12,7 @@ class DatasetSeeder extends Seeder
 {
     public function run()
     {
-        Artisan::call('seed:csv', ['directory' => Storage::disk('local')->path('trajumastra_db/')]);
+        // Artisan::call('seed:csv', ['directory' => Storage::disk('local')->path('trajumastra_db/')]);
+        Artisan::call('seed:csv', ['directory' => database_path('datasets/2025-08-19/')]);
     }
 }
