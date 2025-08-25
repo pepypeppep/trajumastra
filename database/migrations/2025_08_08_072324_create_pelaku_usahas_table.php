@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('bentuk_usaha_id')->references('id')->on('bentuk_usahas')->onDelete('set null');
             $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
             $table->foreign('jenis_usaha_id')->references('id')->on('jenis_usahas')->onDelete('set null');
-            $table->integer('type'); //1.nelayan, 0.pembudidaya
-            $table->string('nik')->unique();
+            // $table->integer('type'); //1.nelayan, 0.pembudidaya (DI V1 TIDAK DIPAKAI)
+            // $table->string('nik')->unique();
             $table->string('name');
             $table->longText('address')->nullable();
             $table->string('phone')->nullable();

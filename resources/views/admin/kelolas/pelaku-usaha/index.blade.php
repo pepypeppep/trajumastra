@@ -19,12 +19,12 @@
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="text-left" style="width: 30%;">Nama Pelaku Usaha</th>
+                        <th class="text-left" style="width: 30%;">Nama Ketua Binaan</th>
                         <th class="text-center" style="width: 15%;">Kelompok Binaan</th>
-                        <th class="text-center" style="width: 10%;">Email</th>
+                        <th class="text-center" style="width: 10%;">Email Ketua Binaan</th>
                         <th class="text-center" style="width: 10%;">NIB</th>
                         <th class="text-center" style="width: 10%;">NPWP</th>
-                        <th class="text-left" style="width: 15%;">Alamat</th>
+                        <th class="text-left" style="width: 15%;">Alamat Skretariat</th>
                         <th class="text-center" style="width: 10%;">Aksi</th>
                     </tr>
                 </thead>
@@ -44,6 +44,13 @@
 
     {{-- Include Modal Add --}}
     @include('admin.kelolas.pelaku-usaha.partials.modal-add')
+    {{-- Include Modal Edit --}}
+    @include('admin.kelolas.pelaku-usaha.partials.modal-edit')
+    {{-- Form Delete --}}
+    <form id="form-delete" action="" method="POST" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form>
 @endsection
 
 @push('scripts')
@@ -131,12 +138,12 @@
 
     {{-- Start action delete data --}}
     <script>
-        $(document).on('click', '#btn-delete', function(e) {
+        $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
             var urlFormAction = $(this).data('url-action');
             Swal.fire({
-                title: 'Yakin ingin menghapus?',
+                title: 'Yakin ingin menghapusss?',
                 text: "Data tidak bisa dikembalikan setelah dihapus!",
                 icon: 'warning',
                 showCancelButton: true,

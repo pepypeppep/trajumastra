@@ -15,7 +15,7 @@
                     <div class="col-span">
                         {{-- Nama --}}
                         <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Nama <strong
+                            <label for="" class="inline-block mb-2 text-base font-medium">Nama Ketua Binaan<strong
                                     class="text-red-500">*</strong></label>
                             <input type="text" id="name" name="name"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -25,7 +25,7 @@
                     <div class="col-span">
                         {{-- Email --}}
                         <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Email <strong
+                            <label for="" class="inline-block mb-2 text-base font-medium">Email Ketua Binaan <strong
                                     class="text-red-500">*</strong></label>
                             <input type="email" id="email" name="email"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -35,9 +35,9 @@
                     <div class="col-span">
                         {{-- No Hp --}}
                         <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">No Hp <strong
+                            <label for="" class="inline-block mb-2 text-base font-medium">No Hp. Ketuan Binaan <strong
                                     class="text-red-500">*</strong></label>
-                            <input type="number" id="no_hp" name="no_hp"
+                            <input type="number" id="phone" name="phone"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Masukkan no hp" required>
                         </div>
@@ -46,16 +46,16 @@
 
                 {{-- Alamat --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Alamat <strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Alamat Sekretariat <strong
                         class="text-red-500">*</strong></label>
-                    <textarea name="alamat"
+                    <textarea name="address"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         id="" rows="3"></textarea>
                 </div>
 
                 {{-- Kelurahan --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Kalurahan<strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Kalurahan <strong
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -69,7 +69,7 @@
 
                 {{-- Jenis Usaha --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Jenis Usaha<strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Jenis Usaha <strong
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -83,7 +83,7 @@
 
                 {{-- Bentuk Usaha --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Bentuk Usaha<strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Bentuk Usaha <strong
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -97,7 +97,7 @@
 
                 {{-- Kelompok Binaan --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Kelompok Binaan<strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Kelompok Binaan <strong
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -115,7 +115,7 @@
                         <div class="">
                             <label for="" class="inline-block mb-2 text-base font-medium">NPWP <strong
                                     class="text-red-500">*</strong></label>
-                            <input type="text" id="npwp" name="npwp"
+                            <input type="number" id="npwp" name="npwp"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Masukkan NPWP" required>
                         </div>
@@ -125,7 +125,7 @@
                         <div class="">
                             <label for="" class="inline-block mb-2 text-base font-medium">NIB <strong
                                     class="text-red-500">*</strong></label>
-                            <input type="text" id="nib" name="nib"
+                            <input type="number" id="siup" name="siup"
                                 class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                 placeholder="Masukkan NIB" required>
                         </div>
@@ -134,14 +134,14 @@
 
                 {{-- Range Penghasilan --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Range Penghasilan<strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Range Penghasilan <strong
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="range_penghasilan_id" id="range_penghasilan_id">
+                        name="income_range" id="income_range">
                         <option value="">Pilih Range Penghasilan</option>
                         @foreach ($rangePenghasilans as $rangePenghasilan)
-                            <option value="{{ $rangePenghasilan->id }}">{{ $rangePenghasilan->name }}</option>
+                            <option value="{{ $rangePenghasilan->name }}">{{ $rangePenghasilan->name }}</option>
                         @endforeach
                     </select>
                 </div>

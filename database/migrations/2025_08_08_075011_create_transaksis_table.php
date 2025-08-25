@@ -15,11 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('uptd_id')->index()->nullable();
+            $table->string('invoice_id')->unique()->nullable();
             $table->string('transaction_type')->default('cash'); // cash / qris / transfer
-            $table->string('fish_name')->nullable();
-            $table->integer('fish_price')->default(0);
-            $table->integer('number_of_fish')->default(0);
-            $table->string('abk_name')->nullable();
+            $table->string('name')->nullable();
             // $table->string('label'); // uptd : alamat/ tpi : kapal
             $table->bigInteger('amount')->default(0);
             $table->bigInteger('retribution')->default(0);

@@ -25,18 +25,18 @@ class PelakuUsahaService
                 $btnDelete = '';
                 // Btn Edit
                 if (auth()->user()->can('kelola-pelaku-usaha.update')) {
-                    $btnEdit = '<button href="javascript:void(0);" title="Ubah data pelaku usaha" id="btn-modal-edit"
+                    $btnEdit = '<button href="javascript:void(0);" title="Ubah data pelaku usaha" 
                         data-id="' . $row->id . '"  data-url-action="' . route('kelola.pelaku-usaha.update', $row->id) . '" data-url-get="' . route('kelola.pelaku-usaha.edit', $row->id) . '"
-                        class="items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
+                        class="btn-modal-edit items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
                         <i class="ri-edit-line"></i>
                         </button>';
                 }
 
                 // Btn Delete
                 if (auth()->user()->can('kelola-pelaku-usaha.delete')) {
-                    $btnDelete = '<button href="javascript:void(0);" title="Hapus data pelaku usaha" id="btn-delete" onclick="confirmDelete(this)"
+                    $btnDelete = '<button href="javascript:void(0);" title="Hapus data pelaku usaha"
                         data-id="' . $row->id . '"  data-url-action="' . route('kelola.pelaku-usaha.destroy', $row->id) . '"
-                        class="items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
+                        class="btn-delete items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
                         <i class="ri-delete-bin-line"></i>
                         </button>';
                 }
@@ -83,70 +83,40 @@ class PelakuUsahaService
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    /* Get uptd */
-    public function getAllUptd()
-    {
-        $data = Uptd::get();
-        return $data;
-    }
-
-    /* Get jenis ikan */
-    public function getAllJenisIkan()
-    {
-        $data = MasterJenisIkan::get();
-        return $data;
-    }
-
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = HargaIkan::findOrFail($id);
-
+        $data = PelakuUsaha::findOrFail($id);
         return $data;
     }
 
     /* Store new data*/
-    public function store(array $attributes)
+    public function store(array $datas)
     {
         try {
             // DB Transaction
             DB::beginTransaction();
-            $data = HargaIkan::create([
-                'uptd_id' => $attributes['uptd_id'],
-                'jenis_ikan_id' => $attributes['jenis_ikan_id'],
-                'stock' => $attributes['stock'],
-                'size' => $attributes['size'],
-                'price' => $attributes['price'],
-                'unit' => $attributes['unit'],
-                'user_id' => auth()->user()->id,
+            $pelakuUsaha = PelakuUsaha::create([
+                'kalurahan_id' => $datas['kalurahan_id'],
+                'kelompok_binaan_id' => $datas['kelompok_binaan_id'],
+                'bentuk_usaha_id' => $datas['bentuk_usaha_id'],
+                'jenis_usaha_id' => $datas['jenis_usaha_id'],
+                'name' => $datas['name'],
+                'email' => $datas['email'],
+                'phone' => $datas['phone'],
+                'address' => $datas['address'],
+                'npwp' => $datas['npwp'],
+                'siup' => $datas['siup'],
+                'income_range' => $datas['income_range'],
             ]);
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Stok Ikan berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Pelaku usaha berhasil ditambahkan');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Stok Ikan gagal ditambahkan. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Pelaku usaha gagal ditambahkan. Error :' . $e->getMessage()]);
         }
     }
 
@@ -158,25 +128,29 @@ class PelakuUsahaService
             DB::beginTransaction();
 
             // Get data
-            $data = HargaIkan::findOrFail($id);
+            $data = PelakuUsaha::findOrFail($id);
             // Update data data
             $data->update([
-                'uptd_id' => $attributes['uptd_id'] ?? $data->uptd_id,
-                'jenis_ikan_id' => $attributes['jenis_ikan_id'] ?? $data->jenis_ikan_id,
-                'stock' => $attributes['stock'] ?? $data->stock,
-                'size' => $attributes['size'] ?? $data->size,
-                'price' => $attributes['price'] ?? $data->price,
-                'unit' => $attributes['unit'] ?? $data->unit,
-                'user_id' => auth()->user()->id,
+                'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
+                'kelompok_binaan_id' => $attributes['kelompok_binaan_id'] ?? $data->kelompok_binaan_id,
+                'bentuk_usaha_id' => $attributes['bentuk_usaha_id'] ?? $data->bentuk_usaha_id,
+                'jenis_usaha_id' => $attributes['jenis_usaha_id'] ?? $data->jenis_usaha_id,
+                'name' => $attributes['name'] ?? $data->name,
+                'email' => $attributes['email'] ?? $data->email,
+                'phone' => $attributes['phone'] ?? $data->phone,
+                'address' => $attributes['address'] ?? $data->address,
+                'npwp' => $attributes['npwp'] ?? $data->npwp,
+                'siup' => $attributes['siup'] ?? $data->siup,
+                'income_range' => $attributes['income_range'] ?? $data->income_range,
             ]);
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Stok Ikan berhasil diperbarui');
+            return redirect()->back()->with('success', 'Pelaku usaha berhasil diperbarui');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Stok Ikan gagal diperbarui. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Pelaku usaha gagal diperbarui. Error :' . $e->getMessage()]);
         }
     }
 
@@ -188,16 +162,17 @@ class PelakuUsahaService
             DB::beginTransaction();
 
             // Get data
-            $data = HargaIkan::findOrFail($id);
+            $data = PelakuUsaha::findOrFail($id);
             $data->delete();
 
             // Return success response
             DB::commit();
-            return redirect()->route('kelola.harga-ikan.index')->with('success', 'Stok Ikan berhasil dihapus');
+            return redirect()->route('kelola.pelaku-usaha.index')->with('success', 'Pelaku usaha berhasil dihapus');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'Stok Ikan gagal dihapus. Error :' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Pelaku usaha gagal dihapus. Error :' . $e->getMessage()]);
         }
     }
+
 }

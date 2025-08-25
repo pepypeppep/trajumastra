@@ -16,7 +16,7 @@ class SSOController extends Controller
     public function redirect(Request $request): RedirectResponse
     {
         $driver = Socialite::driver('keycloak');
-        $redirect = $driver->redirect(); // Arahkan browser ke laman login Keycloak SSO (KEYCLOAK_BASE_URL). Setelah berhasil login Keycloak --> arahkan balik ke KEYCLOAK_REDIRECT_URI (Endpoint Callback yang ada laravel ini)    
+        $redirect = $driver->redirect(); // Arahkan browser ke laman login Keycloak SSO (KEYCLOAK_BASE_URL). Setelah berhasil login Keycloak --> arahkan balik ke KEYCLOAK_REDIRECT_URI (Endpoint Callback yang ada laravel ini)
 
         return $redirect;
     }
@@ -40,12 +40,12 @@ class SSOController extends Controller
             // check if user exists
             if ($user) {
                 // Check user account status
-                if ($user->status !== 1) {
+                if ($user->is_active !== 1) {
                     return view('auth.message', [
                         'message' => 'Akun Anda Tidak Aktif',
                         'email' => $keycloakUserEmail,
                         'username' => $keycloakUsername,
-                    ]); 
+                    ]);
                 }
                 // Login
                 Auth::login($user);

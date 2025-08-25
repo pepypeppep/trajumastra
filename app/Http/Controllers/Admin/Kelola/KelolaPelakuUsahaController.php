@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin\Kelola;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Kelola\PelakuUsahaService;
-use Illuminate\Http\Request;
+use App\Http\Requests\Kelola\PelakuUsaha\CreateRequest;
+use App\Http\Requests\Kelola\PelakuUsaha\UpdateRequest;
 
 class KelolaPelakuUsahaController extends Controller
 {
@@ -39,19 +41,14 @@ class KelolaPelakuUsahaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
+        $this->setRule('kelola-pelaku-usaha.create');
+
+        // Store Process
+        return $this->pelakuUsahaService->store($request->validated());
     }
 
     /**
@@ -60,22 +57,26 @@ class KelolaPelakuUsahaController extends Controller
     public function show(string $id)
     {
         //
-    }
+    }   
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $this->setRule('kelola-pelaku-usaha.update');
+        return $this->pelakuUsahaService->getById($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        //
+        $this->setRule('kelola-pelaku-usaha.update');
+
+        // Update Process
+        return $this->pelakuUsahaService->update($id, $request->validated());
     }
 
     /**
@@ -83,6 +84,8 @@ class KelolaPelakuUsahaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->setRule('kelola-pelaku-usaha.delete');
+        // Delete Process
+        return $this->pelakuUsahaService->delete($id);
     }
 }

@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_tipe_pelaku_usahas', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->softDeletes();
-            $table->timestamps();
-        });
+        // TABEL TIDAK DIPAKAI
+
+        // Schema::create('master_tipe_pelaku_usahas', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('name');
+        //     $table->softDeletes();
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_tipe_pelaku_usahas');
+        // Schema::dropIfExists('master_tipe_pelaku_usahas');
     }
 };
