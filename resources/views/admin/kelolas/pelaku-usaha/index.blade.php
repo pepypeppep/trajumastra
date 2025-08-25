@@ -162,12 +162,83 @@
     </script>
     {{-- End action delete data --}}
 
-    {{-- Implement Select2 --}}
+    {{-- Start Select 2 --}}
     <script>
-        $(document).ready(function() {
-            $('.select2').select2({
+        // Init global Select2
+        function initSelect2Kalurahan(context) {
+            $(context).find('[name="kalurahan_id"]').select2({
+                dropdownParent: $(context),
                 width: '100%',
+                placeholder: "Pilih Kalurahan",
+                allowClear: true
             });
+        }
+
+        function initSelect2JenisUsaha(context) {
+            $(context).find('[name="jenis_usaha_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Jenis Usaha",
+                allowClear: true,
+            });
+        }
+
+        function initSelect2BentukUsaha(context) {
+            $(context).find('[name="bentuk_usaha_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Bentuk Usaha",
+                allowClear: true,
+            });
+        }
+
+        function initSelect2KelompokBinaan(context) {
+            $(context).find('[name="kelompok_binaan_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Kelompok Binaan",
+                allowClear: true,
+            });
+        }
+
+        function initSelect2RangePenghasilan(context) {
+            $(context).find('[name="income_range"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Range Penghasilan",
+                allowClear: true,
+            });
+        }
+
+        // Modal ADD
+        $(document).on('click', '[data-modal-target="modal-add"]', function() {
+            initSelect2Kalurahan('#modal-add');
+            initSelect2JenisUsaha('#modal-add');
+            initSelect2BentukUsaha('#modal-add');
+            initSelect2KelompokBinaan('#modal-add');
+            initSelect2RangePenghasilan('#modal-add');
+
+            setTimeout(() => {
+                if (mapAdd) {
+                    mapAdd.invalidateSize();
+                }
+            }, 100);
+        });
+
+        // Modal EDIT
+        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
+            initSelect2Kalurahan('#modal-edit');
+            initSelect2JenisUsaha('#modal-edit');
+            initSelect2BentukUsaha('#modal-edit');
+            initSelect2KelompokBinaan('#modal-edit');
+            initSelect2RangePenghasilan('#modal-edit');
+
+            setTimeout(() => {
+                if (mapEdit) {
+                    mapEdit.invalidateSize();
+                }
+            }, 100);
         });
     </script>
+    {{-- End Select 2 --}}
 @endpush
