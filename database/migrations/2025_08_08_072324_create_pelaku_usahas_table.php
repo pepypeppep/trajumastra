@@ -18,9 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('kelompok_binaan_id')->index()->nullable();
             $table->foreign('kelompok_binaan_id')->references('id')->on('kelompok_binaans')->onDelete('set null');
             $table->unsignedBigInteger('bentuk_usaha_id')->index()->nullable();
-            $table->foreign('bentuk_usaha_id')->references('id')->on('bentuk_usahas')->onDelete('set null');
+            $table->foreign('bentuk_usaha_id')->references('id')->on('master_bentuk_usahas')->onDelete('set null');
             $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
-            $table->foreign('jenis_usaha_id')->references('id')->on('jenis_usahas')->onDelete('set null');
+            $table->foreign('jenis_usaha_id')->references('id')->on('master_jenis_usahas')->onDelete('set null');
             // $table->integer('type'); //1.nelayan, 0.pembudidaya (DI V1 TIDAK DIPAKAI)
             // $table->string('nik')->unique();
             $table->string('name');
