@@ -103,8 +103,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('penyuluh', KelolaPenyuluhController::class)->names('penyuluh');
         /* Kelola Kelompok Binaan */
         Route::resource('kelompok-binaan', KelolaKelompokBinaanController::class)->names('kelompok-binaan');
-        /* Kelola Berita */
-        Route::resource('berita', KelolaBeritaController::class)->names('berita');
         /* Kelola Jadwal Pendampingan */
         Route::resource('jadwal-pendampingan', KelolaJadwalPendampinganController::class)->names('jadwal-pendampingan');
         /* Kelola UPTD */

@@ -350,19 +350,6 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Berita
-            [
-                'id' => 205,
-                'name' => 'Kelola Berita',
-                'page' => 'admin', // or 'guest'
-                'url' => 'kelola.berita.index',
-                'slug' => 'kelola-berita',
-                'icon' => '',
-                'order' => 5,
-                'parent_id' => 200,
-                'active' => true,
-                'display' => true,
-            ],
             // Kelola Jadwal Pendampingan
             [
                 'id' => 206,
