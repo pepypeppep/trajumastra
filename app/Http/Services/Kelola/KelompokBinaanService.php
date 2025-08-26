@@ -2,7 +2,9 @@
 
 namespace App\Http\Services\Kelola;
 
-use App\Models\PelakuUsaha;
+use App\Models\Kalurahan;
+use Illuminate\Support\Str;
+use App\Models\KelompokBinaan;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -11,27 +13,30 @@ class KelompokBinaanService
     /* Get alls */
     public function getAll()
     {
-        $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha');
+        $data = KelompokBinaan::with('kalurahan');
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
+            ->addColumn('address', function ($row) {
+                return $row->address ? (Str::length($row->address) > 25 ? Str::substr($row->address, 0, 25) . '...' : $row->address) : '-';
+            })
             ->addColumn('aksi', function ($row) {
                 $btnEdit = '';
                 $btnDelete = '';
                 // Btn Edit
-                if (auth()->user()->can('kelola-pelaku-usaha.update')) {
-                    $btnEdit = '<button href="javascript:void(0);" title="Ubah data pelaku usaha" id="btn-modal-edit"
-                        data-id="' . $row->id . '"  data-url-action="' . route('kelola.pelaku-usaha.update', $row->id) . '" data-url-get="' . route('kelola.pelaku-usaha.edit', $row->id) . '"
-                        class="items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
+                if (auth()->user()->can('kelola-kelompok-binaan.update')) {
+                    $btnEdit = '<button title="Ubah data kelompok binaan"
+                        data-id="' . $row->id . '"  data-url-action="' . route('kelola.kelompok-binaan.update', $row->id) . '" data-url-get="' . route('kelola.kelompok-binaan.edit', $row->id) . '"
+                        class="btn-modal-edit items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
                         <i class="ri-edit-line"></i>
                         </button>';
                 }
 
                 // Btn Delete
-                if (auth()->user()->can('kelola-pelaku-usaha.delete')) {
-                    $btnDelete = '<button href="javascript:void(0);" title="Hapus data pelaku usaha" id="btn-delete" onclick="confirmDelete(this)"
-                        data-id="' . $row->id . '"  data-url-action="' . route('kelola.pelaku-usaha.destroy', $row->id) . '"
-                        class="items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
+                if (auth()->user()->can('kelola-kelompok-binaan.delete')) {
+                    $btnDelete = '<button title="Hapus data kelompok binaan"
+                        data-id="' . $row->id . '"  data-url-action="' . route('kelola.kelompok-binaan.destroy', $row->id) . '"
+                        class="btn-delete items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
                         <i class="ri-delete-bin-line"></i>
                         </button>';
                 }
@@ -42,51 +47,45 @@ class KelompokBinaanService
             ->make(true);
     }
 
-    /* Get uptd */
-    public function getAllUptd()
+    /* Get data kalurahan */
+    public function getAllKalurahan()
     {
-        $data = Uptd::get();
-        return $data;
-    }
-
-    /* Get jenis ikan */
-    public function getAllJenisIkan()
-    {
-        $data = MasterJenisIkan::get();
+        $data = Kalurahan::with('kecamatan.kabupaten')->orderBy('name')->get();
         return $data;
     }
 
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = HargaIkan::findOrFail($id);
-
+        $data = KelompokBinaan::findOrFail($id);
         return $data;
     }
 
     /* Store new data*/
-    public function store(array $attributes)
+    public function store(array $datas)
     {
         try {
             // DB Transaction
             DB::beginTransaction();
-            $data = HargaIkan::create([
-                'uptd_id' => $attributes['uptd_id'],
-                'jenis_ikan_id' => $attributes['jenis_ikan_id'],
-                'stock' => $attributes['stock'],
-                'size' => $attributes['size'],
-                'price' => $attributes['price'],
-                'unit' => $attributes['unit'],
-                'user_id' => auth()->user()->id,
+            $kelompokBinaan = KelompokBinaan::create([
+                'kalurahan_id' => $datas['kalurahan_id'],
+                'name' => $datas['name'],
+                'email' => $datas['email'],
+                'year' => $datas['year'],
+                'phone' => $datas['phone'],
+                'address' => $datas['address'],
+                'npwp' => $datas['npwp'],
+                'sk' => $datas['sk'],
+                'certificate_number' => $datas['certificate_number']
             ]);
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Stok Ikan berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Kelompok binaan berhasil ditambahkan');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Stok Ikan gagal ditambahkan. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Kelompok binaan gagal ditambahkan. Error :' . $e->getMessage()]);
         }
     }
 
@@ -98,25 +97,27 @@ class KelompokBinaanService
             DB::beginTransaction();
 
             // Get data
-            $data = HargaIkan::findOrFail($id);
+            $data = KelompokBinaan::findOrFail($id);
             // Update data data
             $data->update([
-                'uptd_id' => $attributes['uptd_id'] ?? $data->uptd_id,
-                'jenis_ikan_id' => $attributes['jenis_ikan_id'] ?? $data->jenis_ikan_id,
-                'stock' => $attributes['stock'] ?? $data->stock,
-                'size' => $attributes['size'] ?? $data->size,
-                'price' => $attributes['price'] ?? $data->price,
-                'unit' => $attributes['unit'] ?? $data->unit,
-                'user_id' => auth()->user()->id,
+                'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
+                'name' => $attributes['name'] ?? $data->name,
+                'email' => $attributes['email'] ?? $data->email,
+                'year' => $attributes['year'] ?? $data->year,
+                'phone' => $attributes['phone'] ?? $data->phone,
+                'address' => $attributes['address'] ?? $data->address,
+                'npwp' => $attributes['npwp'] ?? $data->npwp,
+                'sk' => $attributes['sk'] ?? $data->sk,
+                'certificate_number' => $attributes['certificate_number'] ?? $data->certificate_number
             ]);
 
             // Return success response
             DB::commit();
-            return redirect()->back()->with('success', 'Stok Ikan berhasil diperbarui');
+            return redirect()->back()->with('success', 'Kelompok binaan berhasil diperbarui');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'Stok Ikan gagal diperbarui. Error :' . $e->getMessage()]);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Kelompok binaan gagal diperbarui. Error :' . $e->getMessage()]);
         }
     }
 
@@ -128,16 +129,16 @@ class KelompokBinaanService
             DB::beginTransaction();
 
             // Get data
-            $data = HargaIkan::findOrFail($id);
+            $data = KelompokBinaan::findOrFail($id);
             $data->delete();
 
             // Return success response
             DB::commit();
-            return redirect()->route('kelola.harga-ikan.index')->with('success', 'Stok Ikan berhasil dihapus');
+            return redirect()->route('kelola.kelompok-binaan.index')->with('success', 'Kelompok binaan berhasil dihapus');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'Stok Ikan gagal dihapus. Error :' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Kelompok binaan gagal dihapus. Error :' . $e->getMessage()]);
         }
     }
 }

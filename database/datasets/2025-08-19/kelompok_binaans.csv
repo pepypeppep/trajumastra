@@ -1,4 +1,4 @@
-﻿name;id_kelurahan;address;email;phone;id_jenis_usaha;business_type_name;year;npwp;certificate_number;sk
+﻿name;kalurahan_id;address;email;phone;jenis_usaha_id;business_type_name;year;npwp;certificate_number;sk
 Testing;3402050002;testing;email@ptdes.net;081235123123;;;2024;081231231;01231231;01224
 TES KELOMPOK;3471120002;TES ALAMAT;naefariq@gmail.com;082176312379;;;2019;213213;12312213;123123
 Rizquna Lele;3402110003;Padukuhan Jembangan Rt.001;s;08512345678;;;2022;0;0;No 24 Tahun 2022

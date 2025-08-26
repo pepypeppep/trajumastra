@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('kelompok_binaans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_kelurahan')->index()->nullable();
-            $table->unsignedBigInteger('id_jenis_usaha')->index()->nullable();
+            $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
+            $table->foreign('kalurahan_id')->references('id')->on('kalurahans')->onDelete('set null');
+            // Saya comment karena di V1 id_jenis_usaha pada tabel ini tidak di pakai
+            // $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
+            // $table->foreign('jenis_usaha_id')->references('id')->on('master_jenis_usahas')->onDelete('set null');
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();

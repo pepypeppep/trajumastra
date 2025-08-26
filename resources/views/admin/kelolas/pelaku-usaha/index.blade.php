@@ -217,12 +217,6 @@
             initSelect2BentukUsaha('#modal-add');
             initSelect2KelompokBinaan('#modal-add');
             initSelect2RangePenghasilan('#modal-add');
-
-            setTimeout(() => {
-                if (mapAdd) {
-                    mapAdd.invalidateSize();
-                }
-            }, 100);
         });
 
         // Modal EDIT
@@ -232,12 +226,6 @@
             initSelect2BentukUsaha('#modal-edit');
             initSelect2KelompokBinaan('#modal-edit');
             initSelect2RangePenghasilan('#modal-edit');
-
-            setTimeout(() => {
-                if (mapEdit) {
-                    mapEdit.invalidateSize();
-                }
-            }, 100);
         });
     </script>
     {{-- End Select 2 --}}
