@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Kelola;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Kelola\PenyuluhService;
+use App\Http\Requests\Kelola\Penyuluh\CreateRequest;
+use App\Http\Requests\Kelola\Penyuluh\UpdateRequest;
 
 class KelolaPenyuluhController extends Controller
 {
@@ -18,31 +20,24 @@ class KelolaPenyuluhController extends Controller
     public function index()
     {
         $this->setRule('kelola-penyuluh.read');
+
+        // Load data for data table (server side - AJAX)
+        if (request()->ajax()) {
+            return $this->penyuluhService->getAll();
+        }
+
         return view('admin.kelolas.penyuluh.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
-    }
+        $this->setRule('kelola-penyuluh.create');
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        // Store Process
+        return $this->penyuluhService->store($request->validated());
     }
 
     /**
@@ -50,15 +45,19 @@ class KelolaPenyuluhController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $this->setRule('kelola-penyuluh.update');
+        return $this->penyuluhService->getById($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        //
+        $this->setRule('kelola-penyuluh.update');
+
+        // Update Process
+        return $this->penyuluhService->update($id, $request->validated());
     }
 
     /**
@@ -66,6 +65,8 @@ class KelolaPenyuluhController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->setRule('kelola-penyuluh.delete');
+        // Delete Process
+        return $this->penyuluhService->delete($id);
     }
 }
