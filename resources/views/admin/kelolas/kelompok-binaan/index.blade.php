@@ -99,7 +99,7 @@
                         data: 'year',
                         name: 'year',
                         searchable: true,
-                        orderable: false,
+                        orderable: true,
                         width: '5%',
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
@@ -134,7 +134,7 @@
                         data: 'email',
                         name: 'email',
                         searchable: true,
-                        orderable: false,
+                        orderable: true,
                         width: '10%',
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
                     },{

@@ -11,21 +11,23 @@
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar ...</h5>
-                <a href=""
+                <h5 class="mb-0">Daftar Jadwal Pendampingan</h5>
+                <button type="button" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah ...
-                </a>
+                    <i class="ri-user-add-line"></i> Tambah Jadwal Pendampingan
+                </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="ltr:!text-left rtl:!text-right">Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th class="text-center-">Judul Penyuluhan</th>
+                        <th class="text-left">Jenis Penyuluhan</th>
+                        <th class="text-center">Deskripsi</th>
+                        <th class="text-center">Kuota</th>
+                        <th class="text-center">Periode</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Materi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +35,7 @@
                     <tr class="data-row">
                         <td colspan="6">
                             <div class="flex justify-center items-center">
-                                <span class="text-gray-500 dark:text-zink-300">Memuat data ...</span>
+                                <span class="text-gray-500 dark:text-zink-300">Memuat data Jadwal Pendampingan</span>
                             </div>
                         </td>
                     </tr>
@@ -41,6 +43,16 @@
             </table>
         </div>
     </div>
+
+    {{-- Load modal add --}}
+    @include('admin.kelolas.jadwal-pendampingan.partials.modal-add')
+    {{-- Load modal edit --}}
+    @include('admin.kelolas.jadwal-pendampingan.partials.modal-edit')
+    {{-- Form Delete --}}
+    <form id="form-delete" action="" method="POST" class="hidden">
+        @csrf
+        @method('DELETE')
+    </form>
 @endsection
 
 @push('scripts')
@@ -72,42 +84,78 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('settings.users.index') }}",
+                    url: "{{ route('kelola.jadwal-pendampingan.index') }}",
                     type: 'GET',
                 },
-                columns: [{
+                columns: [
+                    {
                         data: 'name',
                         name: 'name',
                         searchable: true,
                         orderable: true,
+                        width: '20%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                    },{
+                        data: 'jenis_penyuluhan_name',
+                        name: 'jenis_penyuluhan_name',
+                        searchable: true,
+                        orderable: true,
+                        width: '10%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'description',
+                        name: 'description',
+                        searchable: true,
+                        orderable: true,
+                        width: '20%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                    },{
+                        data: 'quota',
+                        name: 'quota',
+                        searchable: true,
+                        orderable: true,
+                        width: '5%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'periode',
+                        name: 'periode',
+                        searchable: true,
+                        orderable: false,
+                        width: '10%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'status',
+                        name: 'status',
+                        searchable: true,
+                        orderable: false,
+                        width: '10%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                    },{
+                        data: 'materi_title',
+                        name: 'materi_title',
+                        searchable: true,
+                        orderable: false,
+                        width: '15%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                    },{
+                        data: 'aksi',
+                        name: 'aksi',
+                        searchable: false,
+                        orderable: false,
+                        width: '10%',
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },
-                    // etc ...
+                    
+                    // etc kelompok-binaan
                 ],
             })
         }
         // -- End Load Datatable
-
-
-        // Untuk mengatur kolom (lebar dan align)
-        $(document).ready(function() {
-            $('#data-table').DataTable({
-                "columnDefs": [
-                    { "targets": [2], "className": "text-center" }
-                ],
-                columns: [
-                    { width: "5%" },
-                    { width: "75%" },
-                    { width: "20%" }
-                ],
-                autoWidth: false
-            });
-        });
     </script>
 
     {{-- Start action delete data --}}
     <script>
-        $(document).on('click', '#btn-delete', function(e) {
+        $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
             var urlFormAction = $(this).data('url-action');
@@ -130,4 +178,62 @@
         });
     </script>
     {{-- End action delete data --}}
+
+
+    {{-- Start Select 2 --}}
+    <script>
+        // Init global Select2
+        function initSelect2JenisPenyuluhan(context) {
+            $(context).find('[name="jenis_penyuluhan_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Jenis Penyuluhan",
+                allowClear: true
+            });
+        }
+        
+        function initSelect2KategoriPenyuluhan(context) {
+            $(context).find('[name="kategori_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Kategori Penyuluhan",
+                allowClear: true
+            });
+        }
+        
+        function initSelect2MateriPenyuluhan(context) {
+            $(context).find('[name="materi_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Materi Penyuluhan",
+                allowClear: true
+            });
+        }
+
+        function initSelect2StatusPenyuluhan(context) {
+            $(context).find('[name="status"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Status Penyuluhan",
+                allowClear: true
+            });
+        }
+
+        // Modal ADD
+        $(document).on('click', '[data-modal-target="modal-add"]', function() {
+            initSelect2JenisPenyuluhan('#modal-add');
+            initSelect2KategoriPenyuluhan('#modal-add');
+            initSelect2MateriPenyuluhan('#modal-add');
+            initSelect2StatusPenyuluhan('#modal-add');
+        });
+
+        // Modal EDIT
+        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
+            initSelect2JenisPenyuluhan('#modal-edit');
+            initSelect2KategoriPenyuluhan('#modal-edit');
+            initSelect2MateriPenyuluhan('#modal-edit');
+            initSelect2StatusPenyuluhan('#modal-edit');
+        });
+    </script>
+    {{-- End Select 2 --}}
 @endpush

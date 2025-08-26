@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\Kelola;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Kelola\JadwalPendampinganService;
+use App\Http\Requests\Kelola\JadwalPendampingan\CreateRequest;
+use App\Http\Requests\Kelola\JadwalPendampingan\UpdateRequest;
 
 class KelolaJadwalPendampinganController extends Controller
 {
@@ -18,31 +20,28 @@ class KelolaJadwalPendampinganController extends Controller
     public function index()
     {
         $this->setRule('kelola-jadwal-pendampingan.read');
-        return view('admin.kelolas.jadwal-pendampingan.index');
-    }
+        // Load data for data table (server side - AJAX)
+        if (request()->ajax()) {
+            return $this->jadwalPendampinganService->getAll();
+        }
+        // Get data
+        $materis = $this->jadwalPendampinganService->getAllMateri();
+        $kategoris = $this->jadwalPendampinganService->getAllKategoriPenyuluhan();
+        $jenisPenyuluhans = $this->jadwalPendampinganService->getAllJenisPenyuluhan();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        // Return view
+        return view('admin.kelolas.jadwal-pendampingan.index', compact('materis', 'kategoris', 'jenisPenyuluhans'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        //
-    }
+        $this->setRule('kelola-kelompok-binaan.create');
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        // Store Process
+        return $this->jadwalPendampinganService->store($request->validated());
     }
 
     /**
@@ -50,15 +49,19 @@ class KelolaJadwalPendampinganController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $this->setRule('kelola-kelompok-binaan.update');
+        return $this->jadwalPendampinganService->getById($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $request, string $id)
     {
-        //
+        $this->setRule('kelola-kelompok-binaan.update');
+
+        // Update Process
+        return $this->jadwalPendampinganService->update($id, $request->validated());
     }
 
     /**
@@ -66,6 +69,8 @@ class KelolaJadwalPendampinganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->setRule('kelola-kelompok-binaan.delete');
+        // Delete Process
+        return $this->jadwalPendampinganService->delete($id);
     }
 }
