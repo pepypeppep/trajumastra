@@ -61,210 +61,210 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            // Asset Digunakan
+            // Bidang
             [
                 'id' => 101,
-                'name' => 'Asset Digunakan',
+                'name' => 'Bidang',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.asset-digunakan.index',
-                'slug' => 'asset-digunakan',
+                'url' => 'master.bidang.index',
+                'slug' => 'bidang',
                 'icon' => '',
                 'order' => 1,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Range Penghasilan
+            // Bentuk Usaha
             [
                 'id' => 102,
-                'name' => 'Range Penghasilan',
+                'name' => 'Bentuk Usaha',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.range-penghasilan.index',
-                'slug' => 'range-penghasilan',
+                'url' => 'master.bentuk-usaha.index',
+                'slug' => 'bentuk-usaha',
                 'icon' => '',
                 'order' => 2,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Jenis Penyuluhan
+            // Jenis Usaha
             [
                 'id' => 103,
-                'name' => 'Kelola Jenis Penyuluhan',
+                'name' => 'Jenis Usaha',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-penyuluhan.index',
-                'slug' => 'jenis-penyuluhan',
+                'url' => 'master.jenis-usaha.index',
+                'slug' => 'jenis-usaha',
                 'icon' => '',
                 'order' => 3,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Bentuk Usaha
+            // Jenis Usaha Sarana
             [
                 'id' => 104,
-                'name' => 'Bentuk Usaha',
+                'name' => 'Jenis Usaha Sarana',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.bentuk-usaha.index',
-                'slug' => 'bentuk-usaha',
+                'url' => 'master.jenis-usaha-sarana.index',
+                'slug' => 'jenis-usaha-sarana',
                 'icon' => '',
                 'order' => 4,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Bidang
+            // Jenis Klasifikasi Usaha
             [
                 'id' => 105,
-                'name' => 'Bidang',
+                'name' => 'Jenis Klasifikasi Usaha',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.bidang.index',
-                'slug' => 'bidang',
+                'url' => 'master.jenis-klasifikasi-usaha.index',
+                'slug' => 'jenis-klasifikasi-usaha',
                 'icon' => '',
                 'order' => 5,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Alat Tangkap
+            // Range Penghasilan
             [
                 'id' => 106,
-                'name' => 'Alat Tangkap',
+                'name' => 'Range Penghasilan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.alat-tangkap.index',
-                'slug' => 'alat-tangkap',
+                'url' => 'master.range-penghasilan.index',
+                'slug' => 'range-penghasilan',
                 'icon' => '',
                 'order' => 6,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Asset
+            // Materi
             [
                 'id' => 107,
-                'name' => 'Jenis Asset',
+                'name' => 'Materi',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-asset.index',
-                'slug' => 'jenis-asset',
+                'url' => 'master.materi.index',
+                'slug' => 'master-materi',
                 'icon' => '',
                 'order' => 7,
-                'parent_id' => 100,
+                'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Ikan
+            // Penyuluh
             [
                 'id' => 108,
-                'name' => 'Jenis Ikan',
+                'name' => 'Penyuluh (Pemateri)',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-ikan.index',
-                'slug' => 'jenis-ikan',
+                'url' => 'master.penyuluh.index',
+                'slug' => 'master-penyuluh',
                 'icon' => '',
                 'order' => 8,
-                'parent_id' => 100,
+                'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Pendaratan
+            // Jenis Penyuluhan
             [
                 'id' => 109,
-                'name' => 'Jenis Pendaratan',
+                'name' => 'Jenis Penyuluhan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-pendaratan.index',
-                'slug' => 'jenis-pendaratan',
+                'url' => 'master.jenis-penyuluhan.index',
+                'slug' => 'jenis-penyuluhan',
                 'icon' => '',
                 'order' => 9,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Perairan
+            // Jenis Asset
             [
                 'id' => 110,
-                'name' => 'Jenis Perairan',
+                'name' => 'Jenis Asset',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-perairan.index',
-                'slug' => 'jenis-perairan',
+                'url' => 'master.jenis-asset.index',
+                'slug' => 'jenis-asset',
                 'icon' => '',
                 'order' => 10,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Transaksi
+            // Asset Digunakan
             [
                 'id' => 111,
-                'name' => 'Jenis Transaksi',
+                'name' => 'Asset Digunakan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-transaksi.index',
-                'slug' => 'jenis-transaksi',
+                'url' => 'master.asset-digunakan.index',
+                'slug' => 'asset-digunakan',
                 'icon' => '',
                 'order' => 11,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Usaha
+            // Alat Tangkap
             [
                 'id' => 112,
-                'name' => 'Jenis Usaha',
+                'name' => 'Alat Tangkap',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-usaha.index',
-                'slug' => 'jenis-usaha',
+                'url' => 'master.alat-tangkap.index',
+                'slug' => 'alat-tangkap',
                 'icon' => '',
                 'order' => 12,
-                'parent_id' => 100,
-                'active' => true,
-                'display' => true,
-            ],
-            // Jenis Usaha Sarana
-            [
-                'id' => 113,
-                'name' => 'Jenis Usaha Sarana',
-                'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-usaha-sarana.index',
-                'slug' => 'jenis-usaha-sarana',
-                'icon' => '',
-                'order' => 12,
-                'parent_id' => 100,
-                'active' => true,
-                'display' => true,
-            ],
-            // Jenis Klasifikasi Usaha
-            [
-                'id' => 114,
-                'name' => 'Jenis Klasifikasi Usaha',
-                'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-klasifikasi-usaha.index',
-                'slug' => 'jenis-klasifikasi-usaha',
-                'icon' => '',
-                'order' => 13,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
             // Perahu
             [
-                'id' => 115,
+                'id' => 113,
                 'name' => 'Perahu',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.perahu.index',
                 'slug' => 'perahu',
+                'icon' => '',
+                'order' => 13,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Ikan
+            [
+                'id' => 114,
+                'name' => 'Jenis Ikan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-ikan.index',
+                'slug' => 'jenis-ikan',
                 'icon' => '',
                 'order' => 14,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // SPBU
+            // Jenis Perairan
             [
-                'id' => 116,
-                'name' => 'SPBU',
+                'id' => 115,
+                'name' => 'Jenis Perairan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'master.spbu.index',
-                'slug' => 'spbu',
+                'url' => 'master.jenis-perairan.index',
+                'slug' => 'jenis-perairan',
                 'icon' => '',
                 'order' => 15,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Pendaratan
+            [
+                'id' => 116,
+                'name' => 'Jenis Pendaratan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-pendaratan.index',
+                'slug' => 'jenis-pendaratan',
+                'icon' => '',
+                'order' => 16,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
@@ -277,20 +277,47 @@ class NavigationSeeder extends Seeder
                 'url' => 'master.uu-rekomendasi.index',
                 'slug' => 'uu-rekomendasi',
                 'icon' => '',
-                'order' => 16,
+                'order' => 17,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
-            // Persyaratan Pengajuan
+            
+            // Persyaratan Pengajuan BBM
             [
                 'id' => 118,
-                'name' => 'Persyaratan Pengajuan',
+                'name' => 'Persyaratan Pengajuan BBM',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.persyaratan-pengajuan.index',
                 'slug' => 'persyaratan-pengajuan',
                 'icon' => '',
-                'order' => 17,
+                'order' => 18,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // SPBU
+            [
+                'id' => 119,
+                'name' => 'SPBU',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.spbu.index',
+                'slug' => 'spbu',
+                'icon' => '',
+                'order' => 19,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Transaksi
+            [
+                'id' => 120,
+                'name' => 'Jenis Transaksi',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-transaksi.index',
+                'slug' => 'jenis-transaksi',
+                'icon' => '',
+                'order' => 20,
                 'parent_id' => 100,
                 'active' => true,
                 'display' => true,
@@ -325,144 +352,119 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
+            // Kelola Stok Ikan
             [
                 'id' => 202,
-                'name' => 'Kelola Pelaku Usaha',
+                'name' => 'Kelola Stok Ikan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.pelaku-usaha.index',
-                'slug' => 'kelola-pelaku-usaha',
+                'url' => 'kelola.stok-ikan.index',
+                'slug' => 'kelola-stok-ikan',
                 'icon' => '',
                 'order' => 2,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Penyuluh
+            // Kelola Harga Ikan
             [
                 'id' => 203,
-                'name' => 'Kelola Penyuluh',
+                'name' => 'Kelola Harga Ikan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.penyuluh.index',
-                'slug' => 'kelola-penyuluh',
+                'url' => 'kelola.harga-ikan.index',
+                'slug' => 'kelola-harga-ikan',
                 'icon' => '',
                 'order' => 3,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Kelompok Binaan
+            // Kelola UPTD
             [
                 'id' => 204,
-                'name' => 'Kelola Kelompok Binaan',
+                'name' => 'Kelola UPTD',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.kelompok-binaan.index',
-                'slug' => 'kelola-kelompok-binaan',
+                'url' => 'kelola.uptd.index',
+                'slug' => 'kelola-uptd',
                 'icon' => '',
                 'order' => 4,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Jadwal Pendampingan
+            // Kelola TPI
             [
-                'id' => 206,
-                'name' => 'Kelola Jadwal Pendampingan',
+                'id' => 205,
+                'name' => 'Kelola TPI',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.jadwal-pendampingan.index',
-                'slug' => 'kelola-jadwal-pendampingan',
+                'url' => 'kelola.tpi.index',
+                'slug' => 'kelola-tpi',
                 'icon' => '',
-                'order' => 6,
-                'parent_id' => 200,
-                'active' => true,
-                'display' => true,
-            ],
-            // Kelola UPTD
-            [
-                'id' => 207,
-                'name' => 'Kelola UPTD',
-                'page' => 'admin', // or 'guest'
-                'url' => 'kelola.uptd.index',
-                'slug' => 'kelola-uptd',
-                'icon' => '',
-                'order' => 7,
+                'order' => 5,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
             // Kelola Koordinator UPTD/TPI
             [
-                'id' => 208,
+                'id' => 206,
                 'name' => 'Kelola Koordinator UPTD/TPI',
                 'page' => 'admin', // or 'guest'
                 'url' => 'kelola.koordinator-uptd-tpi.index',
                 'slug' => 'kelola-koordinator-uptd-tpi',
                 'icon' => '',
-                'order' => 8,
+                'order' => 6,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola TPI
+            // Kelola Jadwal Pendampingan
             [
                 'id' => 209,
-                'name' => 'Kelola TPI',
+                'name' => 'Kelola Jadwal Pendampingan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.tpi.index',
-                'slug' => 'kelola-tpi',
+                'url' => 'kelola.jadwal-pendampingan.index',
+                'slug' => 'kelola-jadwal-pendampingan',
                 'icon' => '',
                 'order' => 9,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Stok Ikan
+            // Kelola Pelaku Usaha
             [
                 'id' => 210,
-                'name' => 'Kelola Stok Ikan',
+                'name' => 'Kelola Pelaku Usaha',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.stok-ikan.index',
-                'slug' => 'kelola-stok-ikan',
+                'url' => 'kelola.pelaku-usaha.index',
+                'slug' => 'kelola-pelaku-usaha',
                 'icon' => '',
                 'order' => 10,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Harga Ikan
+            // Kelola Kelompok Binaan
             [
                 'id' => 211,
-                'name' => 'Kelola Harga Ikan',
+                'name' => 'Kelola Kelompok Binaan',
                 'page' => 'admin', // or 'guest'
-                'url' => 'kelola.harga-ikan.index',
-                'slug' => 'kelola-harga-ikan',
+                'url' => 'kelola.kelompok-binaan.index',
+                'slug' => 'kelola-kelompok-binaan',
                 'icon' => '',
                 'order' => 11,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Materi
-            [
-                'id' => 212,
-                'name' => 'Kelola Materi',
-                'page' => 'admin', // or 'guest'
-                'url' => 'kelola.materi.index',
-                'slug' => 'kelola-materi',
-                'icon' => '',
-                'order' => 12,
-                'parent_id' => 200,
-                'active' => true,
-                'display' => true,
-            ],
             // Kelola Pokdakan
             [
-                'id' => 213,
+                'id' => 212,
                 'name' => 'Kelola Pokdakan',
                 'page' => 'admin', // or 'guest'
                 'url' => 'kelola.pokdakan.index',
                 'slug' => 'kelola-pokdakan',
                 'icon' => '',
-                'order' => 13,
+                'order' => 12,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
