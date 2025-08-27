@@ -38,6 +38,7 @@ use App\Http\Controllers\Admin\Master\PersyaratanPengajuanController;
 use App\Http\Controllers\Admin\Master\JenisKlasifikasiUsahaController;
 use App\Http\Controllers\Admin\Kelola\KelolaJadwalPendampinganController;
 use App\Http\Controllers\Admin\Kelola\KelolaKoordinatorUptdTpiController;
+use App\Http\Controllers\Admin\Kelola\KelolaPokdakanController;
 use App\Http\Controllers\Admin\Kelola\PermohonanRekomendasiBbmController;
 
 /** ======================== BYPASS SSO
@@ -118,6 +119,8 @@ Route::middleware('auth', 'verified')->group(function () {
         /* Kelola Materi */
         Route::get('/materi/attachment/{id}', [KelolaMateriController::class, 'attachment'])->name('materi.attachment');
         Route::resource('materi', KelolaMateriController::class)->names('materi');
+        /* Kelola Pokdakan */
+        Route::resource('pokdakan', KelolaPokdakanController::class)->names('pokdakan');
     });
 
     /* ---- Laporan */

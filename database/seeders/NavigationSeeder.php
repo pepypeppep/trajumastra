@@ -12,26 +12,26 @@ class NavigationSeeder extends Seeder
      * Run the database seeds.
      */
     // The structure of each navigation item is as follows:
-        // [
-        //     'id' => null,
-        //     'name' => '',
-        //     'page' => 'admin', // or 'guest'
-        //     'url' => '',
-        //     'slug' => '',
-        //     'icon' => '',
-        //     'order' => 1,
-        //     'parent_id' => null,
-        //     'active' => true,
-        //     'display' => true,
-        // ],
+    // [
+    //     'id' => null,
+    //     'name' => '',
+    //     'page' => 'admin', // or 'guest'
+    //     'url' => '',
+    //     'slug' => '',
+    //     'icon' => '',
+    //     'order' => 1,
+    //     'parent_id' => null,
+    //     'active' => true,
+    //     'display' => true,
+    // ],
     public function run(): void
     {
         $navigationsAdmin = [
-            /* --------------------------------------------------------- 
-            *                      ADMIN PAGE 
+            /* ---------------------------------------------------------
+            *                      ADMIN PAGE
             ---------------------------------------------------------*/
             /*
-            ! ============== Dashboard 
+            ! ============== Dashboard
             */
             [
                 'id' => 1,
@@ -45,9 +45,9 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            
+
             /*
-            ! ============== Master Data (Parent) 
+            ! ============== Master Data (Parent)
             */
             [
                 'id' => 100,
@@ -284,7 +284,7 @@ class NavigationSeeder extends Seeder
             ],
 
             /*
-            ! ============== Kelola (Parent) 
+            ! ============== Kelola (Parent)
             */
             [
                 'id' => 200,
@@ -441,9 +441,22 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
+            // Kelola Pokdakan
+            [
+                'id' => 213,
+                'name' => 'Kelola Pokdakan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.pokdakan.index',
+                'slug' => 'kelola-pokdakan',
+                'icon' => '',
+                'order' => 13,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
 
             /*
-            ! ============== Laporan (Parent) 
+            ! ============== Laporan (Parent)
             */
             [
                 'id' => 300,
@@ -485,7 +498,7 @@ class NavigationSeeder extends Seeder
             ],
 
             /*
-            ! ============== Setting (Parent) 
+            ! ============== Setting (Parent)
             */
             [
                 'id' => 500,
@@ -559,12 +572,12 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            
+
         ];
 
         $navigationGuest = [
-            /* --------------------------------------------------------- 
-            *                      GUEST PAGE 
+            /* ---------------------------------------------------------
+            *                      GUEST PAGE
             ---------------------------------------------------------*/
             /* Dashboard */
             [
