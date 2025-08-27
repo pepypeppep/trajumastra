@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('master_bidangs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->softDeletes();
             $table->timestamps();

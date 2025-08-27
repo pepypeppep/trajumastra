@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('uptds', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
             $table->string('name');
             $table->string('dusun')->nullable();

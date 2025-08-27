@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('pelaku_usahas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
             $table->foreign('kalurahan_id')->references('id')->on('kalurahans')->onDelete('set null');
             $table->unsignedBigInteger('kelompok_binaan_id')->index()->nullable();

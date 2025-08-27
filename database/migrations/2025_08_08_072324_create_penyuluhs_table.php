@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('penyuluhs', function (Blueprint $table) {
             $table->id();
-            $table->string('nik')->unique();
-            $table->string('name');
-            $table->longText('address')->nullable();
-            $table->longText('born_place')->nullable();
-            $table->date('born_date')->nullable();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

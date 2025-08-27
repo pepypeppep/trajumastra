@@ -13,24 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_bidang')->index()->nullable();
-            $table->unsignedBigInteger('id_penyuluh')->index()->nullable();
-            $table->unsignedBigInteger('id_pelaku_usaha')->index()->nullable();
-            $table->unsignedBigInteger('id_koordinator_uptds')->index()->nullable();
-            $table->unsignedBigInteger('uptd_id')->index()->nullable();
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->boolean('is_active')->default(1); // 1: active, 0: inactive
             $table->timestamps();
             $table->softDeletes();
-
-            // $table->foreign('id_user_level')->references('id')->on('user_levels');
-            // $table->foreign('id_bidang')->references('id')->on('master_bidangs');
-            // $table->foreign('id_penyuluh')->references('id')->on('penyuluhs');
-            // $table->foreign('id_pelaku_usaha')->references('id')->on('pelaku_usahas');
-            // $table->foreign('id_koordinator_uptds')->references('id')->on('koordinator_uptds');
-            // $table->foreign('id_uptd')->references('id')->on('uptds');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

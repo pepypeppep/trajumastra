@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('koordinator_uptds', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('uptd_id')->index()->nullable();
-            $table->string('nik')->unique();
-            $table->string('name');
-            $table->string('phone');
-            $table->longText('address')->nullable();
+            $table->foreign('uptd_id')->references('id')->on('uptds')->onDelete('cascade');
             $table->timestamps();
         });
     }
