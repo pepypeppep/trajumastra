@@ -30,6 +30,8 @@ class UpdateRequest extends FormRequest
             'jenis_penyuluhan_id' => 'required|exists:master_jenis_penyuluhans,id',
             'kategori_id' => 'required|exists:master_kategoris,id',
             'materi_id' => 'required|exists:materis,id',
+            'penyuluh_id' => 'required|array',
+            'penyuluh_id.*' => 'exists:penyuluhs,id',
             'theme' => 'required|string',
             'quota' => 'required|numeric',
             'status' => ['required', new Enum(JenisPenyuluhanStatusEnum::class)],

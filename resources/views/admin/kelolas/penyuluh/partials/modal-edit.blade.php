@@ -18,14 +18,18 @@
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                 {{-- Pengguna --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Pengguna <strong
-                            class="text-red-500">*</strong></label>
+                    <label for="user_id" class="inline-block text-base font-medium">Pengguna <strong
+                            class="text-red-500">*</strong>
+                    </label>
+                    <div class="mb-2">
+                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai penyuluh.</small>
+                    </div>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         name="user_id" id="user_id">
                         <option value=""></option>
                         @foreach ($usersHasPenyuluhRole as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                         @endforeach
                     </select>
                 </div>
@@ -61,13 +65,14 @@
                 type: 'GET',
                 success: function(response) {
                     // Modal title
-                    $('#modal-title').text('Ubah Data Penyuluh - ' + response.name);
+                    $('#modal-title').text('Ubah Data Penyuluh - ' + response.user.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
                     $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
                 },
                 error: function(xhr) {
+                    console.log(xhr);   
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',

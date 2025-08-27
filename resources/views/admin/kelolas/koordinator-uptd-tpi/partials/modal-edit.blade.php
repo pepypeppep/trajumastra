@@ -19,37 +19,22 @@
             @method('PUT')
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <div class="grid grid-cols-3 gap-4 mb-1">
-                    <div class="col-span">
-                        {{-- NIK --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">NIK <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="nik" name="nik"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan NIK koordinator" required>
-                        </div>
+                {{-- User ID --}}
+                <div class="mt-3">
+                    <label for="user_id" class="inline-block text-base font-medium">Pilih pengguna untuk dijadikan koordinator UPTD TPI <strong
+                            class="text-red-500">*</strong>
+                    </label>
+                    <div class="mb-2">
+                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai koordinator UPTD TPI.</small>
                     </div>
-                    <div class="col-span">
-                        {{-- Nama --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Nama <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="name" name="name"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan nama koordinator" required>
-                        </div>
-                    </div>
-                    <div class="col-span">
-                        {{-- No. Telepon --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">No. Telepon <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="phone" name="phone"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan no. telepon koordinator" required>
-                        </div>
-                    </div>
+                    <select
+                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        name="user_id" id="user_id" required>
+                        <option value=""></option>
+                        @foreach ($usersHasPetugasTpiRole as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                        @endforeach
+                    </select>
                 </div>
                 {{-- UPTD --}}
                 <div class="mt-3">
@@ -57,20 +42,12 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="uptd_id" id="uptd_id">
+                        name="uptd_id" id="uptd_id" required>
                         <option value="">Pilih UPTD</option>
                         @foreach ($uptds as $uptd)
                             <option value="{{ $uptd->id }}">{{ $uptd->name }}</option>
                         @endforeach
                     </select>
-                </div>
-                {{-- Alamat --}}
-                <div class="mt-3 mb-1">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Alamat <strong
-                            class="text-red-500">*</strong></label>
-                    <textarea id="address" name="address"
-                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        placeholder="Masukkan alamat koordinator" required></textarea>
                 </div>
             </div>
             {{-- End Modal Body --}}
@@ -105,22 +82,18 @@
                 type: 'GET',
                 success: function(response) {
                     // Modal title
-                    $('#modal-title').text('Ubah Data Koordinator UPTD TPI - ' + response.name);
+                    $('#modal-title').text('Ubah Data Koordinator UPTD TPI - ' + response.user.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
-                    // Set value to form inputs
-                    $('#form-edit').find('#nik').val(response.nik);
-                    $('#form-edit').find('#name').val(response.name);
-                    $('#form-edit').find('#phone').val(response.phone);
-                    $('#form-edit').find('#address').val(response.address);
                     // Set selected value to dropdown
-                    $('#form-edit').find('[name="uptd_id"]').val(response.uptd_id).trigger('change');
+                    $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
+                    $('#form-edit').find('#uptd_id').val(response.uptd_id).trigger('change');
                 },
                 error: function(xhr) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Gagal memuat data desa.',
+                        text: 'Gagal memuat data UPTD TPI.',
                     });
                 }
             });

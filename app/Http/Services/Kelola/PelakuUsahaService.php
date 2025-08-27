@@ -2,6 +2,8 @@
 
 namespace App\Http\Services\Kelola;
 
+use App\Models\User;
+use App\Enums\RoleEnum;
 use App\Models\Kalurahan;
 use App\Models\PelakuUsaha;
 use App\Models\KelompokBinaan;
@@ -16,7 +18,8 @@ class PelakuUsahaService
     /* Get alls */
     public function getAll()
     {
-        $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha');
+        $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha', 'user')
+                ->select('pelaku_usahas.*');
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
@@ -85,8 +88,15 @@ class PelakuUsahaService
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = PelakuUsaha::findOrFail($id);
-        return $data;
+        $data = PelakuUsaha::with('user')->findOrFail($id);
+        return $data;   
+    }
+
+    /* Get User Has Pelaku Usaha Role */
+    public function getUsersHasPelakuUsahaRole()
+    {
+        $users = User::role(RoleEnum::PELAKU_USAHA->value)->get();
+        return $users;
     }
 
     /* Store new data*/
@@ -95,15 +105,14 @@ class PelakuUsahaService
         try {
             // DB Transaction
             DB::beginTransaction();
+
             $pelakuUsaha = PelakuUsaha::create([
+                'user_id' => $datas['user_id'],
                 'kalurahan_id' => $datas['kalurahan_id'],
                 'kelompok_binaan_id' => $datas['kelompok_binaan_id'],
                 'bentuk_usaha_id' => $datas['bentuk_usaha_id'],
                 'jenis_usaha_id' => $datas['jenis_usaha_id'],
-                'name' => $datas['name'],
-                'email' => $datas['email'],
-                'phone' => $datas['phone'],
-                'address' => $datas['address'],
+                'secretariat_address' => $datas['secretariat_address'],
                 'npwp' => $datas['npwp'],
                 'siup' => $datas['siup'],
                 'income_range' => $datas['income_range'],
@@ -130,14 +139,12 @@ class PelakuUsahaService
             $data = PelakuUsaha::findOrFail($id);
             // Update data data
             $data->update([
+                'user_id' => $datas['user_id'] ?? $data['user_id'],
                 'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
                 'kelompok_binaan_id' => $attributes['kelompok_binaan_id'] ?? $data->kelompok_binaan_id,
                 'bentuk_usaha_id' => $attributes['bentuk_usaha_id'] ?? $data->bentuk_usaha_id,
                 'jenis_usaha_id' => $attributes['jenis_usaha_id'] ?? $data->jenis_usaha_id,
-                'name' => $attributes['name'] ?? $data->name,
-                'email' => $attributes['email'] ?? $data->email,
-                'phone' => $attributes['phone'] ?? $data->phone,
-                'address' => $attributes['address'] ?? $data->address,
+                'secretariat_address' => $attributes['secretariat_address'] ?? $data->secretariat_address,
                 'npwp' => $attributes['npwp'] ?? $data->npwp,
                 'siup' => $attributes['siup'] ?? $data->siup,
                 'income_range' => $attributes['income_range'] ?? $data->income_range,

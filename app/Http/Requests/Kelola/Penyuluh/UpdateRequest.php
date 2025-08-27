@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Kelola\Penyuluh;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -19,10 +20,22 @@ class UpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
+    {
+        $id = $this->route('penyuluh'); // ambil id dari route parameter
+
+        return [
+            'user_id' => [
+                'required',
+                Rule::unique('penyuluhs', 'user_id')->ignore($id),
+            ],
+        ];
+    }
+
+    public function messages()
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'user_id.unique' => 'Penyuluh sudah digunakan.',
         ];
     }
 }

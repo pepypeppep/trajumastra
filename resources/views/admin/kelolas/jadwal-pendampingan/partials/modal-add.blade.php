@@ -44,7 +44,8 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="jenis_penyuluhan_id" id="jenis_penyuluhan_id">
+                        name="jenis_penyuluhan_id" id="jenis_penyuluhan_id" required>
+                        <option value=""></option>
                         @foreach ($jenisPenyuluhans as $jenisPenyuluhan)
                             <option value="{{ $jenisPenyuluhan->id }}">{{ $jenisPenyuluhan->name }}</option>
                         @endforeach
@@ -56,7 +57,7 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="kategori_id" id="kategori_id">
+                        name="kategori_id" id="kategori_id" required>
                         <option value=""></option>
                         @foreach ($kategoris as $kategori)
                             <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
@@ -79,10 +80,25 @@
                             class="text-red-500">*</strong></label>
                         <select
                             class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            name="materi_id" id="materi_id">
+                            name="materi_id" id="materi_id" required>
                             <option value=""></option>
                             @foreach ($materis as $materi)
                                 <option value="{{ $materi->id }}">{{ $materi->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                {{-- Penyuluh / Pembawa Materi --}}
+                <div class="mt-3">
+                    <div class="col-span">
+                        <label for="" class="inline-block mb-2 text-base font-medium">Penyuluh / Pembawa Materi <strong
+                            class="text-red-500">*</strong></label>
+                        <select
+                            class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            name="penyuluh_id[]" id="penyuluh_id" multiple required>
+                            <option value=""></option>
+                            @foreach ($penyuluhs as $penyuluh)
+                                <option value="{{ $penyuluh->id }}">{{ $penyuluh->user->name }} ({{ $penyuluh->user->email }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -102,7 +118,7 @@
                             class="text-red-500">*</strong></label>
                         <select
                             class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            name="status" id="status">
+                            name="status" id="status" required>
                             <option value=""></option>
                             @foreach (\App\Enums\JenisPenyuluhanStatusEnum::cases() as $status)
                                     @if ($status !== \App\Enums\JenisPenyuluhanStatusEnum::NEW)
@@ -125,6 +141,5 @@
         </form>
     </div>
 </div>
-
 
 

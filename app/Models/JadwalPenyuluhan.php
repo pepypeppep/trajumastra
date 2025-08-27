@@ -7,6 +7,7 @@ use App\Models\MasterKategori;
 use App\Models\MasterJenisPenyuluhan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class JadwalPenyuluhan extends Model
 {
@@ -30,5 +31,16 @@ class JadwalPenyuluhan extends Model
     public function kategori(): BelongsTo
     {
         return $this->belongsTo(MasterKategori::class);
+    }
+
+    /* Jadwal Penyuluhan has Penyuluhs */
+    public function penyuluhs(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Penyuluh::class,                             // model tujuan
+            'jadwal_penyuluhan_has_penyuluhs',           // tabel pivot
+            'jadwal_penyuluhan_id',                      // foreign key di pivot yang mengacu ke jadwal
+            'penyuluh_id'                                // foreign key di pivot yang mengacu ke penyuluh
+        );
     }
 }

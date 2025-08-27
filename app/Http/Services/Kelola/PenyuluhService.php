@@ -14,13 +14,14 @@ class PenyuluhService
     /* Get alls */
     public function getAll()
     {
-        $data = Penyuluh::orderBy('name');
+        $data = Penyuluh::with('user')
+                ->select('penyuluhs.*');
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
             ->addColumn('ttl', function ($row) {
-                if(!empty($row->born_place) || !empty($row->born_date)){
-                    return $row->born_place ?? '-' . ', ' . tanggal_indonesia($row->born_date);
+                if(!empty($row->user->born_place) || !empty($row->user->born_date)){
+                    return $row->user->born_place . ', ' . tanggal_indonesia($row->user->born_date);
                 }
                 return '-';
             })
@@ -54,7 +55,7 @@ class PenyuluhService
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = Penyuluh::findOrFail($id);
+        $data = Penyuluh::with('user')->findOrFail($id);
         return $data;
     }
 
@@ -72,11 +73,7 @@ class PenyuluhService
             // DB Transaction
             DB::beginTransaction();
             $penyuluh = Penyuluh::create([
-                'name' => $datas['name'],
-                'nik' => $datas['nik'],
-                'born_place' => $datas['born_place'],
-                'born_date' => $datas['born_date'],
-                'address' => $datas['address'],
+                'user_id' => $datas['user_id']
             ]);
 
             // Return success response
@@ -100,11 +97,7 @@ class PenyuluhService
             $data = Penyuluh::findOrFail($id);
             // Update data data
             $data->update([
-                'name' => $attributes['name'] ?? $data->name,
-                'nik' => $attributes['nik'] ?? $data->nik,
-                'born_place' => $attributes['born_place'] ?? $data->born_place,
-                'born_date' => $attributes['born_date'] ?? $data->born_date,
-                'address' => $attributes['address'] ?? $data->address,
+                'user_id' => $attributes['user_id'] ?? $data->user_id
             ]);
 
             // Return success response

@@ -11,7 +11,7 @@
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Jadwal Pendampingan</h5>
+                <h5 class="mb-0">Daftar Jadwal Pendampingan atau Penyuluhan</h5>
                 <button type="button" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
                     <i class="ri-user-add-line"></i> Tambah Jadwal Pendampingan
@@ -191,6 +191,15 @@
                 allowClear: true
             });
         }
+
+        function initSelect2Penyuluh(context) {
+            $(context).find('[name="penyuluh_id[]"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Penyuluh / Pemateri",
+                allowClear: true
+            });
+        }
         
         function initSelect2KategoriPenyuluhan(context) {
             $(context).find('[name="kategori_id"]').select2({
@@ -214,7 +223,7 @@
             $(context).find('[name="status"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
-                placeholder: "Pilih Status Penyuluhan",
+                placeholder: "Pilih Status Jadwal Penyuluhan",
                 allowClear: true
             });
         }
@@ -225,6 +234,7 @@
             initSelect2KategoriPenyuluhan('#modal-add');
             initSelect2MateriPenyuluhan('#modal-add');
             initSelect2StatusPenyuluhan('#modal-add');
+            initSelect2Penyuluh('#modal-add');
         });
 
         // Modal EDIT
@@ -233,6 +243,7 @@
             initSelect2KategoriPenyuluhan('#modal-edit');
             initSelect2MateriPenyuluhan('#modal-edit');
             initSelect2StatusPenyuluhan('#modal-edit');
+            initSelect2Penyuluh('#modal-edit');
         });
     </script>
     {{-- End Select 2 --}}

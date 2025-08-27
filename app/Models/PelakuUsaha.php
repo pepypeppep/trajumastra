@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Kalurahan;
 use App\Models\KelompokBinaan;
 use App\Models\MasterJenisUsaha;

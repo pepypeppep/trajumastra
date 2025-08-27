@@ -24,8 +24,8 @@ class KelolaKoordinatorUptdTpiController extends Controller
         }
 
         $uptds = $this->service->getAllUptd();
-
-        return view('admin.kelolas.koordinator-uptd-tpi.index', compact('uptds'));
+        $usersHasPetugasTpiRole = $this->service->getUsersHasPetugasTpiRole();
+        return view('admin.kelolas.koordinator-uptd-tpi.index', compact('uptds', 'usersHasPetugasTpiRole'));
     }
 
     /**

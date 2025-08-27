@@ -87,8 +87,8 @@
                 },
                 columns: [
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'user.name',
+                        name: 'user.name',
                         searchable: true,
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
@@ -99,8 +99,8 @@
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
-                        data: 'email',
-                        name: 'email',
+                        data: 'user.email',
+                        name: 'user.email',
                         searchable: true,
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
@@ -117,8 +117,8 @@
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
-                        data: 'address',
-                        name: 'address',
+                        data: 'secretariat_address',
+                        name: 'secretariat_address',
                         searchable: true,
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
@@ -165,6 +165,15 @@
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2
+        function initSelect2UserId(context) {
+            $(context).find('[name="user_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih pengguna untuk dijadikan ketua binaan",
+                allowClear: true
+            });
+        }
+        
         function initSelect2Kalurahan(context) {
             $(context).find('[name="kalurahan_id"]').select2({
                 dropdownParent: $(context),
@@ -212,6 +221,7 @@
 
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
+            initSelect2UserId('#modal-add');
             initSelect2Kalurahan('#modal-add');
             initSelect2JenisUsaha('#modal-add');
             initSelect2BentukUsaha('#modal-add');
@@ -221,6 +231,7 @@
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
+            initSelect2UserId('#modal-edit');
             initSelect2Kalurahan('#modal-edit');
             initSelect2JenisUsaha('#modal-edit');
             initSelect2BentukUsaha('#modal-edit');

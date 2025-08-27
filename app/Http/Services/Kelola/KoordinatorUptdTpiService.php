@@ -3,6 +3,8 @@
 namespace App\Http\Services\Kelola;
 
 use App\Models\Uptd;
+use App\Models\User;
+use App\Enums\RoleEnum;
 use App\Models\KoordinatorUptd;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
@@ -12,7 +14,8 @@ class KoordinatorUptdTpiService
     /* Get alls */
     public function getAll()
     {
-        $data = KoordinatorUptd::with('uptd');
+        $data = KoordinatorUptd::with('uptd', 'user')
+                ->select('koordinator_uptds.*');
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
@@ -49,10 +52,17 @@ class KoordinatorUptdTpiService
         return $data;
     }
 
+    /* Get user has petugas TPI Role */
+    public function getUsersHasPetugasTpiRole()
+    {
+        $data = User::role(RoleEnum::PETUGAS_TPI->value)->get();
+        return $data;
+    }
+
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = KoordinatorUptd::findOrFail($id);
+        $data = KoordinatorUptd::with('uptd', 'user')->findOrFail($id);
 
         return $data;
     }
@@ -65,10 +75,7 @@ class KoordinatorUptdTpiService
             DB::beginTransaction();
             $data = KoordinatorUptd::create([
                 'uptd_id' => $attributes['uptd_id'],
-                'nik' => $attributes['nik'],
-                'name' => $attributes['name'],
-                'phone' => $attributes['phone'],
-                'address' => $attributes['address'],
+                'user_id' => $attributes['user_id'],
             ]);
 
             // Return success response
@@ -93,10 +100,7 @@ class KoordinatorUptdTpiService
             // Update data data
             $data->update([
                 'uptd_id' => $attributes['uptd_id'] ?? $data->uptd_id,
-                'nik' => $attributes['nik'] ?? $data->nik,
-                'name' => $attributes['name'] ?? $data->name,
-                'phone' => $attributes['phone'] ?? $data->phone,
-                'address' => $attributes['address'] ?? $data->address,
+                'user_id' => $attributes['user_id'] ?? $data->user_id,
             ]);
 
             // Return success response

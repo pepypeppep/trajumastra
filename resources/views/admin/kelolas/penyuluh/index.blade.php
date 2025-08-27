@@ -20,6 +20,7 @@
                 <thead>
                     <tr>
                         <th class="text-left">Nama Penyuluh</th>
+                        <th class="text-center">Email</th>
                         <th class="text-center">Tempat, Tgl. Lahir</th>
                         <th class="text-left">Alamat</th>
                         <th class="text-center">Aksi</th>
@@ -84,18 +85,18 @@
                 },
                 columns: [
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'user.name',
+                        name: 'user.name',
                         searchable: true,
                         orderable: true,
-                        width: '25%',
+                        width: '20%',
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
                     },{
-                        data: 'nik',
-                        name: 'nik',
+                        data: 'user.email',
+                        name: 'user.email',
                         searchable: true,
-                        orderable: false,
-                        width: '10%',
+                        orderable: true,
+                        width: '15%',
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
                         data: 'ttl',
@@ -105,18 +106,18 @@
                         width: '10%',
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
-                        data: 'address',
-                        name: 'address',
+                        data: 'user.address',
+                        name: 'user.address',
                         searchable: true,
                         orderable: false,
-                        width: '40%',
+                        width: '35%',
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
                     },{
                         data: 'aksi',
                         name: 'aksi',
                         searchable: false,
                         orderable: false,
-                        width: '15%',
+                        width: '10%',
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },
                     

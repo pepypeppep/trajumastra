@@ -19,11 +19,11 @@
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="ltr:!text-left rtl:!text-right">NIK</th>
-                        <th class="ltr:!text-left rtl:!text-right">Nama</th>
-                        <th class="ltr:!text-left rtl:!text-right">Telepon</th>
-                        <th class="ltr:!text-left rtl:!text-right">UPTD</th>
-                        <th class="ltr:!text-left rtl:!text-right">Alamat</th>
+                        <th class="text-left">Nama</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Telepon</th>
+                        <th class="text-center">UPTD</th>
+                        <th class="text-left">Alamat</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -65,8 +65,17 @@
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2
-        function initSelect2(context) {
-            $(context).find('.select2').select2({
+        function initSelect2UserId(context) {
+            $(context).find('select[name="user_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih pengguna yang ingin dijadikan koordinator UPTD",
+                allowClear: true
+            });
+        }
+
+        function initSelect2UptdId(context) {
+            $(context).find('select[name="uptd_id"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
                 placeholder: "Pilih UPTD",
@@ -76,12 +85,14 @@
 
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2('#modal-add');
+            initSelect2UserId('#modal-add');
+            initSelect2UptdId('#modal-add');
         });
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2('#modal-edit');
+            initSelect2UserId('#modal-edit');
+            initSelect2UptdId('#modal-edit');
         });
     </script>
     {{-- End Select 2 --}}
@@ -108,30 +119,35 @@
                     type: 'GET',
                 },
                 columns: [{
-                        data: 'nik',
-                        name: 'nik',
+                        data: 'user.name',
+                        name: 'user.name',
                         searchable: true,
                         orderable: true,
+                        className: 'dark:border-zink-50 text-left'
                     }, {
-                        data: 'name',
-                        name: 'name',
+                        data: 'user.email',
+                        name: 'user.email',
                         searchable: true,
                         orderable: true,
-                    }, {
-                        data: 'phone',
-                        name: 'phone',
+                        className: 'dark:border-zink-50 text-center'
+                    },{
+                        data: 'user.phone',
+                        name: 'user.phone',
                         searchable: true,
                         orderable: true,
+                        className: 'dark:border-zink-50 text-center'
                     }, {
                         data: 'uptd.name',
                         name: 'uptd.name',
                         searchable: true,
                         orderable: true,
+                        className: 'dark:border-zink-50 text-center'
                     }, {
-                        data: 'address',
-                        name: 'address',
+                        data: 'user.address',
+                        name: 'user.address',
                         searchable: true,
                         orderable: true,
+                        className: 'dark:border-zink-50 text-left'
                     },
                     {
                         data: 'aksi',

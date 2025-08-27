@@ -28,9 +28,10 @@ class KelolaJadwalPendampinganController extends Controller
         $materis = $this->jadwalPendampinganService->getAllMateri();
         $kategoris = $this->jadwalPendampinganService->getAllKategoriPenyuluhan();
         $jenisPenyuluhans = $this->jadwalPendampinganService->getAllJenisPenyuluhan();
+        $penyuluhs = $this->jadwalPendampinganService->getAllPenyuluh();
 
         // Return view
-        return view('admin.kelolas.jadwal-pendampingan.index', compact('materis', 'kategoris', 'jenisPenyuluhans'));
+        return view('admin.kelolas.jadwal-pendampingan.index', compact('materis', 'kategoris', 'jenisPenyuluhans', 'penyuluhs'));
     }
 
     /**

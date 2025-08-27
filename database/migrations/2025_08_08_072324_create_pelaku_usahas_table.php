@@ -23,18 +23,10 @@ return new class extends Migration
             $table->foreign('bentuk_usaha_id')->references('id')->on('master_bentuk_usahas')->onDelete('set null');
             $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
             $table->foreign('jenis_usaha_id')->references('id')->on('master_jenis_usahas')->onDelete('set null');
-            // $table->integer('type'); //1.nelayan, 0.pembudidaya (DI V1 TIDAK DIPAKAI)
-            // $table->string('nik')->unique();
-            $table->string('name');
-            $table->longText('address')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
+            $table->longText('secretariat_address')->nullable(); // alamat sekretariat
             $table->string('npwp')->nullable();
             $table->string('siup')->nullable();
-            $table->string('gender')->nullable();
             $table->string('income_range')->nullable();
-            $table->string('born_place')->nullable();
-            $table->date('born_date')->nullable();
             $table->string('last_education')->nullable();
             $table->integer('maried_status')->nullable(); //1: belum menikah; 2: menikah; 3: cerai
             $table->integer('profession')->nullable(); //1: utama; 2: tambahan

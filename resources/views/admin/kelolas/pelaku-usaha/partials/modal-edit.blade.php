@@ -16,46 +16,30 @@
             @method('PUT')
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <div class="grid grid-cols-3 gap-4 mb-1 mt-3">
-                    <div class="col-span">
-                        {{-- Nama --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Nama Ketua Binaan<strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="name" name="name"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan nama" required>
-                        </div>
+                <div class="mt-3">
+                    <label for="user_id" class="inline-block text-base font-medium">Pengguna untuk dijadikan Ketua Binaan <strong
+                            class="text-red-500">*</strong>
+                    </label>
+                    <div class="mb-2">
+                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai ketua binaan.</small>
                     </div>
-                    <div class="col-span">
-                        {{-- Email --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Email Ketua Binaan <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="email" id="email" name="email"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan email" required>
-                        </div>
-                    </div>
-                    <div class="col-span">
-                        {{-- No Hp --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">No Hp. Ketuan Binaan <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="number" id="phone" name="phone"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan no hp" required>
-                        </div>
-                    </div>
+                    <select
+                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        name="user_id" id="user_id" required>
+                        <option value=""></option>
+                        @foreach ($usersHasPelakuUsahaRole as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 {{-- Alamat --}}
                 <div class="mt-3">
                     <label for="" class="inline-block mb-2 text-base font-medium">Alamat Sekretariat <strong
                         class="text-red-500">*</strong></label>
-                    <textarea name="address"
+                    <textarea name="secretariat_address"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        id="address" rows="3"></textarea>
+                        id="secretariat_address" rows="3" required></textarea>
                 </div>
 
                 {{-- Kelurahan --}}
@@ -64,7 +48,7 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="kalurahan_id" id="kalurahan_id">
+                        name="kalurahan_id" id="kalurahan_id" required>
                         <option value="">Pilih Kalurahan</option>
                         @foreach ($kalurahans as $kalurahan)
                             <option value="{{ $kalurahan->id }}">{{ $kalurahan->name }}, {{ $kalurahan->kecamatan->name }}, {{ $kalurahan->kecamatan->kabupaten->name }}</option>
@@ -78,7 +62,7 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="jenis_usaha_id" id="jenis_usaha_id">
+                        name="jenis_usaha_id" id="jenis_usaha_id" required>
                         <option value="">Pilih Jenis Usaha</option>
                         @foreach ($jenisUsahas as $jenisUsaha)
                             <option value="{{ $jenisUsaha->id }}">{{ $jenisUsaha->name }}</option>
@@ -92,7 +76,7 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="bentuk_usaha_id" id="bentuk_usaha_id">
+                        name="bentuk_usaha_id" id="bentuk_usaha_id" required>
                         <option value="">Pilih Bentuk Usaha</option>
                         @foreach ($bentukUsahas as $bentukUsaha)
                             <option value="{{ $bentukUsaha->id }}">{{ $bentukUsaha->name }}</option>
@@ -102,8 +86,7 @@
 
                 {{-- Kelompok Binaan --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Kelompok Binaan <strong
-                            class="text-red-500">*</strong></label>
+                    <label for="" class="inline-block mb-2 text-base font-medium">Kelompok Binaan</label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         name="kelompok_binaan_id" id="kelompok_binaan_id">
@@ -143,7 +126,7 @@
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="income_range" id="income_range">
+                        name="income_range" id="income_range" required>
                         <option value="">Pilih Range Penghasilan</option>
                         @foreach ($rangePenghasilans as $rangePenghasilan)
                             <option value="{{ $rangePenghasilan->name }}">{{ $rangePenghasilan->name }}</option>
@@ -181,15 +164,14 @@
                 url: urlGetData, // Url for get data edit
                 type: 'GET',
                 success: function(response) {
+                    console.log(response);  
                     // Modal title
-                    $('#modal-title').text('Ubah Data UPTD - ' + response.name);
+                    $('#modal-title').text('Ubah Data Pelaku Usaha - ' + response.user.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
-                    $('#form-edit').find('#name').val(response.name);
-                    $('#form-edit').find('#email').val(response.email);
-                    $('#form-edit').find('#phone').val(response.phone);
-                    $('#form-edit').find('#address').val(response.address);
+                    $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
+                    $('#form-edit').find('#secretariat_address').val(response.secretariat_address);
                     $('#form-edit').find('#npwp').val(response.npwp);
                     $('#form-edit').find('#siup').val(response.siup);
                     $('#form-edit').find('#kalurahan_id').val(response.kalurahan_id).trigger('change');

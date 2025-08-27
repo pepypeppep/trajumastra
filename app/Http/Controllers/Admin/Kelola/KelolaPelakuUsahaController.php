@@ -36,8 +36,10 @@ class KelolaPelakuUsahaController extends Controller
         $kelompokBinaans = $this->pelakuUsahaService->getAllKelompokBinaan();
         /* Get all range penghasilan */
         $rangePenghasilans = $this->pelakuUsahaService->getAllRangePenghasilan();
+        /* Get user has pelaku usaha role */
+        $usersHasPelakuUsahaRole = $this->pelakuUsahaService->getUsersHasPelakuUsahaRole();
 
-        return view('admin.kelolas.pelaku-usaha.index', compact('kalurahans', 'jenisUsahas', 'bentukUsahas', 'kelompokBinaans', 'rangePenghasilans'));
+        return view('admin.kelolas.pelaku-usaha.index', compact('kalurahans', 'jenisUsahas', 'bentukUsahas', 'kelompokBinaans', 'rangePenghasilans', 'usersHasPelakuUsahaRole'));
     }
 
     /**
@@ -50,14 +52,6 @@ class KelolaPelakuUsahaController extends Controller
         // Store Process
         return $this->pelakuUsahaService->store($request->validated());
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }   
 
     /**
      * Show the form for editing the specified resource.

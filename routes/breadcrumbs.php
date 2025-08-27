@@ -187,7 +187,7 @@ Breadcrumbs::for('kelola.berita', function (BreadcrumbTrail $trail) {
 /* Kelola Jadwal Pendampingan */
 Breadcrumbs::for('kelola.jadwal-pendampingan', function (BreadcrumbTrail $trail) {
     $trail->parent('kelola');
-    $trail->push('Jadwal Pendampingan', route('kelola.jadwal-pendampingan.index'));
+    $trail->push('Jadwal Pendampingan atau Penyuluhan', route('kelola.jadwal-pendampingan.index'));
 });
 
 /* Kelola UPTD */

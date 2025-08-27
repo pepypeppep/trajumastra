@@ -23,10 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'uptd_id' => 'required|exists:uptds,id',
-            'nik' => 'required|integer|digits:16',
-            'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 }

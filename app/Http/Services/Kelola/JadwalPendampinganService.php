@@ -4,6 +4,7 @@ namespace App\Http\Services\Kelola;
 
 use Carbon\Carbon;
 use App\Models\Materi;
+use App\Models\Penyuluh;
 use Illuminate\Support\Str;
 use App\Models\MasterKategori;
 use App\Models\JadwalPenyuluhan;
@@ -91,11 +92,18 @@ class JadwalPendampinganService
         return Materi::orderBy('title')->get();
     }
 
+    /* Get All Penyuluh */
+    public function getAllPenyuluh()
+    {
+        return Penyuluh::all()->sortBy('user.name');
+    }
+
     /* Get data by ID */
     public function getById(int $id)
     {
         $data = JadwalPenyuluhan::findOrFail($id);
         $data->periode = $data->start . ' to ' . $data->end;
+        $data->penyuluh_ids = $data->penyuluhs()->pluck('penyuluhs.id')->toArray();
         return $data;
     }
 
@@ -132,6 +140,11 @@ class JadwalPendampinganService
                 'quota' => $datas['quota'],
                 'status' => $datas['status']
             ]);
+
+            // Attach penyuluh
+            if (isset($datas['penyuluh_id']) && is_array($datas['penyuluh_id'])) {
+                $jadwalPenyuluhan->penyuluhs()->sync($datas['penyuluh_id']);
+            }
 
             // Return success response
             DB::commit();
@@ -180,6 +193,11 @@ class JadwalPendampinganService
                 'quota' => $attributes['quota'],
                 'status' => $attributes['status']
             ]);
+
+            // Attach penyuluh / pembawa materi
+            if (isset($attributes['penyuluh_id']) && is_array($attributes['penyuluh_id'])) {
+                $data->penyuluhs()->sync($attributes['penyuluh_id']);
+            }
 
             // Return success response
             DB::commit();

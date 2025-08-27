@@ -23,13 +23,11 @@ class CreateRequest extends FormRequest
     {
         return [
             'kalurahan_id' => 'required|exists:kalurahans,id',
-            'kelompok_binaan_id' => 'required|exists:kelompok_binaans,id',
+            'kelompok_binaan_id' => 'exists:kelompok_binaans,id',
             'bentuk_usaha_id' => 'required|exists:master_bentuk_usahas,id',
             'jenis_usaha_id' => 'required|exists:master_jenis_usahas,id',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|numeric',
-            'address' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+            'secretariat_address' => 'required|string',
             'npwp' => 'required|numeric',
             'siup' => 'required|numeric',
             'income_range' => 'required|string',
