@@ -2,8 +2,10 @@
 
 namespace App\Http\Services\Kelola;
 
-use App\Models\PelakuUsaha;
+use App\Models\User;
+use App\Enums\RoleEnum;
 use App\Models\Penyuluh;
+use App\Models\PelakuUsaha;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -54,6 +56,13 @@ class PenyuluhService
     {
         $data = Penyuluh::findOrFail($id);
         return $data;
+    }
+
+    /* Get User Has Penyuluh Role */
+    public function getUsersHasPenyuluhRole()
+    {
+        $users = User::role(RoleEnum::PENYULUH->value)->get();
+        return $users;
     }
 
     /* Store new data*/

@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('born_place')->nullable();
+            $table->date('born_date')->nullable();
             $table->boolean('is_active')->default(1); // 1: active, 0: inactive
             $table->timestamps();
             $table->softDeletes();

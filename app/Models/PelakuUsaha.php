@@ -41,4 +41,10 @@ class PelakuUsaha extends Model
     {
         return $this->belongsTo(MasterJenisUsaha::class);
     }
+
+    /* User */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

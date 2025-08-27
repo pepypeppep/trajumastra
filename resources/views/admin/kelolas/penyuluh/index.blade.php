@@ -20,7 +20,6 @@
                 <thead>
                     <tr>
                         <th class="text-left">Nama Penyuluh</th>
-                        <th class="text-center">NIK</th>
                         <th class="text-center">Tempat, Tgl. Lahir</th>
                         <th class="text-left">Alamat</th>
                         <th class="text-center">Aksi</th>
@@ -153,4 +152,28 @@
         });
     </script>
     {{-- End action delete data --}}
+
+    {{-- Start Select 2 --}}
+    <script>
+        // Init global Select2
+        function initSelect2User(context) {
+            $(context).find('[name="user_id"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih pengguna dengan role penyuluh",
+                allowClear: true
+            });
+        }
+
+        // Modal ADD
+        $(document).on('click', '[data-modal-target="modal-add"]', function() {
+            initSelect2User('#modal-add');
+        });
+
+        // Modal EDIT
+        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
+            initSelect2User('#modal-edit');
+        });
+    </script>
+    {{-- End Select 2 --}}
 @endpush

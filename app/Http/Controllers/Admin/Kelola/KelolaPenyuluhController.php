@@ -25,8 +25,10 @@ class KelolaPenyuluhController extends Controller
         if (request()->ajax()) {
             return $this->penyuluhService->getAll();
         }
-
-        return view('admin.kelolas.penyuluh.index');
+        // Get data
+        $usersHasPenyuluhRole = $this->penyuluhService->getUsersHasPenyuluhRole();
+        
+        return view('admin.kelolas.penyuluh.index', compact('usersHasPenyuluhRole'));
     }
     
     /**

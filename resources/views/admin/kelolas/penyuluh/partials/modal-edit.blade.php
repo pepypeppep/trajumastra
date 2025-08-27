@@ -16,61 +16,22 @@
             @method('PUT')
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <div class="grid grid-cols-2 gap-4 mb-1 mt-3">
-                    <div class="col-span">
-                        {{-- Nama --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Nama <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="name" name="name"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan nama" required>
-                        </div>
-                    </div>
-                    <div class="col-span">
-                        {{-- Email --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">NIK <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="number" id="nik" name="nik"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan NIK" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mb-1 mt-3">
-                    <div class="col-span">
-                        {{-- Tempat Lahir --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Tempat Lahir <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="born_place" name="born_place"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan tempat lahir" required>
-                        </div>
-                    </div>
-                    <div class="col-span">
-                        {{-- Email --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Tgl. Lahir <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="date" id="born_date" name="born_date"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan Tanggal Lahir" required>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Alamat --}}
+                {{-- Pengguna --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Alamat <strong
-                        class="text-red-500">*</strong></label>
-                    <textarea name="address"
-                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        id="" rows="3"></textarea>
+                    <label for="" class="inline-block mb-2 text-base font-medium">Pengguna <strong
+                            class="text-red-500">*</strong></label>
+                    <select
+                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        name="user_id" id="user_id">
+                        <option value=""></option>
+                        @foreach ($usersHasPenyuluhRole as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             {{-- End Modal Body --}}
+            
             {{-- Start Modal Footer --}}
             <div class="flex items-center justify-between p-4 mt-auto border-t border-slate-200 dark:border-zink-500">
                 <button type="submit"
@@ -104,11 +65,7 @@
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
-                    $('#form-edit').find('#name').val(response.name);
-                    $('#form-edit').find('#nik').val(response.nik);
-                    $('#form-edit').find('#born_place').val(response.born_place);
-                    $('#form-edit').find('#born_date').val(response.born_date);
-                    $('#form-edit').find('#address').val(response.address);
+                    $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
                 },
                 error: function(xhr) {
                     Swal.fire({

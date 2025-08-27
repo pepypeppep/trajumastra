@@ -65,7 +65,6 @@ class UserSeeder extends Seeder
         $developerAccount->assignRole($developerRole);
 
         $petugasUPTDAccount = User::factory()->create([
-            'uptd_id' => 1,
             'name' => 'Petugas UPTD',
             'username' => 'petugas_uptd',
             'email' => 'petugas_uptd@petugas_uptd.net'
@@ -73,12 +72,19 @@ class UserSeeder extends Seeder
         $petugasUPTDAccount->assignRole($petugasTPIRole);
 
         $petugasTPIAccount = User::factory()->create([
-            'uptd_id' => 7,
             'name' => 'Petugas TPI',
             'username' => 'petugas_tpi',
             'email' => 'petugas_tpi@petugas_tpi.net'
         ]);
         $petugasTPIAccount->assignRole($petugasTPIRole);
+
+        $penyuluhAccount = User::factory()->create([
+            'name' => 'Penyuluh',
+            'username' => 'penyuluh',
+            'email' => 'penyuluh@penyuluh.net'
+        ]);
+        $penyuluhRole->syncPermissions($transaksiPermissions);
+        $penyuluhAccount->assignRole($penyuluhRole);
 
         $pelakuUsahaAccount = User::factory()->create([
             'name' => 'Pengusaha',

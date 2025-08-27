@@ -18,4 +18,10 @@ class KoordinatorUptd extends Model
     {
         return $this->belongsTo(Uptd::class);
     }
+
+    /* User */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }
