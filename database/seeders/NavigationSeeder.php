@@ -204,9 +204,22 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            // Jenis Usaha Sarana
+            // Jenis Usaha
             [
                 'id' => 112,
+                'name' => 'Jenis Usaha',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-usaha.index',
+                'slug' => 'jenis-usaha',
+                'icon' => '',
+                'order' => 12,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Jenis Usaha Sarana
+            [
+                'id' => 113,
                 'name' => 'Jenis Usaha Sarana',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.jenis-usaha-sarana.index',
@@ -219,7 +232,7 @@ class NavigationSeeder extends Seeder
             ],
             // Jenis Klasifikasi Usaha
             [
-                'id' => 113,
+                'id' => 114,
                 'name' => 'Jenis Klasifikasi Usaha',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.jenis-klasifikasi-usaha.index',
@@ -232,7 +245,7 @@ class NavigationSeeder extends Seeder
             ],
             // Perahu
             [
-                'id' => 114,
+                'id' => 115,
                 'name' => 'Perahu',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.perahu.index',
@@ -245,7 +258,7 @@ class NavigationSeeder extends Seeder
             ],
             // SPBU
             [
-                'id' => 115,
+                'id' => 116,
                 'name' => 'SPBU',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.spbu.index',
@@ -258,7 +271,7 @@ class NavigationSeeder extends Seeder
             ],
             // UU Rekomendasi
             [
-                'id' => 116,
+                'id' => 117,
                 'name' => 'UU Rekomendasi',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.uu-rekomendasi.index',
@@ -271,7 +284,7 @@ class NavigationSeeder extends Seeder
             ],
             // Persyaratan Pengajuan
             [
-                'id' => 117,
+                'id' => 118,
                 'name' => 'Persyaratan Pengajuan',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.persyaratan-pengajuan.index',

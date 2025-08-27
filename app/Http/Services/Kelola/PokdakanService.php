@@ -198,13 +198,13 @@ class PokdakanService
             $data = Pokdakan::findOrFail($id);
             // Update data data
             $data->update([
-                'kalurahan_id' => $attributes['kalurahan_id'],
-                'name' => $attributes['name'],
-                'address' => $attributes['address'],
-                'phone' => $attributes['phone'],
-                'year' => $attributes['year'],
-                'leader' => $attributes['leader'],
-                'members' => $attributes['members']
+                'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
+                'name' => $attributes['name'] ?? $data->name,
+                'address' => $attributes['address'] ?? $data->address,
+                'phone' => $attributes['phone'] ?? $data->phone,
+                'year' => $attributes['year'] ?? $data->year,
+                'leader' => $attributes['leader'] ?? $data->leader,
+                'members' => $attributes['members'] ?? $data->members
             ]);
 
             $jenisIkanIds = [];

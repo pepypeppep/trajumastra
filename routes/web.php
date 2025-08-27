@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Kelola\KelolaTpiController;
 use App\Http\Controllers\Admin\Master\JenisIkanController;
 use App\Http\Controllers\Admin\Kelola\KelolaUptdController;
 use App\Http\Controllers\Admin\Master\JenisAssetController;
+use App\Http\Controllers\Admin\Master\JenisUsahaController;
 use App\Http\Controllers\Admin\Master\AlatTangkapController;
 use App\Http\Controllers\Admin\Master\BentukUsahaController;
 use App\Http\Controllers\Admin\Kelola\KelolaBeritaController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Admin\Master\UuRekomendasiController;
 use App\Http\Controllers\Admin\Settings\NavigationsController;
 use App\Http\Controllers\Admin\Settings\PreferencesController;
 use App\Http\Controllers\Admin\Kelola\KelolaPenyuluhController;
+use App\Http\Controllers\Admin\Kelola\KelolaPokdakanController;
 use App\Http\Controllers\Admin\Kelola\KelolaStokIkanController;
 use App\Http\Controllers\Admin\Laporan\TransaksiUptdController;
 use App\Http\Controllers\Admin\Master\AssetDigunakanController;
@@ -38,7 +40,6 @@ use App\Http\Controllers\Admin\Master\PersyaratanPengajuanController;
 use App\Http\Controllers\Admin\Master\JenisKlasifikasiUsahaController;
 use App\Http\Controllers\Admin\Kelola\KelolaJadwalPendampinganController;
 use App\Http\Controllers\Admin\Kelola\KelolaKoordinatorUptdTpiController;
-use App\Http\Controllers\Admin\Kelola\KelolaPokdakanController;
 use App\Http\Controllers\Admin\Kelola\PermohonanRekomendasiBbmController;
 
 /** ======================== BYPASS SSO
@@ -80,6 +81,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('jenis-perairan', JenisPerairanController::class)->names('jenis-perairan');
         /* Jenis Transaksi */
         Route::resource('jenis-transaksi', JenisTransaksiController::class)->names('jenis-transaksi');
+        /* Jenis Usaha */
+        Route::resource('jenis-usaha', JenisUsahaController::class)->names('jenis-usaha');
         /* Jenis Usaha Sarana */
         Route::resource('jenis-usaha-sarana', JenisUsahaSaranaController::class)->names('jenis-usaha-sarana');
         /* Jenis Klasifikasi Usaha */

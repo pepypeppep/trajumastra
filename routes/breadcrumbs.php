@@ -104,6 +104,12 @@ Breadcrumbs::for('master.jenis-transaksi', function (BreadcrumbTrail $trail) {
     $trail->push('Jenis Transaksi', route('master.jenis-transaksi.index'));
 });
 
+/* Jenis Usaha */
+Breadcrumbs::for('master.jenis-usaha', function (BreadcrumbTrail $trail) {
+    $trail->parent('master');
+    $trail->push('Jenis Usaha', route('master.jenis-usaha.index'));
+});
+
 /* Jenis Usaha Sarana */
 Breadcrumbs::for('master.jenis-usaha-sarana', function (BreadcrumbTrail $trail) {
     $trail->parent('master');
