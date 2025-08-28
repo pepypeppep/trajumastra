@@ -18,4 +18,14 @@ class TransaksiDetail extends Model
     {
         return $this->belongsTo(Transaksi::class);
     }
+
+    /**
+     * Get the jenis_ikan that owns the TransaksiDetail
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function jenis_ikan(): BelongsTo
+    {
+        return $this->belongsTo(MasterJenisIkan::class, 'master_jenis_ikans_id');
+    }
 }
