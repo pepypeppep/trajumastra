@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Kelola\Pokdakan;
+namespace App\Http\Requests\Kelola\Poklashar;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,19 +22,16 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'kalurahan_id' => 'required|exists:kalurahans,id',
+            'kecamatan_id' => 'required|exists:kecamatans,id',
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:255',
             'year' => 'required|string|max:255',
             'leader' => 'required|string|max:255',
             'members' => 'required|integer',
-            'jenis_ikan_id' => 'required|array',
-            'jenis_ikan_id.*' => 'integer|exists:master_jenis_ikans,id',
+            'market' => 'required|string|max:255',
             'jenis_usaha_id' => 'required|array',
             'jenis_usaha_id.*' => 'integer|exists:master_jenis_usahas,id',
-            'jenis_kolam_id' => 'required|array',
-            'jenis_kolam_id.*' => 'integer|exists:master_jenis_asets,id',
         ];
     }
 }

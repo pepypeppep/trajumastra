@@ -73,18 +73,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- Jenis Ikan --}}
-                <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Jenis Ikan <strong
-                            class="text-red-500">*</strong></label>
-                    <select
-                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="jenis_ikan_id[]" id="jenis_ikan_id" multiple>
-                        @foreach ($jenis_ikans as $jenis_ikan)
-                            <option value="{{ $jenis_ikan->id }}">{{ $jenis_ikan->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
                 {{-- Jenis Usaha --}}
                 <div class="mt-3">
                     <label for="" class="inline-block mb-2 text-base font-medium">Jenis Usaha <strong
@@ -97,29 +85,17 @@
                         @endforeach
                     </select>
                 </div>
-                {{-- Jenis Kolam --}}
+                {{-- Kecamatan --}}
                 <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Jenis Kolam <strong
+                    <label for="" class="inline-block mb-2 text-base font-medium">Kecamatan <strong
                             class="text-red-500">*</strong></label>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="jenis_kolam_id[]" id="jenis_kolam_id" multiple>
-                        @foreach ($jenis_kolams as $jenis_kolam)
-                            <option value="{{ $jenis_kolam->id }}">{{ $jenis_kolam->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                {{-- Kalurahan --}}
-                <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">Kalurahan <strong
-                            class="text-red-500">*</strong></label>
-                    <select
-                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="kalurahan_id" id="kalurahan_id">
+                        name="kecamatan_id" id="kecamatan_id">
                         <option value=""></option>
-                        @foreach ($kals as $kal)
-                            <option value="{{ $kal->id }}">
-                                {{ $kal->name . ' - ' . $kal->kecamatan->name . ' - ' . $kal->kecamatan->kabupaten->name }}
+                        @foreach ($kecamatans as $kecamatan)
+                            <option value="{{ $kecamatan->id }}">
+                                {{ $kecamatan->name . ' - ' . $kecamatan->kabupaten->name }}
                             </option>
                         @endforeach
                     </select>
@@ -131,6 +107,17 @@
                     <textarea id="address" name="address"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         rows="3" placeholder="Masukkan alamat" required></textarea>
+                </div>
+                {{-- Pasar --}}
+                <div class="mt-3">
+                    <label for="" class="inline-block text-base font-medium">Pasar <strong
+                            class="text-red-500">*</strong></label>
+                    <div class="mb-2">
+                        <small>Apabila terdapat 2 jenis pasar, pisahkan dengan koma.</small>
+                    </div>
+                    <input type="text" id="market" name="market"
+                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        placeholder="Masukkan pasar" required>
                 </div>
             </div>
             {{-- End Modal Body --}}
@@ -175,50 +162,15 @@
                     $('#form-edit').find('#leader').val(response.leader);
                     $('#form-edit').find('#members').val(response.members);
                     $('#form-edit').find('#year').val(response.year);
-                    $('#form-edit').find('#kalurahan_id').val(response.kalurahan_id).trigger('change');
-
-                    // ==== Jenis Ikan (multiple select2 with tags) ====
-                    let jenisIkanSelect = $('#form-edit').find('select[name="jenis_ikan_id[]"]');
-
-                    response.jenis_ikans.forEach(function(item) {
-                        // append option dynamically
-                        let option = new Option(item.name, item.id, true, true);
-                        jenisIkanSelect.append(option);
-                    });
-
-                    // Refresh select2
-                    jenisIkanSelect.trigger('change');
-
-                    // ==== Jenis Usaha (multiple select2 with tags) ====
-                    let jenisUsahaSelect = $('#form-edit').find('select[name="jenis_usaha_id[]"]');
-
-                    response.jenis_usahas.forEach(function(item) {
-                        // append option dynamically
-                        let option = new Option(item.name, item.id, true, true);
-                        jenisUsahaSelect.append(option);
-                    });
-
-                    // Refresh select2
-                    jenisUsahaSelect.trigger('change');
-
-                    // ==== Jenis Kolam (multiple select2 with tags) ====
-                    let jenisKolamSelect = $('#form-edit').find('select[name="jenis_kolam_id[]"]');
-
-                    response.jenis_kolams.forEach(function(item) {
-                        // append option dynamically
-                        let option = new Option(item.name, item.id, true, true);
-                        jenisKolamSelect.append(option);
-                    });
-
-                    // Refresh select2
-                    jenisKolamSelect.trigger('change');
-
+                    $('#form-edit').find('#market').val(response.market);
+                    $('#form-edit').find('#kecamatan_id').val(response.kecamatan_id).trigger('change');
+                    $('#form-edit').find('#jenis_usaha_id').val(response.jenis_usaha_ids).trigger('change');
                 },
                 error: function(xhr) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Gagal memuat data desa.',
+                        text: 'Gagal memuat data poklashar.',
                     });
                 }
             });

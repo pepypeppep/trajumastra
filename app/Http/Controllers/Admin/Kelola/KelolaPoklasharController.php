@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\Kelola;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Kelola\Pokdakan\CreateRequest;
-use App\Http\Requests\Kelola\Pokdakan\UpdateRequest;
+use App\Http\Requests\Kelola\poklashar\CreateRequest;
+use App\Http\Requests\Kelola\poklashar\UpdateRequest;
 use App\Http\Services\Kelola\PoklasharService;
 
 class KelolaPoklasharController extends Controller
@@ -24,12 +24,10 @@ class KelolaPoklasharController extends Controller
             return $this->service->getAll();
         }
 
-        $kals = $this->service->getAllKalurahan();
-        $jenis_ikans = $this->service->getAllJenisIkan();
+        $kecamatans = $this->service->getAllKecamatan();
         $jenis_usahas = $this->service->getAllJenisUsaha();
-        $jenis_kolams = $this->service->getAllJenisKolam();
 
-        return view('admin.kelolas.poklashar.index', compact('kals', 'jenis_ikans', 'jenis_usahas', 'jenis_kolams'));
+        return view('admin.kelolas.poklashar.index', compact('kecamatans', 'jenis_usahas'));
     }
 
     /**

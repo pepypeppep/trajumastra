@@ -41,6 +41,6 @@ class JadwalPenyuluhan extends Model
             'jadwal_penyuluhan_has_penyuluhs',           // tabel pivot
             'jadwal_penyuluhan_id',                      // foreign key di pivot yang mengacu ke jadwal
             'penyuluh_id'                                // foreign key di pivot yang mengacu ke penyuluh
-        );
+        )->withTimestamps();
     }
 }

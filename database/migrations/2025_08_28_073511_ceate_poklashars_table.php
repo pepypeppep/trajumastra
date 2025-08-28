@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->integer('year')->nullable();
             $table->string('leader')->nullable();
-            $table->string('pasar')->nullable();
+            $table->string('market')->nullable();
             $table->integer('members')->nullable();
             $table->timestamps();
         });

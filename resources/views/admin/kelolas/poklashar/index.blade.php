@@ -10,10 +10,10 @@
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Pokdakan</h5>
+                <h5 class="mb-0">Daftar Poklashar</h5>
                 <button type="button" href="" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Pokdakan
+                    <i class="ri-user-add-line"></i> Tambah Poklashar
                 </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
@@ -23,10 +23,9 @@
                         <th class="ltr:!text-left rtl:!text-right">Kecamatan</th>
                         <th class="ltr:!text-left rtl:!text-right">Alamat</th>
                         <th class="ltr:!text-left rtl:!text-right">Ketua</th>
-                        <th class="ltr:!text-left rtl:!text-right">Anggota</th>
-                        <th class="ltr:!text-left rtl:!text-right">Jenis Ikan</th>
+                        <th class="ltr:!text-left rtl:!text-right">Anggota</th> 
                         <th class="ltr:!text-left rtl:!text-right">Jenis Usaha</th>
-                        <th class="ltr:!text-left rtl:!text-right">Jenis Kolam</th>
+                        <th class="ltr:!text-left rtl:!text-right">Pasar</th> 
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -55,10 +54,6 @@
     </form>
 @endsection
 
-@push('css')
-    <!-- leaflet plugin -->
-    <link rel="stylesheet" href="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.css') }}">
-@endpush
 @push('scripts')
     <script src="{{ URL::asset('assets/js/datatables/data-tables.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/data-tables.tailwindcss.min.js') }}"></script>
@@ -68,32 +63,16 @@
     <script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
-    <!-- leaflet plugin -->
-    <script src="{{ URL::asset('assets/libs/leaflet/leaflet.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet.js') }}"></script>
-    <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.js') }}"></script>
 
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2
-        function initSelect2Kalurahan(context) {
-            $(context).find('[name="kalurahan_id"]').select2({
+        function initSelect2Kecamatan(context) {
+            $(context).find('[name="kecamatan_id"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
-                placeholder: "Pilih Kalurahan",
+                placeholder: "Pilih Kecamatan",
                 allowClear: true
-            });
-        }
-
-        function initSelect2JenisIkan(context) {
-            $(context).find('[name="jenis_ikan_id[]"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih Jenis Ikan",
-                allowClear: true,
-                tags: true,
-                tokenSeparators: [',', ' '],
-                multiple: true
             });
         }
 
@@ -109,32 +88,17 @@
             });
         }
 
-        function initSelect2JenisKolam(context) {
-            $(context).find('[name="jenis_kolam_id[]"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih Jenis Kolam",
-                allowClear: true,
-                tags: true,
-                tokenSeparators: [',', ' '],
-                multiple: true
-            });
-        }
 
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2Kalurahan('#modal-add');
-            initSelect2JenisIkan('#modal-add');
+            initSelect2Kecamatan('#modal-add');
             initSelect2JenisUsaha('#modal-add');
-            initSelect2JenisKolam('#modal-add');
         });
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2Kalurahan('#modal-edit');
-            initSelect2JenisIkan('#modal-edit');
+            initSelect2Kecamatan('#modal-edit');
             initSelect2JenisUsaha('#modal-edit');
-            initSelect2JenisKolam('#modal-edit');
         });
     </script>
     {{-- End Select 2 --}}
@@ -160,15 +124,16 @@
                     url: "{{ route('kelola.poklashar.index') }}",
                     type: 'GET',
                 },
-                columns: [{
+                columns: [
+                    {
                         data: 'name',
                         name: 'name',
                         searchable: true,
                         orderable: true,
                     },
                     {
-                        data: 'kalurahan.name',
-                        name: 'kalurahan.name',
+                        data: 'kecamatan.name',
+                        name: 'kecamatan.name',
                         searchable: true,
                         orderable: true,
                     },
@@ -191,20 +156,14 @@
                         orderable: true,
                     },
                     {
-                        data: 'jenis_ikan_data',
-                        name: 'jenis_ikan_data',
-                        searchable: true,
-                        orderable: true,
-                    },
-                    {
                         data: 'jenis_usaha_data',
                         name: 'jenis_usaha_data',
                         searchable: true,
                         orderable: true,
                     },
                     {
-                        data: 'jenis_kolam_data',
-                        name: 'jenis_kolam_data',
+                        data: 'market',
+                        name: 'market',
                         searchable: true,
                         orderable: true,
                     },
