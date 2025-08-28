@@ -233,6 +233,12 @@ Breadcrumbs::for('kelola.pokdakan', function (BreadcrumbTrail $trail) {
     $trail->push('Pokdakan', route('kelola.pokdakan.index'));
 });
 
+/* Kelola Poklashar */
+Breadcrumbs::for('kelola.poklashar', function (BreadcrumbTrail $trail) {
+    $trail->parent('kelola');
+    $trail->push('Poklashar', route('kelola.poklashar.index'));
+});
+
 /**
  * ------------------------------------------------------------------------------------------------------------------------
  * Laporan

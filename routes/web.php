@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Laporan\TransaksiUptdController;
 use App\Http\Controllers\Admin\Master\AssetDigunakanController;
 use App\Http\Controllers\Admin\Master\JenisTransaksiController;
 use App\Http\Controllers\Admin\Kelola\KelolaHargaIkanController;
+use App\Http\Controllers\Admin\Kelola\KelolaPoklasharController;
 use App\Http\Controllers\Admin\Master\JenisPendaratanController;
 use App\Http\Controllers\Admin\Master\JenisPenyuluhanController;
 use App\Http\Controllers\Admin\Master\JenisUsahaSaranaController;
@@ -123,6 +124,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('harga-ikan', KelolaHargaIkanController::class)->names('harga-ikan');
         /* Kelola Pokdakan */
         Route::resource('pokdakan', KelolaPokdakanController::class)->names('pokdakan');
+        /* Kelola Poklashar */
+        Route::resource('poklashar', KelolaPoklasharController::class)->names('poklashar');
     });
 
     /* ---- Laporan */

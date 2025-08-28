@@ -469,6 +469,19 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
+            // Kelola Poklashar
+            [
+                'id' => 213,
+                'name' => 'Kelola Poklashar',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.poklashar.index',
+                'slug' => 'kelola-poklashar',
+                'icon' => '',
+                'order' => 12,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
 
             /*
             ! ============== Laporan (Parent)
