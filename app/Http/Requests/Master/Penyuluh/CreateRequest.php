@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Kelola\Penyuluh;
+namespace App\Http\Requests\Master\Penyuluh;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;

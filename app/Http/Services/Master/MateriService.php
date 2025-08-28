@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services\Kelola;
+namespace App\Http\Services\Master;
 
 use App\Models\Tag;
 use App\Models\Materi;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
-class MateriService
+class   MateriService
 {
     /* Get alls */
     public function getAll()
@@ -33,7 +33,7 @@ class MateriService
             })
             ->addColumn('attachment_data', function ($row) {
                 $content = '<button href="javascript:void(0);" title="Lihat data materi" id="btn-modal-file"
-                        data-id="' . $row->id . '" data-url-get="' . route('kelola.materi.attachment', $row->id) . '"
+                        data-id="' . $row->id . '" data-url-get="' . route('master.materi.attachment', $row->id) . '"
                         class="items-center justify-center size-[37.5px] transition-all duration-200 ease-linear p-0 text-sky-500 btn bg-sky-100 hover:text-white hover:bg-sky-600 focus:text-white focus:bg-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:ring active:ring-sky-100 dark:bg-sky-500/20 dark:text-sky-400 dark:hover:bg-sky-500 dark:hover:text-white dark:focus:bg-sky-500 dark:focus:text-white dark:active:bg-sky-500 dark:active:text-white dark:ring-sky-400/20">
                         <i class="ri-file-line"></i>
                         </button>';
@@ -49,18 +49,18 @@ class MateriService
                 $btnEdit = '';
                 $btnDelete = '';
                 // Btn Edit
-                if (auth()->user()->can('kelola-materi.update')) {
+                if (auth()->user()->can('master-materi.update')) {
                     $btnEdit = '<button href="javascript:void(0);" title="Ubah data materi" id="btn-modal-edit"
-                        data-id="' . $row->id . '"  data-url-action="' . route('kelola.materi.update', $row->id) . '" data-url-get="' . route('kelola.materi.edit', $row->id) . '"
+                        data-id="' . $row->id . '"  data-url-action="' . route('master.materi.update', $row->id) . '" data-url-get="' . route('master.materi.edit', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
                         <i class="ri-edit-line"></i>
                         </button>';
                 }
 
                 // Btn Delete
-                if (auth()->user()->can('kelola-materi.delete')) {
+                if (auth()->user()->can('master-materi.delete')) {
                     $btnDelete = '<button href="javascript:void(0);" title="Hapus data materi" id="btn-delete" onclick="confirmDelete(this)"
-                        data-id="' . $row->id . '"  data-url-action="' . route('kelola.materi.destroy', $row->id) . '"
+                        data-id="' . $row->id . '"  data-url-action="' . route('master.materi.destroy', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
                         <i class="ri-delete-bin-line"></i>
                         </button>';
@@ -199,7 +199,7 @@ class MateriService
 
             // Return success response
             DB::commit();
-            return redirect()->route('kelola.materi.index')->with('success', 'Materi berhasil dihapus');
+            return redirect()->route('master.materi.index')->with('success', 'Materi berhasil dihapus');
         } catch (\Exception $e) {
             // Return error response
             DB::rollBack();

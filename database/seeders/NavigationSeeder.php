@@ -139,39 +139,39 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            // Materi
+            // Jenis Penyuluhan
             [
                 'id' => 107,
-                'name' => 'Materi',
+                'name' => 'Jenis Penyuluhan',
+                'page' => 'admin', // or 'guest'
+                'url' => 'master.jenis-penyuluhan.index',
+                'slug' => 'jenis-penyuluhan',
+                'icon' => '',
+                'order' => 7,
+                'parent_id' => 100,
+                'active' => true,
+                'display' => true,
+            ],
+            // Materi
+            [
+                'id' => 108,
+                'name' => 'Materi Penyuluhan',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.materi.index',
                 'slug' => 'master-materi',
                 'icon' => '',
-                'order' => 7,
-                'parent_id' => 200,
+                'order' => 8,
+                'parent_id' => 100,
                 'active' => true,
                 'display' => true,
             ],
             // Penyuluh
             [
-                'id' => 108,
+                'id' => 109,
                 'name' => 'Penyuluh (Pemateri)',
                 'page' => 'admin', // or 'guest'
                 'url' => 'master.penyuluh.index',
                 'slug' => 'master-penyuluh',
-                'icon' => '',
-                'order' => 8,
-                'parent_id' => 200,
-                'active' => true,
-                'display' => true,
-            ],
-            // Jenis Penyuluhan
-            [
-                'id' => 109,
-                'name' => 'Jenis Penyuluhan',
-                'page' => 'admin', // or 'guest'
-                'url' => 'master.jenis-penyuluhan.index',
-                'slug' => 'jenis-penyuluhan',
                 'icon' => '',
                 'order' => 9,
                 'parent_id' => 100,

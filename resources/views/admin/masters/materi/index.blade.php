@@ -1,28 +1,29 @@
 @extends('layouts.master')
 
-@section('title', 'Penyuluh')
+@section('title', 'Materi Penyuluhan')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('kelola.penyuluh') }}
+    {{ Breadcrumbs::render('master.materi') }}
 @endsection
 
 @section('content-admin')
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Penyuluh</h5>
-                <button type="button" data-modal-target="modal-add"
+                <h5 class="mb-0">Daftar Materi</h5>
+                <button type="button" href="" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Penyuluh
+                    <i class="ri-user-add-line"></i> Tambah Materi
                 </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="text-left">Nama Penyuluh</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Tempat, Tgl. Lahir</th>
-                        <th class="text-left">Alamat</th>
+                        <th class="ltr:!text-left rtl:!text-right">Judul</th>
+                        <th class="ltr:!text-left rtl:!text-right">Tag</th>
+                        <th class="ltr:!text-left rtl:!text-right">Deskripsi</th>
+                        <th class="ltr:!text-left rtl:!text-right">Lampiran</th>
+                        <th class="ltr:!text-left rtl:!text-right">Tanggal Buat</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -31,7 +32,7 @@
                     <tr class="data-row">
                         <td colspan="6">
                             <div class="flex justify-center items-center">
-                                <span class="text-gray-500 dark:text-zink-300">Memuat data penyuluh</span>
+                                <span class="text-gray-500 dark:text-zink-300">Memuat data ...</span>
                             </div>
                         </td>
                     </tr>
@@ -40,10 +41,12 @@
         </div>
     </div>
 
-    {{-- Load modal add --}}
-    @include('admin.kelolas.penyuluh.partials.modal-add')
-    {{-- Load modal edit --}}
-    @include('admin.kelolas.penyuluh.partials.modal-edit')
+    {{-- Modal Add --}}
+    @include('admin.masters.materi.partials.modal-add')
+    {{-- Modal Edit --}}
+    @include('admin.masters.materi.partials.modal-edit')
+    {{-- Modal File --}}
+    @include('admin.masters.materi.partials.modal-file')
     {{-- Form Delete --}}
     <form id="form-delete" action="" method="POST" class="hidden">
         @csrf
@@ -61,8 +64,60 @@
     <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
 
-        
-    {{-- Implement datatable --}}
+    <script src="{{ URL::asset('assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
+    {{-- <script src="{{ URL::asset('assets/js/pages/form-editor-classic.init.js') }}"></script> --}}
+
+    <script>
+        let editors = {};
+
+        function initCKEditor() {
+            document.querySelectorAll('.ckeditor-classic').forEach(function(el) {
+                // Prevent multiple init
+                if (editors[el.id]) return;
+
+                ClassicEditor
+                    .create(el)
+                    .then(editor => {
+                        editors[el.id] = editor;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        }
+
+        // Run once after DOM ready
+        initCKEditor();
+    </script>
+
+    {{-- Start Select 2 --}}
+    <script>
+        // Init global Select2
+        function initSelect2(context) {
+            $(context).find('[name="tag[]"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Tag",
+                allowClear: true,
+                tags: true,
+                tokenSeparators: [',', ' '],
+                multiple: true
+            });
+        }
+
+        // Modal ADD
+        $(document).on('click', '[data-modal-target="modal-add"]', function() {
+            initSelect2('#modal-add');
+        });
+
+        // Modal EDIT
+        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
+            initSelect2('#modal-edit');
+        });
+    </script>
+    {{-- End Select 2 --}}
+
+    {{-- Start Implement datatable --}}
     <script>
         // -- Start Load Datatable
         var filter = {
@@ -80,57 +135,55 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('kelola.penyuluh.index') }}",
+                    url: "{{ route('master.materi.index') }}",
                     type: 'GET',
                 },
-                columns: [
+                columns: [{
+                        data: 'title',
+                        name: 'title',
+                        searchable: true,
+                        orderable: true,
+                    },
                     {
-                        data: 'user.name',
-                        name: 'user.name',
+                        data: 'tags',
+                        name: 'tags',
                         searchable: true,
                         orderable: true,
-                        width: '20%',
-                        className: 'border border-gray-300 dark:border-zink-50 text-left'
-                    },{
-                        data: 'user.email',
-                        name: 'user.email',
+                    },
+                    {
+                        data: 'description',
+                        name: 'description',
                         searchable: true,
                         orderable: true,
-                        width: '15%',
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
-                    },{
-                        data: 'ttl',
-                        name: 'ttl',
-                        searchable: true,
+                    },
+                    {
+                        data: 'attachment_data',
+                        name: 'attachment',
+                        searchable: false,
                         orderable: false,
-                        width: '10%',
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
-                    },{
-                        data: 'user.address',
-                        name: 'user.address',
+                    },
+                    {
+                        data: 'created_date',
+                        name: 'created_at',
                         searchable: true,
-                        orderable: false,
-                        width: '35%',
-                        className: 'border border-gray-300 dark:border-zink-50 text-left'
-                    },{
+                        orderable: true,
+                    }, {
                         data: 'aksi',
                         name: 'aksi',
                         searchable: false,
                         orderable: false,
-                        width: '10%',
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
+                        className: 'text-center'
                     },
-                    
-                    // etc Penyuluh
                 ],
             })
         }
         // -- End Load Datatable
     </script>
+    {{-- End Implement datatable --}}
 
     {{-- Start action delete data --}}
     <script>
-        $(document).on('click', '.btn-delete', function(e) {
+        $(document).on('click', '#btn-delete', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
             var urlFormAction = $(this).data('url-action');
@@ -153,28 +206,4 @@
         });
     </script>
     {{-- End action delete data --}}
-
-    {{-- Start Select 2 --}}
-    <script>
-        // Init global Select2
-        function initSelect2User(context) {
-            $(context).find('[name="user_id"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih pengguna dengan role penyuluh",
-                allowClear: true
-            });
-        }
-
-        // Modal ADD
-        $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2User('#modal-add');
-        });
-
-        // Modal EDIT
-        $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2User('#modal-edit');
-        });
-    </script>
-    {{-- End Select 2 --}}
 @endpush

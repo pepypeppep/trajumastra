@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Kelola;
+namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\Kelola\MateriService;
-use App\Http\Requests\Kelola\Materi\CreateRequest;
-use App\Http\Requests\Kelola\Materi\UpdateRequest;
+use App\Http\Services\Master\MateriService;
+use App\Http\Requests\Master\Materi\CreateRequest;
+use App\Http\Requests\Master\Materi\UpdateRequest;
 
-class KelolaMateriController extends Controller
+class MateriController extends Controller
 {
     public function __construct(protected MateriService $service) {}
 
@@ -16,14 +16,14 @@ class KelolaMateriController extends Controller
      */
     public function index()
     {
-        $this->setRule('kelola-materi.read');
+        $this->setRule('master-materi.read');
 
         // Get data jenis ikan for data table
         if (request()->ajax()) {
             return $this->service->getAll();
         }
 
-        return view('admin.kelolas.materi.index');
+        return view('admin.masters.materi.index');
     }
 
     /**
@@ -39,7 +39,7 @@ class KelolaMateriController extends Controller
      */
     public function attachment($id)
     {
-        $this->setRule('kelola-materi.read');
+        $this->setRule('master-materi.read');
 
         return $this->service->getAttachmentById($id);
     }
@@ -49,7 +49,7 @@ class KelolaMateriController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $this->setRule('kelola-materi.create');
+        $this->setRule('master-materi.create');
 
         // Store process
         return $this->service->store($request->validated());
@@ -60,7 +60,7 @@ class KelolaMateriController extends Controller
      */
     public function edit($id)
     {
-        $this->setRule('kelola-materi.update');
+        $this->setRule('master-materi.update');
 
         return $this->service->getById($id);
     }
@@ -70,7 +70,7 @@ class KelolaMateriController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $this->setRule('kelola-materi.update');
+        $this->setRule('master-materi.update');
         // Update process
         return $this->service->update($id, $request->validated());
     }
@@ -80,7 +80,7 @@ class KelolaMateriController extends Controller
      */
     public function destroy($id)
     {
-        $this->setRule('kelola-materi.delete');
+        $this->setRule('master-materi.delete');
         // Delete Process
         return $this->service->delete($id);
     }

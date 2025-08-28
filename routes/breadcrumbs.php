@@ -146,6 +146,19 @@ Breadcrumbs::for('master.persyaratan-pengajuan', function (BreadcrumbTrail $trai
     $trail->push('Persyaratan Pengajuan', route('master.persyaratan-pengajuan.index'));
 });
 
+/* Penyuluh */
+Breadcrumbs::for('master.penyuluh', function (BreadcrumbTrail $trail) {
+    $trail->parent('master');
+    $trail->push('Penyuluh', route('master.penyuluh.index'));
+});
+
+/* Materi */
+Breadcrumbs::for('master.materi', function (BreadcrumbTrail $trail) {
+    $trail->parent('master');
+    $trail->push('Materi Penyuluhan', route('master.materi.index'));
+});
+
+
 /**
  * ------------------------------------------------------------------------------------------------------------------------
  * Kelola
@@ -164,12 +177,6 @@ Breadcrumbs::for('kelola.permohonan-rekomendasi-bbm', function (BreadcrumbTrail 
 Breadcrumbs::for('kelola.pelaku-usaha', function (BreadcrumbTrail $trail) {
     $trail->parent('kelola');
     $trail->push('Pelaku Usaha', route('kelola.pelaku-usaha.index'));
-});
-
-/* Kelola Penyuluh */
-Breadcrumbs::for('kelola.penyuluh', function (BreadcrumbTrail $trail) {
-    $trail->parent('kelola');
-    $trail->push('Penyuluh', route('kelola.penyuluh.index'));
 });
 
 /* Kelola Kelompok Binaan */
@@ -218,12 +225,6 @@ Breadcrumbs::for('kelola.stok-ikan', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('kelola.harga-ikan', function (BreadcrumbTrail $trail) {
     $trail->parent('kelola');
     $trail->push('Harga Ikan', route('kelola.harga-ikan.index'));
-});
-
-/* Kelola Materi */
-Breadcrumbs::for('kelola.materi', function (BreadcrumbTrail $trail) {
-    $trail->parent('kelola');
-    $trail->push('Materi', route('kelola.materi.index'));
 });
 
 /* Kelola Pokdakan */

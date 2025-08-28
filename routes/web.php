@@ -6,9 +6,11 @@ use App\Http\Controllers\Guest\BerandaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Master\SpbuController;
 use App\Http\Controllers\Admin\Master\BidangController;
+use App\Http\Controllers\Admin\Master\MateriController;
 use App\Http\Controllers\Admin\Master\PerahuController;
 use App\Http\Controllers\Admin\Settings\RolesController;
 use App\Http\Controllers\Admin\Settings\UsersController;
+use App\Http\Controllers\Admin\Master\PenyuluhController;
 use App\Http\Controllers\Admin\Kelola\KelolaTpiController;
 use App\Http\Controllers\Admin\Master\JenisIkanController;
 use App\Http\Controllers\Admin\Kelola\KelolaUptdController;
@@ -16,14 +18,11 @@ use App\Http\Controllers\Admin\Master\JenisAssetController;
 use App\Http\Controllers\Admin\Master\JenisUsahaController;
 use App\Http\Controllers\Admin\Master\AlatTangkapController;
 use App\Http\Controllers\Admin\Master\BentukUsahaController;
-use App\Http\Controllers\Admin\Kelola\KelolaBeritaController;
-use App\Http\Controllers\Admin\Kelola\KelolaMateriController;
 use App\Http\Controllers\Admin\Laporan\TransaksiTpiController;
 use App\Http\Controllers\Admin\Master\JenisPerairanController;
 use App\Http\Controllers\Admin\Master\UuRekomendasiController;
 use App\Http\Controllers\Admin\Settings\NavigationsController;
 use App\Http\Controllers\Admin\Settings\PreferencesController;
-use App\Http\Controllers\Admin\Kelola\KelolaPenyuluhController;
 use App\Http\Controllers\Admin\Kelola\KelolaPokdakanController;
 use App\Http\Controllers\Admin\Kelola\KelolaStokIkanController;
 use App\Http\Controllers\Admin\Laporan\TransaksiUptdController;
@@ -63,8 +62,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('asset-digunakan', AssetDigunakanController::class)->names('asset-digunakan');
         /* Range Penghasilan */
         Route::resource('range-penghasilan', RangePenghasilanController::class)->names('range-penghasilan');
-        /* Jenis Penyuluhan */
-        Route::resource('jenis-penyuluhan', JenisPenyuluhanController::class)->names('jenis-penyuluhan');
         /* Bentuk Usaha */
         Route::resource('bentuk-usaha', BentukUsahaController::class)->names('bentuk-usaha');
         /* Bidang */
@@ -95,6 +92,13 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('uu-rekomendasi', UuRekomendasiController::class)->names('uu-rekomendasi');
         /* Persyaratan Pengajuan */
         Route::resource('persyaratan-pengajuan', PersyaratanPengajuanController::class)->names('persyaratan-pengajuan');
+        /* Jenis Penyuluhan */
+        Route::resource('jenis-penyuluhan', JenisPenyuluhanController::class)->names('jenis-penyuluhan');
+        /* Kelola Penyuluh */
+        Route::resource('penyuluh', PenyuluhController::class)->names('penyuluh');
+        /* Kelola Materi */
+        Route::get('/materi/attachment/{id}', [MateriController::class, 'attachment'])->name('materi.attachment');
+        Route::resource('materi', MateriController::class)->names('materi');
     });
 
     /* ---- Kelola */
@@ -103,8 +107,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('permohonan-rekomendasi-bbm', PermohonanRekomendasiBbmController::class)->names('permohonan-rekomendasi-bbm');
         /* Kelola Pelaku Usaha */
         Route::resource('pelaku-usaha', KelolaPelakuUsahaController::class)->names('pelaku-usaha');
-        /* Kelola Penyuluh */
-        Route::resource('penyuluh', KelolaPenyuluhController::class)->names('penyuluh');
         /* Kelola Kelompok Binaan */
         Route::resource('kelompok-binaan', KelolaKelompokBinaanController::class)->names('kelompok-binaan');
         /* Kelola Jadwal Pendampingan */
@@ -119,9 +121,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('stok-ikan', KelolaStokIkanController::class)->names('stok-ikan');
         /* Kelola Harga Ikan */
         Route::resource('harga-ikan', KelolaHargaIkanController::class)->names('harga-ikan');
-        /* Kelola Materi */
-        Route::get('/materi/attachment/{id}', [KelolaMateriController::class, 'attachment'])->name('materi.attachment');
-        Route::resource('materi', KelolaMateriController::class)->names('materi');
         /* Kelola Pokdakan */
         Route::resource('pokdakan', KelolaPokdakanController::class)->names('pokdakan');
     });

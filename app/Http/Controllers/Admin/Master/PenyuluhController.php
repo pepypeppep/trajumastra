@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Kelola;
+namespace App\Http\Controllers\Admin\Master;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Services\Kelola\PenyuluhService;
-use App\Http\Requests\Kelola\Penyuluh\CreateRequest;
-use App\Http\Requests\Kelola\Penyuluh\UpdateRequest;
+use App\Http\Services\Master\PenyuluhService;
+use App\Http\Requests\Master\Penyuluh\CreateRequest;
+use App\Http\Requests\Master\Penyuluh\UpdateRequest;
 
-class KelolaPenyuluhController extends Controller
+class PenyuluhController extends Controller
 {
     public function __construct(protected PenyuluhService $penyuluhService)
     {
@@ -19,7 +19,7 @@ class KelolaPenyuluhController extends Controller
      */
     public function index()
     {
-        $this->setRule('kelola-penyuluh.read');
+        $this->setRule('master-penyuluh.read');
 
         // Load data for data table (server side - AJAX)
         if (request()->ajax()) {
@@ -28,7 +28,7 @@ class KelolaPenyuluhController extends Controller
         // Get data
         $usersHasPenyuluhRole = $this->penyuluhService->getUsersHasPenyuluhRole();
         
-        return view('admin.kelolas.penyuluh.index', compact('usersHasPenyuluhRole'));
+        return view('admin.masters.penyuluh.index', compact('usersHasPenyuluhRole'));
     }
     
     /**
@@ -36,7 +36,7 @@ class KelolaPenyuluhController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $this->setRule('kelola-penyuluh.create');
+        $this->setRule('master-penyuluh.create');
 
         // Store Process
         return $this->penyuluhService->store($request->validated());
@@ -47,7 +47,7 @@ class KelolaPenyuluhController extends Controller
      */
     public function edit(string $id)
     {
-        $this->setRule('kelola-penyuluh.update');
+        $this->setRule('master-penyuluh.update');
         return $this->penyuluhService->getById($id);
     }
 
@@ -56,7 +56,7 @@ class KelolaPenyuluhController extends Controller
      */
     public function update(UpdateRequest $request, string $id)
     {
-        $this->setRule('kelola-penyuluh.update');
+        $this->setRule('master-penyuluh.update');
 
         // Update Process
         return $this->penyuluhService->update($id, $request->validated());
@@ -67,7 +67,7 @@ class KelolaPenyuluhController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->setRule('kelola-penyuluh.delete');
+        $this->setRule('master-penyuluh.delete');
         // Delete Process
         return $this->penyuluhService->delete($id);
     }

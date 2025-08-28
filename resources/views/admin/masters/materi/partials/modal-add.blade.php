@@ -7,7 +7,7 @@
                 class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
                     data-lucide="x" class="size-5"></i></button>
         </div>
-        <form action="{{ route('kelola.materi.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('master.materi.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
