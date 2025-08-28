@@ -4,16 +4,32 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Services\DashboardService;
 
 class DashboardController extends Controller
 {
+    public function __construct(protected DashboardService $service) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->setRule('dashboard.read');
-        return view('admin.dashboard.index');
+
+        if ($request->ajax()) {
+            $transactionCount = $this->service->getTransactionCount();
+            $transactions = $this->service->getTransactionAmount();
+            return [
+                'transactionCount' => $transactionCount,
+                'transactions' => $transactions
+            ];
+        }
+
+        $dataCount = $this->service->getDataCount();
+        $popularFish = $this->service->getPopularFish();
+
+        return view('admin.dashboard.index', compact('dataCount', 'popularFish'));
     }
 
     /**
