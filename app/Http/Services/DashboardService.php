@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Enums\JenisKelompokBinaanEnum;
 use App\Models\Uptd;
 use App\Models\Penyuluh;
 use App\Models\Pokdakan;
@@ -23,7 +24,7 @@ class DashboardService
         $total_pelaku_usaha = PelakuUsaha::count();
         $total_penyuluh = Penyuluh::count();
         $total_kelompok_binaan = KelompokBinaan::count();
-        $total_pokdakan = Pokdakan::count();
+        $total_pokdakan = KelompokBinaan::where('jenis_kelompok', JenisKelompokBinaanEnum::POKDAKAN->value)->count();
         $total_rekomendasi_bbm = SuratRekomendasiBbm::count();
         $total_uptd = Uptd::where('type', Uptd::UPTD)->count();
         $total_tpi = Uptd::where('type', Uptd::TPI)->count();
