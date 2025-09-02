@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pokdakan_jenis_ikan', function (Blueprint $table) {
+        /* Khusus untuk kelompok binaan POKDAKAN. Karena HANYA POKDAKAN yang memiliki data Ikan */
+        Schema::create('kelompok_binaan_jenis_ikan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pokdakan_id');
+            $table->unsignedBigInteger('kelompok_binaan_id')->comment('ID Kelompok Binaan dengan jenis_kelompok = pokdakan');
             $table->unsignedBigInteger('jenis_ikan_id');
             $table->timestamps();
         });
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pokdakan_jenis_ikan');
+        Schema::dropIfExists('kelompok_binaan_jenis_ikan');
     }
 };

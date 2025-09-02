@@ -27,7 +27,7 @@ class Pokdakan extends Model
      */
     public function jenis_ikans(): BelongsToMany
     {
-        return $this->belongsToMany(MasterJenisIkan::class, 'pokdakan_jenis_ikan', 'pokdakan_id', 'jenis_ikan_id');
+        return $this->belongsToMany(MasterJenisIkan::class, 'pokdakan_jenis_ikan', 'kelompok_binaan_id', 'jenis_ikan_id');
     }
 
     /**
@@ -37,7 +37,7 @@ class Pokdakan extends Model
      */
     public function jenis_usahas(): BelongsToMany
     {
-        return $this->belongsToMany(MasterJenisUsaha::class, 'pokdakan_jenis_usaha', 'pokdakan_id', 'jenis_usaha_id');
+        return $this->belongsToMany(MasterJenisUsaha::class, 'kelompok_binaan_jenis_usaha', 'kelompok_binaan_id', 'jenis_usaha_id');
     }
 
     /**
@@ -47,6 +47,6 @@ class Pokdakan extends Model
      */
     public function jenis_kolams(): BelongsToMany
     {
-        return $this->belongsToMany(MasterJenisAset::class, 'pokdakan_jenis_kolam', 'pokdakan_id', 'jenis_aset_id');
+        return $this->belongsToMany(MasterJenisAset::class, 'pokdakan_jenis_kolam', 'kelompok_binaan_id', 'jenis_aset_id');
     }
 }

@@ -29,7 +29,7 @@ class Poklashar extends Model
      */
     public function jenis_usahas(): BelongsToMany
     {
-        return $this->belongsToMany(MasterJenisUsaha::class, 'poklashar_jenis_usaha', 'poklashar_id', 'jenis_usaha_id')
+        return $this->belongsToMany(MasterJenisUsaha::class, 'kelompok_binaan_jenis_usaha', 'kelompok_binaan_id', 'jenis_usaha_id')
                     ->withTimestamps();
     }
 

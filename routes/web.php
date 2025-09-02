@@ -108,8 +108,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('permohonan-rekomendasi-bbm', PermohonanRekomendasiBbmController::class)->names('permohonan-rekomendasi-bbm');
         /* Kelola Pelaku Usaha */
         Route::resource('pelaku-usaha', KelolaPelakuUsahaController::class)->names('pelaku-usaha');
-        /* Kelola Kelompok Binaan */
-        Route::resource('kelompok-binaan', KelolaKelompokBinaanController::class)->names('kelompok-binaan');
         /* Kelola Jadwal Pendampingan */
         Route::resource('jadwal-pendampingan', KelolaJadwalPendampinganController::class)->names('jadwal-pendampingan');
         /* Kelola UPTD */
@@ -122,6 +120,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('stok-ikan', KelolaStokIkanController::class)->names('stok-ikan');
         /* Kelola Harga Ikan */
         Route::resource('harga-ikan', KelolaHargaIkanController::class)->names('harga-ikan');
+        /* Kelola Kelompok Binaan */
+        Route::resource('kelompok-binaan', KelolaKelompokBinaanController::class)->names('kelompok-binaan');
         /* Kelola Pokdakan */
         Route::resource('pokdakan', KelolaPokdakanController::class)->names('pokdakan');
         /* Kelola Poklashar */

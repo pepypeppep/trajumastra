@@ -443,19 +443,19 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            // Kelola Kelompok Binaan
-            [
-                'id' => 211,
-                'name' => 'Kelola Kelompok Binaan',
-                'page' => 'admin', // or 'guest'
-                'url' => 'kelola.kelompok-binaan.index',
-                'slug' => 'kelola-kelompok-binaan',
-                'icon' => '',
-                'order' => 11,
-                'parent_id' => 200,
-                'active' => true,
-                'display' => true,
-            ],
+            // // Kelola Kelompok Binaan
+            // [
+            //     'id' => 211,
+            //     'name' => 'Kelola Kelompok Binaan',
+            //     'page' => 'admin', // or 'guest'
+            //     'url' => 'kelola.kelompok-binaan.index',
+            //     'slug' => 'kelola-kelompok-binaan',
+            //     'icon' => '',
+            //     'order' => 11,
+            //     'parent_id' => 200,
+            //     'active' => true,
+            //     'display' => true,
+            // ],
             // Kelola Pokdakan
             [
                 'id' => 212,

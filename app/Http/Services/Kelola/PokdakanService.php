@@ -2,7 +2,8 @@
 
 namespace App\Http\Services\Kelola;
 
-use App\Models\Pokdakan;
+use App\Enums\JenisKelompokBinaanEnum;
+use App\Models\KelompokBinaan;
 use App\Models\Kalurahan;
 use App\Models\MasterJenisAset;
 use App\Models\MasterJenisIkan;
@@ -15,7 +16,8 @@ class PokdakanService
     /* Get alls */
     public function getAll()
     {
-        $data = Pokdakan::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans', 'jenis_usahas', 'jenis_kolams');
+        $data = KelompokBinaan::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans', 'jenis_usahas', 'jenis_kolams')
+                ->where('jenis_kelompok', JenisKelompokBinaanEnum::POKDAKAN->value);
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
@@ -31,8 +33,8 @@ class PokdakanService
             ->orderColumn('jenis_ikan_data', function ($query, $order) {
                 $query->orderBy(
                     DB::raw('(SELECT GROUP_CONCAT(master_jenis_ikans.name) FROM master_jenis_ikans
-                          JOIN pokdakan_jenis_ikan ON master_jenis_ikans.id = pokdakan_jenis_ikan.jenis_ikan_id
-                          WHERE pokdakan_jenis_ikan.pokdakan_id = pokdakans.id)'),
+                        JOIN kelompok_binaan_jenis_ikan ON master_jenis_ikans.id = kelompok_binaan_jenis_ikan.jenis_ikan_id
+                        WHERE kelompok_binaan_jenis_ikan.kelompok_binaan_id = kelompok_binaans.id)'),
                     $order
                 );
             })
@@ -48,8 +50,8 @@ class PokdakanService
             ->orderColumn('jenis_usaha_data', function ($query, $order) {
                 $query->orderBy(
                     DB::raw('(SELECT GROUP_CONCAT(master_jenis_usahas.name) FROM master_jenis_usahas
-                          JOIN pokdakan_jenis_usaha ON master_jenis_usahas.id = pokdakan_jenis_usaha.jenis_usaha_id
-                          WHERE pokdakan_jenis_usaha.pokdakan_id = pokdakans.id)'),
+                        JOIN kelompok_binaan_jenis_usaha ON master_jenis_usahas.id = kelompok_binaan_jenis_usaha.jenis_usaha_id
+                        WHERE kelompok_binaan_jenis_usaha.kelompok_binaan_id = kelompok_binaans.id)'),
                     $order
                 );
             })
@@ -65,8 +67,8 @@ class PokdakanService
             ->orderColumn('jenis_kolam_data', function ($query, $order) {
                 $query->orderBy(
                     DB::raw('(SELECT GROUP_CONCAT(master_jenis_asets.name) FROM master_jenis_asets
-                          JOIN pokdakan_jenis_kolam ON master_jenis_asets.id = pokdakan_jenis_kolam.jenis_aset_id
-                          WHERE pokdakan_jenis_kolam.pokdakan_id = pokdakans.id)'),
+                        JOIN kelompok_binaan_jenis_kolam ON master_jenis_asets.id = kelompok_binaan_jenis_kolam.jenis_aset_id
+                        WHERE kelompok_binaan_jenis_kolam.kelompok_binaan_id = kelompok_binaans.id)'),
                     $order
                 );
             })
@@ -129,7 +131,7 @@ class PokdakanService
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = Pokdakan::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans', 'jenis_usahas', 'jenis_kolams')->findOrFail($id);
+        $data = KelompokBinaan::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans', 'jenis_usahas', 'jenis_kolams')->findOrFail($id);
 
         return $data;
     }
@@ -140,7 +142,8 @@ class PokdakanService
         try {
             // DB Transaction
             DB::beginTransaction();
-            $data = Pokdakan::create([
+            $data = KelompokBinaan::create([
+                'jenis_kelompok' => JenisKelompokBinaanEnum::POKDAKAN->value,
                 'kalurahan_id' => $attributes['kalurahan_id'],
                 'name' => $attributes['name'],
                 'address' => $attributes['address'],
@@ -195,7 +198,7 @@ class PokdakanService
             DB::beginTransaction();
 
             // Get data
-            $data = Pokdakan::findOrFail($id);
+            $data = KelompokBinaan::findOrFail($id);
             // Update data data
             $data->update([
                 'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
@@ -252,7 +255,7 @@ class PokdakanService
             DB::beginTransaction();
 
             // Get data
-            $data = Pokdakan::findOrFail($id);
+            $data = KelompokBinaan::findOrFail($id);
             $data->delete();
 
             // Return success response
