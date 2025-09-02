@@ -2,12 +2,14 @@
 
 namespace App\Http\Services\Api;
 
-use App\Models\HargaIkan;
-use App\Models\MasterJenisIkan;
 use App\Models\Uptd;
 use App\Models\User;
+use App\Models\HargaIkan;
 use App\Models\Transaksi;
+use App\Models\MasterJenisIkan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class TransaksiService
 {
@@ -15,12 +17,10 @@ class TransaksiService
     public function getAll($request)
     {
         // $user = $request->user();
-        $user = User::with('uptd')->find(2);
-        $data = Transaksi::with('uptd')->where('user_id', $user->id);
+        $data = Transaksi::with('uptd')->where('user_id', 2);
 
         if ($request->has('keyword')) {
-            $data->where('fish_name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('abk_name', 'like', '%' . $request->keyword . '%');
+            $data->where('name', 'like', '%' . $request->keyword . '%');
         }
 
         if ($request->has('transaction_type')) {
@@ -28,6 +28,25 @@ class TransaksiService
         }
 
         return $data->paginate(10);
+    }
+
+    /* Get products by User */
+    public function getProductByUser($request)
+    {
+        // $user = $request->user();
+        $data = HargaIkan::with('jenis_ikan:id,name')->where('uptd_id', 2);
+
+        if ($request->has('keyword')) {
+            $data->whereHas('jenis_ikan', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        if ($request->has('transaction_type')) {
+            $data->where('transaction_type', $request->transaction_type);
+        }
+
+        return $data->get();
     }
 
     /* Get data by ID */
@@ -42,95 +61,111 @@ class TransaksiService
         return $data;
     }
 
+    /* Get image by ID */
+    public function getImageById($id)
+    {
+        $fish = MasterJenisIkan::find($id);
+
+        if (!$fish) {
+            return null;
+        }
+
+        $data = Storage::disk('local')->get($fish->image);
+
+        if (!$data) {
+            return null;
+        }
+
+        return response($data, 200)->header('Content-Type', 'image/jpeg');
+    }
+
     /* Store new data*/
     public function store(array $attributes)
     {
-        // $user = $request->user();
-        $user = User::with('uptd')->find(2);
-        $jenisIkan = MasterJenisIkan::find($attributes['master_jenis_ikan_id']);
-        $hargaIkan = HargaIkan::where('jenis_ikan_id', $jenisIkan->id)
-            ->where('uptd_id', $user->uptd_id)
-            ->first();
-
-        $retribution = 0;
-        $total = 0;
+        DB::beginTransaction();
 
         try {
-            // DB Transaction
-            DB::beginTransaction();
-            $data = Uptd::create([
-                'user_id' => $user->id,
-                'uptd_id' => $user->uptd_id,
-                'transaction_type' => $attributes['transaction_type'],
-                'fish_name' => $jenisIkan->name,
-                'fish_price' => $hargaIkan,
-                'number_of_fish' => $attributes['number_of_fish'],
-                'abk_name' => $attributes['abk_name'],
-                'amount' => $attributes['amount'],
-                'retribution' => $retribution,
-                'total' => $total,
+            // $user = $request->user();
+            $user = User::with('uptd')->find(2);
+            $transactions = $attributes['transactions'];
+            $savedTransactions = [];
+            // $amount = 0;
+            $retribution = 0;
+            $total = 0;
+
+            foreach ($transactions as $transactionData) {
+                $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $attributes['master_jenis_ikan_id'])
+                    ->where('uptd_id', 2)
+                    ->first();
+
+                if ($fish->stock < $transactionData['quantity']) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak cukup',
+                        'error' => 'Internal server error'
+                    ], 500);
+                }
+
+                $transaction = Transaksi::create([
+                    'user_id' => $user->id,
+                    'uptd_id' => $user->uptd_id,
+                    'transaction_type' => $attributes['transaction_type'] ?? 'cash',
+                    'name' => $user->name,
+                ]);
+
+                $priceTotal = $transactionData['quantity'] * $fish->price;
+                $transaction->details()->create([
+                    'master_jenis_ikan_id' => $transactionData['master_jenis_ikan_id'],
+                    'name' => $fish->jenis_ikan->name,
+                    'unit' => $fish->unit,
+                    'size' => $fish->size,
+                    'price' => $fish->price,
+                    'weight' => $fish->weight,
+                    'quantity' => $transactionData['quantity'],
+                    'total' => $priceTotal,
+                ]);
+
+                $total += $priceTotal;
+
+                $savedTransactions[] = $transaction;
+            }
+
+            $transaction->update([
+                'total' => $total
             ]);
 
-            // Return success response
             DB::commit();
-            return $data;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Transaksi berhasil disimpan',
+                'data' => [
+                    'transactions' => $savedTransactions,
+                    'total_items' => count($savedTransactions)
+                ]
+            ], 201);
         } catch (\Exception $e) {
-            // Return error response
             DB::rollBack();
-            return $e;
+
+            Log::error('Cashier transaction error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan transaksi',
+                'error' => config('app.debug') ? $e->getMessage() : 'Internal server error'
+            ], 500);
         }
     }
 
     /* Update data*/
     public function update($id, array $attributes)
     {
-        try {
-            // DB Transaction
-            DB::beginTransaction();
-
-            // Get data
-            $data = Uptd::findOrFail($id);
-            // Update data data
-            $data->update([
-                'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
-                'name' => $attributes['name'] ?? $data->name,
-                'dusun' => $attributes['dusun'] ?? $data->dusun,
-                'address' => $attributes['address'] ?? $data->address,
-                'latitude' => $attributes['latitude'] ?? $data->latitude,
-                'longitude' => $attributes['longitude'] ?? $data->longitude,
-                'type' => $attributes['type'] ?? $data->type,
-                'status' => $attributes['status'] ?? $data->status,
-                'user_id' => auth()->user()->id,
-            ]);
-
-            // Return success response
-            DB::commit();
-            return redirect()->back()->with('success', 'TPI berhasil diperbarui');
-        } catch (\Exception $e) {
-            // Return error response
-            DB::rollBack();
-            return redirect()->back()->withInput()->withErrors(['error' => 'TPI gagal diperbarui. Error :' . $e->getMessage()]);
-        }
+        //
     }
 
     /* Delete data*/
     public function delete($id)
     {
-        try {
-            // DB Transaction
-            DB::beginTransaction();
-
-            // Get data
-            $data = Uptd::findOrFail($id);
-            $data->delete();
-
-            // Return success response
-            DB::commit();
-            return redirect()->route('kelola.tpi.index')->with('success', 'TPI berhasil dihapus');
-        } catch (\Exception $e) {
-            // Return error response
-            DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'TPI gagal dihapus. Error :' . $e->getMessage()]);
-        }
+        //
     }
 }

@@ -62,7 +62,7 @@ class SeedCsv extends Command
                         return null;
                     }
                     return $value;
-                }, $row));
+                }, array_map('trim', $row)));
 
                 // Keep only columns that actually exist in DB
                 $rowData = array_intersect_key($rowData, array_flip($tableColumns));

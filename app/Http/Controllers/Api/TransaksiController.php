@@ -16,9 +16,9 @@ class TransaksiController extends BaseApiController
      */
     public function index(Request $request)
     {
-        $transactions = $this->service->getAll($request);
+        $products = $this->service->getProductByUser($request);
 
-        return $this->successResponse($transactions, "Transactions fetched successfully");
+        return $this->successResponse($products, "Products fetched successfully");
     }
 
     /**
@@ -29,18 +29,17 @@ class TransaksiController extends BaseApiController
         return $this->service->store($request->validated());
     }
 
+    public function getImage(string $id)
+    {
+        return $this->service->getImageById($id);
+    }
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $transaction = $this->service->getById($id);
-
-        if (!$transaction) {
-            return $this->errorResponse("Transaction not found", 404);
-        }
-
-        return $this->successResponse($transaction, "Transaction fetched successfully");
+        //
     }
 
     /**

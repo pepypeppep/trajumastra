@@ -23,9 +23,7 @@ class TransaksiTableSeeder extends Seeder
             $transaksi = Transaksi::create([
                 'user_id' => $user->id,
                 'uptd_id' => $user->uptd_id,
-                'amount' => $amount,
                 'retribution' => $retribution,
-                'total' => $total,
                 'transaction_type' => 'cash',
                 'name' => fake()->name(),
             ]);
@@ -41,11 +39,15 @@ class TransaksiTableSeeder extends Seeder
                     'size' => $ikan->size,
                     'price' => $ikan->price,
                     'weight' => null,
-                    'amount' => $fishAmount,
+                    'quantity' => $fishAmount,
                     'total' => $fishAmount * $ikan->price,
                     'notes' => null,
                 ]);
+                $total += $fishAmount * $ikan->price;
             }
+            $transaksi->update([
+                'total' => $total
+            ]);
         }
     }
 }

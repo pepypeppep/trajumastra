@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->integer('price')->nullable();
             $table->integer('weight')->nullable();
-            $table->integer('amount')->nullable();
+            $table->integer('quantity')->nullable();
             $table->integer('total')->nullable();
             $table->longText('notes')->nullable();
             $table->timestamps();

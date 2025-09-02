@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PreferenceSeeder::class,
             TransaksiTableSeeder::class,
+            JenisIkanSeeder::class
         ]);
     }
 }

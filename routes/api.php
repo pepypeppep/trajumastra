@@ -9,5 +9,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::as('api.')->group(function () {
+    Route::get('/product/{id}',  [TransaksiController::class, 'getImage'])->name('product.image');
     Route::resource('transaksi', TransaksiController::class)->names('transaksi');
 });
