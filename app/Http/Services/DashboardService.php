@@ -44,7 +44,7 @@ class DashboardService
     /* Get popular fish */
     public function getPopularFish()
     {
-        $detail = TransaksiDetail::selectRaw('master_jenis_ikans_id, sum(amount) as total_quantity, sum(total) as total_price')
+        $detail = TransaksiDetail::selectRaw('master_jenis_ikans_id, sum(quantity) as total_quantity, sum(total) as total_price')
             ->groupBy('master_jenis_ikans_id')
             ->with('jenis_ikan')
             ->orderByDesc('total_price')

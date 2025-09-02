@@ -7,7 +7,7 @@
                 class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
                     data-lucide="x" class="size-5"></i></button>
         </div>
-        <form action="{{ route('master.jenis-ikan.store') }}" method="POST">
+        <form action="{{ route('master.jenis-ikan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
@@ -18,6 +18,14 @@
                     <input type="text" id="name" name="name"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         placeholder="Masukkan nama jenis ikan" required>
+                </div>
+                {{-- Gambar --}}
+                <div class="mb-1">
+                    <label for="" class="inline-block mb-2 text-base font-medium">Gambar <strong
+                            class="text-red-500">*</strong></label>
+                    <input type="file" id="image" name="image"
+                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        accept="image/jpeg,image/png,image/jpg" required>
                 </div>
             </div>
             {{-- End Modal Body --}}

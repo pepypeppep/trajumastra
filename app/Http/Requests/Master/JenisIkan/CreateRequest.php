@@ -23,6 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'image' => 'nullable|mimes:png,jpg,jpeg|max:1024',
         ];
     }
 }
