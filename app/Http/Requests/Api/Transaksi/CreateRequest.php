@@ -22,11 +22,22 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'transaction_type' => 'required|integer',
-            'master_jenis_ikan_id' => 'required|integer|exists:master_jenis_ikans,id',
-            'number_of_fish' => 'required|integer',
-            'abk_name' => 'nullable|string',
-            'amount' => 'required|integer',
+            'transactions' => 'required|array',
+            'transactions.*.master_jenis_ikan_id' => 'required|integer|exists:master_jenis_ikans,id',
+            'transactions.*.quantity' => 'required|integer|min:1'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'transactions.required' => 'Data transaksi harus diisi',
+            'transactions.array' => 'Format transaksi tidak valid',
+            'transactions.*.master_jenis_ikan_id.required' => 'ID jenis ikan harus diisi',
+            'transactions.*.master_jenis_ikan_id.exists' => 'Jenis ikan tidak valid',
+            'transactions.*.quantity.required' => 'Quantity harus diisi',
+            'transactions.*.quantity.integer' => 'Quantity harus berupa angka',
+            'transactions.*.quantity.min' => 'Quantity minimal 1'
         ];
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('master_jenis_ikans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->longText('image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
