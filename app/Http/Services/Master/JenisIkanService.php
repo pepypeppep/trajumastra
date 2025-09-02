@@ -2,8 +2,10 @@
 
 namespace App\Http\Services\Master;
 
+use Illuminate\Support\Str;
 use App\Models\MasterJenisIkan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class JenisIkanService
@@ -15,6 +17,12 @@ class JenisIkanService
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
+            ->addColumn('image_data', function ($row) {
+                if ($row->image == null) {
+                    return '-';
+                }
+                return '<img src="' . route('api.product.image', $row->id) . '" alt="Gambar" class="w-10 h-10 rounded-full object-cover cursor-pointer" id="btn-modal-image" data-title="' . $row->name . '" data-url-get="' . route('api.product.image', $row->id) . '">';
+            })
             ->addColumn('aksi', function ($row) {
                 $btnEdit = '';
                 $btnDelete = '';
@@ -56,8 +64,16 @@ class JenisIkanService
         try {
             // DB Transaction
             DB::beginTransaction();
+
+            $filename = null;
+            if ($attributes['image']) {
+                $filename = Str::uuid() . '.png';
+                Storage::disk('local')->put('ikan/' . $filename, file_get_contents($attributes['image']));
+            }
+
             $data = MasterJenisIkan::create([
-                'name' => $attributes['name']
+                'name' => $attributes['name'],
+                'image' => 'ikan/' . $filename
             ]);
 
             // Return success response
@@ -79,9 +95,17 @@ class JenisIkanService
 
             // Get data
             $data = MasterJenisIkan::findOrFail($id);
+
+            $filename = $data->image;
+            if ($attributes['image']) {
+                $filename = Str::uuid() . '.png';
+                Storage::disk('local')->put('ikan/' . $filename, file_get_contents($attributes['image']));
+            }
+
             // Update data data
             $data->update([
-                'name' => $attributes['name'] ?? $data->name
+                'name' => $attributes['name'] ?? $data->name,
+                'image' => 'ikan/' . $filename
             ]);
 
             // Return success response

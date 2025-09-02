@@ -20,6 +20,7 @@
                 <thead>
                     <tr>
                         <th class="ltr:!text-left rtl:!text-right">Nama</th>
+                        <th class="ltr:!text-left rtl:!text-right">Gambar</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -41,6 +42,8 @@
     @include('admin.masters.jenis-ikan.partials.modal-add')
     {{-- Modal Edit --}}
     @include('admin.masters.jenis-ikan.partials.modal-edit')
+    {{-- Modal Image --}}
+    @include('admin.masters.jenis-ikan.partials.modal-image')
     {{-- Form Delete --}}
     <form id="form-delete" action="" method="POST" class="hidden">
         @csrf
@@ -84,6 +87,12 @@
                         name: 'name',
                         searchable: true,
                         orderable: true,
+                    },
+                    {
+                        data: 'image_data',
+                        name: 'image_data',
+                        searchable: false,
+                        orderable: false,
                     },
                     {
                         data: 'aksi',

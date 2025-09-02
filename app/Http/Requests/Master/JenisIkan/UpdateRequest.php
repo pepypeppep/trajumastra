@@ -23,6 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'image' => 'nullable|mimes:png,jpg,jpeg,svg|max:1024',
         ];
     }
 }
