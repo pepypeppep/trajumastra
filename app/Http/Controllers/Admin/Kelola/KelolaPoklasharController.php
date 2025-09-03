@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\Kelola;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Kelola\poklashar\CreateRequest;
-use App\Http\Requests\Kelola\poklashar\UpdateRequest;
+use App\Http\Requests\Kelola\Poklashar\CreateRequest;
+use App\Http\Requests\Kelola\Poklashar\UpdateRequest;
 use App\Http\Services\Kelola\PoklasharService;
 
 class KelolaPoklasharController extends Controller

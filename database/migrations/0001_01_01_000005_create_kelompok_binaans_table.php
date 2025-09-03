@@ -17,6 +17,8 @@ return new class extends Migration
             $table->enum('jenis_kelompok', array_column(JenisKelompokBinaanEnum::cases(), 'value'))->index();
             $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
             $table->foreign('kalurahan_id')->references('id')->on('kalurahans')->onDelete('set null');
+            $table->unsignedBigInteger('kecamatan_id')->index()->nullable();
+            $table->foreign('kecamatan_id')->references('id')->on('kecamatans')->onDelete('set null');
             $table->string('name')->comment('Nama kelompok binaan');
             $table->string('address')->nullable()->comment('Alamat Sekretariat kelompok binaan');
             $table->string('phone')->nullable()->comment('No Telp/HP kelompok binaan');

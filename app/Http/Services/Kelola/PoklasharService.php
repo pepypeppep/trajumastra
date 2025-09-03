@@ -3,9 +3,10 @@
 namespace App\Http\Services\Kelola;
 
 use App\Models\Kecamatan;
+use App\Models\KelompokBinaan;
 use App\Models\MasterJenisUsaha;
-use App\Models\Poklashar;
 use Illuminate\Support\Facades\DB;
+use App\Enums\JenisKelompokBinaanEnum;
 use Yajra\DataTables\Facades\DataTables;
 
 class PoklasharService
@@ -13,7 +14,8 @@ class PoklasharService
     /* Get alls */
     public function getAll()
     {
-        $data = Poklashar::with('kecamatan.kabupaten', 'jenis_usahas');
+        $data = KelompokBinaan::with('kecamatan.kabupaten', 'jenis_usahas')
+                ->where('jenis_kelompok', JenisKelompokBinaanEnum::POKLASHAR->value);
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
@@ -29,8 +31,8 @@ class PoklasharService
             ->orderColumn('jenis_usaha_data', function ($query, $order) {
                 $query->orderBy(
                     DB::raw('(SELECT GROUP_CONCAT(master_jenis_usahas.name) FROM master_jenis_usahas
-                        JOIN poklashar_jenis_usaha ON master_jenis_usahas.id = poklashar_jenis_usaha.jenis_usaha_id
-                        WHERE poklashar_jenis_usaha.poklashar_id = poklashars.id)'),
+                        JOIN kelompok_binaan_jenis_usaha ON master_jenis_usahas.id = kelompok_binaan_jenis_usaha.jenis_usaha_id
+                        WHERE kelompok_binaan_jenis_usaha.kelompok_binaan_id = kelompok_binaans.id)'),
                     $order
                 );
             })
@@ -78,7 +80,7 @@ class PoklasharService
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = Poklashar::with('kecamatan.kabupaten', 'jenis_usahas')->findOrFail($id);
+        $data = KelompokBinaan::with('kecamatan.kabupaten', 'jenis_usahas')->findOrFail($id);
         $data->jenis_usaha_ids = $data->jenis_usahas()->pluck('master_jenis_usahas.id')->toArray();
 
         return $data;
@@ -90,7 +92,7 @@ class PoklasharService
         try {
             // DB Transaction
             DB::beginTransaction();
-            $data = Poklashar::create([
+            $data = KelompokBinaan::create([
                 'kecamatan_id' => $attributes['kecamatan_id'],
                 'name' => $attributes['name'],
                 'address' => $attributes['address'],
@@ -128,7 +130,7 @@ class PoklasharService
             DB::beginTransaction();
 
             // Get data
-            $data = Poklashar::findOrFail($id);
+            $data = KelompokBinaan::findOrFail($id);
             // Update data data
             $data->update([
                 'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
@@ -168,7 +170,7 @@ class PoklasharService
             DB::beginTransaction();
 
             // Get data
-            $data = Poklashar::findOrFail($id);
+            $data = KelompokBinaan::findOrFail($id);
             $data->delete();
 
             // Return success response
