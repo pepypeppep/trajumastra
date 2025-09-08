@@ -20,9 +20,8 @@
                 <thead>
                     <tr>
                         <th class="ltr:!text-left rtl:!text-right">Jenis Ikan</th>
-                        <th class="ltr:!text-left rtl:!text-right">UPTD</th>
-                        <th class="ltr:!text-left rtl:!text-right">Stok</th>
                         <th class="ltr:!text-left rtl:!text-right">Ukuran</th>
+                        <th class="ltr:!text-left rtl:!text-right">Satuan</th>
                         <th class="ltr:!text-left rtl:!text-right">Harga</th>
                         <th class="text-center">Aksi</th>
                     </tr>
@@ -65,15 +64,6 @@
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2
-        function initSelect2(context) {
-            $(context).find('[name="uptd_id"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih UPTD",
-                allowClear: true
-            });
-        }
-
         function initSelect2JenisIkan(context) {
             $(context).find('[name="jenis_ikan_id"]').select2({
                 dropdownParent: $(context),
@@ -94,14 +84,12 @@
 
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2('#modal-add');
             initSelect2JenisIkan('#modal-add');
             initSelect2Satuan('#modal-add');
         });
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2('#modal-edit');
             initSelect2JenisIkan('#modal-edit');
             initSelect2Satuan('#modal-edit');
         });
@@ -134,21 +122,16 @@
                         name: 'jenis_ikan.name',
                         searchable: true,
                         orderable: true,
-                    }, {
-                        data: 'uptd.name',
-                        name: 'uptd.name',
-                        searchable: true,
-                        orderable: true,
-                    },
-                    {
-                        data: 'stock',
-                        name: 'stock',
-                        searchable: true,
-                        orderable: true,
                     },
                     {
                         data: 'size',
                         name: 'size',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'unit',
+                        name: 'unit',
                         searchable: true,
                         orderable: true,
                     },

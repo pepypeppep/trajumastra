@@ -11,19 +11,6 @@
             @csrf
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                {{-- UPTD --}}
-                <div class="mt-3">
-                    <label for="" class="inline-block mb-2 text-base font-medium">UPTD <strong
-                            class="text-red-500">*</strong></label>
-                    <select
-                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="uptd_id" id="uptd_id">
-                        <option value="">Pilih UPTD</option>
-                        @foreach ($uptds as $uptd)
-                            <option value="{{ $uptd->id }}">{{ $uptd->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
                 {{-- Jenis Ikan --}}
                 <div class="mt-3">
                     <label for="" class="inline-block mb-2 text-base font-medium">Jenis Ikan <strong
@@ -37,17 +24,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="grid grid-cols-2 gap-4 mb-1 mt-3">
-                    <div class="col-span">
-                        {{-- Stok --}}
-                        <div class="">
-                            <label for="" class="inline-block mb-2 text-base font-medium">Stok <strong
-                                    class="text-red-500">*</strong></label>
-                            <input type="text" id="stock" name="stock"
-                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                placeholder="Masukkan stok" required>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-3 gap-4 mb-1 mt-3">
                     <div class="col-span">
                         {{-- Ukuran --}}
                         <div class="">
@@ -58,8 +35,6 @@
                                 placeholder="Masukkan ukuran (contoh: 5cm - 10cm)" required>
                         </div>
                     </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mb-1 mt-3">
                     <div class="col-span">
                         {{-- Harga --}}
                         <div class="">

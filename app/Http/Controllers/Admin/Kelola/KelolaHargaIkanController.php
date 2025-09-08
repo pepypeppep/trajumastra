@@ -23,10 +23,9 @@ class KelolaHargaIkanController extends Controller
             return $this->service->getAll();
         }
 
-        $uptds = $this->service->getAllUptd();
         $jenis_ikans = $this->service->getAllJenisIkan();
 
-        return view('admin.kelolas.harga-ikan.index', compact('uptds', 'jenis_ikans'));
+        return view('admin.kelolas.harga-ikan.index', compact('jenis_ikans'));
     }
 
     /**

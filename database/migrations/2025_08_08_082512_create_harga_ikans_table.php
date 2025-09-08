@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('harga_ikans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('jenis_ikan_id')->index()->nullable();
-            $table->unsignedBigInteger('uptd_id')->index()->nullable();
+            // $table->unsignedBigInteger('uptd_id')->index()->nullable();
             $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->string('price')->nullable();
+            $table->integer('price')->nullable();
             $table->longText('unit')->nullable();
             $table->longText('size')->nullable();
-            $table->integer('stock')->default(0);
+            // $table->integer('stock')->default(0);
+            $table->longText('spelled')->nullable();
             $table->integer('is_active')->default(1); //1: aktif; 2 off
             $table->timestamps();
         });

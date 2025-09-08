@@ -15,9 +15,7 @@ class HargaIkanService
     {
         $data = HargaIkan::select([
             'harga_ikans.id as harga_id',
-            'harga_ikans.uptd_id',
             'harga_ikans.jenis_ikan_id',
-            'harga_ikans.stock',
             'harga_ikans.size',
             'harga_ikans.price',
             'harga_ikans.unit',
