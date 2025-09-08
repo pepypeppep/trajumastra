@@ -36,6 +36,10 @@
                     <i data-lucide="chevrons-right" class="hidden w-5 h-5 group-data-[sidebar-size=sm]:block"></i>
                 </button>
 
+                @env('local')
+                    <input type="text" class="w-full" value="{{ session('access_token') }}">
+                @endenv
+
                 <div class="flex gap-3 ms-auto">
                     {{-- Start Button Theme Switch --}}
                     <div class="relative flex items-center h-header">
@@ -43,7 +47,7 @@
                             class="inline-flex relative justify-center items-center p-0 text-topbar-item transition-all w-[37.5px] h-[37.5px] duration-200 ease-linear bg-topbar rounded-md btn hover:bg-topbar-item-bg-hover hover:text-topbar-item-hover group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:hover:bg-topbar-item-bg-hover-dark group-data-[topbar=dark]:hover:text-topbar-item-hover-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:hover:bg-topbar-item-bg-hover-brand group-data-[topbar=brand]:hover:text-topbar-item-hover-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:hover:bg-zink-600 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:hover:text-zink-50 group-data-[topbar=dark]:dark:text-zink-200 group-data-[topbar=dark]:text-topbar-item-dark"
                             id="light-dark-mode">
                             <i data-lucide="sun"
-                            class="inline-block w-5 h-5 stroke-1 fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand"></i>
+                                class="inline-block w-5 h-5 stroke-1 fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand"></i>
                         </button>
                     </div>
                     {{-- Start Button Theme Switch --}}
@@ -57,14 +61,15 @@
                         </button>
                     </div>
                     {{-- End Button Settings  --}}
-                    
+
                     {{-- Start Button Profile --}}
                     <div class="relative flex items-center dropdown h-header">
                         {{-- Start Photo Profile --}}
                         <button type="button"
                             class="inline-block p-0 transition-all duration-200 ease-linear bg-topbar rounded-full text-topbar-item dropdown-toggle btn hover:bg-topbar-item-bg-hover hover:text-topbar-item-hover group-data-[topbar=dark]:text-topbar-item-dark group-data-[topbar=dark]:bg-topbar-dark group-data-[topbar=dark]:hover:bg-topbar-item-bg-hover-dark group-data-[topbar=dark]:hover:text-topbar-item-hover-dark group-data-[topbar=brand]:bg-topbar-brand group-data-[topbar=brand]:hover:bg-topbar-item-bg-hover-brand group-data-[topbar=brand]:hover:text-topbar-item-hover-brand group-data-[topbar=dark]:dark:bg-zink-700 group-data-[topbar=dark]:dark:hover:bg-zink-600 group-data-[topbar=brand]:text-topbar-item-brand group-data-[topbar=dark]:dark:hover:text-zink-50 group-data-[topbar=dark]:dark:text-zink-200"
                             id="dropdownMenuButton" data-bs-toggle="dropdown">
-                            <i data-lucide="user-2" class="inline-block w-5 h-5 stroke-1 fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand"></i>
+                            <i data-lucide="user-2"
+                                class="inline-block w-5 h-5 stroke-1 fill-slate-100 group-data-[topbar=dark]:fill-topbar-item-bg-hover-dark group-data-[topbar=brand]:fill-topbar-item-bg-hover-brand"></i>
                         </button>
                         {{-- End Photo Profile --}}
 
@@ -73,7 +78,8 @@
                             <a href="javascript:void(0);" class="flex gap-3 mb-3">
                                 <div>
                                     <h6 class="mb-1 text-15">{{ Auth::user()->name }}</h6>
-                                    <p class="text-slate-500 dark:text-zink-300">{{ ucwords(Auth::user()->roles->pluck('name')->toArray()[0]) }}</p>
+                                    <p class="text-slate-500 dark:text-zink-300">
+                                        {{ ucwords(Auth::user()->roles->pluck('name')->toArray()[0]) }}</p>
                                 </div>
                             </a>
                             <ul>
@@ -90,8 +96,7 @@
                                         <a href="{{ route('logout') }}"
                                             class="block ltr:pr-4 rtl:pl-4 py-1.5 text-base font-medium transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:text-custom-500 focus:text-custom-500 dark:text-zink-200 dark:hover:text-custom-500 dark:focus:text-custom-500"
                                             @click.prevent="$root.submit();">
-                                            <i data-lucide="log-out"
-                                                class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>
+                                            <i data-lucide="log-out" class="inline-block size-4 ltr:mr-2 rtl:ml-2"></i>
                                             {{ __('Sign Out') }}
                                         </a>
                                     </form>
@@ -105,4 +110,3 @@
         </div>
     </div>
 </header>
-
