@@ -22,9 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'uptd_id' => 'required|exists:uptds,id',
             'jenis_ikan_id' => 'required|exists:master_jenis_ikans,id',
-            'stock' => 'required|integer',
             'size' => 'required|string',
             'price' => 'required|integer',
             'unit' => 'required|string',

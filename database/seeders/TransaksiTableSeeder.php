@@ -17,7 +17,7 @@ class TransaksiTableSeeder extends Seeder
     {
         for ($i = 1; $i <= 10; $i++) {
             $user = User::find(fake()->numberBetween(2, 3));
-            $uptd = Uptd::find(HargaIkan::get()->pluck('uptd_id')->random());
+            $uptd = Uptd::inRandomOrder()->first();
             $amount = fake()->numberBetween(10000, 100000);
             $retribution = fake()->numberBetween(0, 1000);
             $total = $amount + $retribution;
@@ -30,8 +30,8 @@ class TransaksiTableSeeder extends Seeder
                 'name' => fake()->name(),
             ]);
 
-            $limit = fake()->numberBetween(1, HargaIkan::where('uptd_id', $uptd->id)->count());
-            $ikans = HargaIkan::where('uptd_id', $uptd->id)->inRandomOrder()->take($limit)->get();
+            $limit = fake()->numberBetween(1, 71);
+            $ikans = HargaIkan::inRandomOrder()->take($limit)->get();
             foreach ($ikans as $ikan) {
                 $fishAmount = fake()->numberBetween(1, 10);
                 $transaksi->details()->create([

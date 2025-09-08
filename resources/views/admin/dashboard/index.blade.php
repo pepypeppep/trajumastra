@@ -353,7 +353,7 @@
                             @foreach ($popularFish as $fish)
                                 <li class="flex items-center gap-3 py-2 first:pt-0 last:pb-0">
                                     <div class="w-8 h-8 rounded-full shrink-0 bg-slate-100 dark:bg-zink-600">
-                                        <img src="./assets/images/avatar-2.png" alt=""
+                                        <img src="{{ $fish->jenis_ikan->imageUrl }}" alt=""
                                             class="w-8 h-8 rounded-full">
                                     </div>
                                     <div class="grow">

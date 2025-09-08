@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             NavigationSeeder::class,
             UserSeeder::class,
             PreferenceSeeder::class,
+            JenisIkanSeeder::class,
             TransaksiTableSeeder::class,
-            JenisIkanSeeder::class
         ]);
     }
 }
