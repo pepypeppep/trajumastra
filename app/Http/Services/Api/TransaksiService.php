@@ -96,8 +96,8 @@ class TransaksiService
             $total = 0;
 
             foreach ($transactions as $transactionData) {
-                $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $attributes['master_jenis_ikan_id'])->first();
-                $fishStock = StokIkan::where('jenis_ikan_id', $attributes['master_jenis_ikan_id'])
+                $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])->first();
+                $fishStock = StokIkan::where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])
                     ->where('uptd_id', $koordinatorUptd->uptd_id)->first();
 
                 if (!$fish) {
@@ -133,7 +133,7 @@ class TransaksiService
 
                 $priceTotal = $transactionData['quantity'] * $fish->price;
                 $transaction->details()->create([
-                    'master_jenis_ikan_id' => $transactionData['master_jenis_ikan_id'],
+                    'master_jenis_ikans_id' => $transactionData['master_jenis_ikan_id'],
                     'name' => $fish->jenis_ikan->name,
                     'unit' => $fish->unit,
                     'size' => $fish->size,

@@ -5,7 +5,6 @@ namespace App\Http\Services;
 use App\Enums\JenisKelompokBinaanEnum;
 use App\Models\Uptd;
 use App\Models\Penyuluh;
-use App\Models\Pokdakan;
 use App\Models\Transaksi;
 use App\Models\PelakuUsaha;
 use App\Models\KelompokBinaan;

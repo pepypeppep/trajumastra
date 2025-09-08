@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-
 class SSOController extends Controller
 {
     public function redirect(Request $request): RedirectResponse
@@ -77,7 +76,7 @@ class SSOController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/whoami",
+     *     path="/api/whoami",
      *     summary="Get current user information",
      *     tags={"Auth"},
      *     security={{"bearer": {}}},
@@ -121,7 +120,7 @@ class SSOController extends Controller
      */
     public function whoami(Request $request)
     {
-        $user = User::with('instansi:id,name')->where('id', $request->user()->id)->first();
+        $user = User::where('id', $request->user()->id)->first();
         return $user;
     }
 }
