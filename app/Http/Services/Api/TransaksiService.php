@@ -5,8 +5,10 @@ namespace App\Http\Services\Api;
 use App\Models\Uptd;
 use App\Models\User;
 use App\Models\HargaIkan;
+use App\Models\KoordinatorUptd;
 use App\Models\Transaksi;
 use App\Models\MasterJenisIkan;
+use App\Models\StokIkan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -80,13 +82,13 @@ class TransaksiService
     }
 
     /* Store new data*/
-    public function store(array $attributes)
+    public function store($user, array $attributes)
     {
         DB::beginTransaction();
 
         try {
-            // $user = $request->user();
-            $user = User::with('uptd')->find(2);
+            // $user = User::with('uptd')->find(2);
+            $koordinatorUptd = KoordinatorUptd::with('uptd')->where('user_id', $user->id)->first();
             $transactions = $attributes['transactions'];
             $savedTransactions = [];
             // $amount = 0;
@@ -94,11 +96,27 @@ class TransaksiService
             $total = 0;
 
             foreach ($transactions as $transactionData) {
-                $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $attributes['master_jenis_ikan_id'])
-                    ->where('uptd_id', 2)
-                    ->first();
+                $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $attributes['master_jenis_ikan_id'])->first();
+                $fishStock = StokIkan::where('jenis_ikan_id', $attributes['master_jenis_ikan_id'])
+                    ->where('uptd_id', $koordinatorUptd->uptd_id)->first();
 
-                if ($fish->stock < $transactionData['quantity']) {
+                if (!$fish) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia',
+                        'error' => 'Internal server error'
+                    ], 500);
+                }
+
+                if (!$fishStock) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia',
+                        'error' => 'Internal server error'
+                    ], 500);
+                }
+
+                if ($fishStock->stock < $transactionData['quantity']) {
                     return response()->json([
                         'success' => false,
                         'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak cukup',
@@ -108,7 +126,7 @@ class TransaksiService
 
                 $transaction = Transaksi::create([
                     'user_id' => $user->id,
-                    'uptd_id' => $user->uptd_id,
+                    'uptd_id' => $koordinatorUptd->uptd_id,
                     'transaction_type' => $attributes['transaction_type'] ?? 'cash',
                     'name' => $user->name,
                 ]);
