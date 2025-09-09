@@ -13,9 +13,9 @@
 
     @include('guest.tpi')
 
-    @include('guest.about')
-
     @include('guest.transaction')
+
+    @include('guest.feedback')
 
     @include('guest.newsletter')
 @endsection
