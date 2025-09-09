@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Models\Transaksi;
 use App\Models\Uptd;
 use Illuminate\Support\Facades\Http;
 
@@ -33,6 +34,14 @@ class LandingService
     public function getTpi()
     {
         $data = Uptd::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans')->where('type', Uptd::TPI)->orderByDesc('created_at')->get();
+
+        return $data;
+    }
+
+    /* Get data transaction */
+    public function getTransaction()
+    {
+        $data = Transaksi::with('uptd')->orderByDesc('created_at')->limit(15)->get();
 
         return $data;
     }

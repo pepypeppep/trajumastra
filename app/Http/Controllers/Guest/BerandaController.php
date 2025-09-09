@@ -19,8 +19,9 @@ class BerandaController extends Controller
         $news = $this->service->getNews();
         $bbis = $this->service->getBbi();
         $tpis = $this->service->getTpi();
+        $transaksis = $this->service->getTransaction();
 
-        return view('guest.index', compact('news', 'bbis', 'tpis'));
+        return view('guest.index', compact('news', 'bbis', 'tpis', 'transaksis'));
     }
 
     /**
