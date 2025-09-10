@@ -23,9 +23,11 @@ return new class extends Migration
             $table->foreign('bentuk_usaha_id')->references('id')->on('master_bentuk_usahas')->onDelete('set null');
             $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
             $table->foreign('jenis_usaha_id')->references('id')->on('master_jenis_usahas')->onDelete('set null');
-            $table->longText('secretariat_address')->nullable(); // alamat sekretariat
+            $table->longText('address')->nullable(); // alamat sekretariat
             $table->string('npwp')->nullable();
             $table->string('siup')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->string('income_range')->nullable();
             $table->string('last_education')->nullable();
             $table->integer('maried_status')->nullable(); //1: belum menikah; 2: menikah; 3: cerai

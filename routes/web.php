@@ -50,6 +50,7 @@ Route::get('ssobypass', App\Http\Controllers\Auth\SSOBypass::class);
 /* ======================== GUEST */
 Route::resource('/', BerandaController::class)->names(['beranda']);
 Route::get('/register', [BerandaController::class, 'create'])->name('pendaftaran');
+Route::post('/register-store', [BerandaController::class, 'store'])->name('pendaftaran.store');
 
 /* ======================== ADMIN */
 Route::middleware('auth', 'verified')->group(function () {
