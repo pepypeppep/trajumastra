@@ -7,10 +7,94 @@
 @endsection
 
 @section('content-admin')
+    <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5">
+        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3 cursor-pointer"
+            onclick="location.href='?periode=hari'">
+            <div class="card-body">
+                <div class="mt-4 mb-6 text-center">
+                    <h6 class="text-16"><a href="#!">Hari ini</a></h6>
+                    <p class="text-slate-500 dark:text-zink-200">Data transaksi hari ini</p>
+                </div>
+                <div
+                    class="grid grid-cols-1 gap-5 text-center divide-y md:divide-y-0 md:divide-x sm:grid-cols-3 2xl:grid-cols-12 divide-slate-200 divide-dashed dark:divide-zink-500 rtl:divide-x-reverse">
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->today->count }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Terjual</p>
+                    </div><!--end col-->
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->today->sum }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Pendapatan</p>
+                    </div><!--end col-->
+                </div><!--end grid-->
+            </div>
+        </div><!--end col-->
+        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3 cursor-pointer"
+            onclick="location.href='?periode=bulan'">
+            <div class="card-body">
+                <div class="mt-4 mb-6 text-center">
+                    <h6 class="text-16"><a href="#!">Bulan ini</a></h6>
+                    <p class="text-slate-500 dark:text-zink-200">Data transaksi bulan ini</p>
+                </div>
+                <div
+                    class="grid grid-cols-1 gap-5 text-center divide-y md:divide-y-0 md:divide-x sm:grid-cols-3 2xl:grid-cols-12 divide-slate-200 divide-dashed dark:divide-zink-500 rtl:divide-x-reverse">
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->month->count }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Terjual</p>
+                    </div><!--end col-->
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->month->sum }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Pendapatan</p>
+                    </div><!--end col-->
+                </div><!--end grid-->
+            </div>
+        </div><!--end col-->
+        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3 cursor-pointer"
+            onclick="location.href='?periode=tahun'">
+            <div class="card-body">
+                <div class="mt-4 mb-6 text-center">
+                    <h6 class="text-16"><a href="#!">Tahun ini</a></h6>
+                    <p class="text-slate-500 dark:text-zink-200">Data transaksi tahun ini</p>
+                </div>
+                <div
+                    class="grid grid-cols-1 gap-5 text-center divide-y md:divide-y-0 md:divide-x sm:grid-cols-3 2xl:grid-cols-12 divide-slate-200 divide-dashed dark:divide-zink-500 rtl:divide-x-reverse">
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->year->count }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Terjual</p>
+                    </div><!--end col-->
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->year->sum }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Pendapatan</p>
+                    </div><!--end col-->
+                </div><!--end grid-->
+            </div>
+        </div><!--end col-->
+        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3 cursor-pointer"
+            onclick="location.href='/laporan/transaksi-uptd'">
+            <div class="card-body">
+                <div class="mt-4 mb-6 text-center">
+                    <h6 class="text-16"><a href="#!">Selama ini</a></h6>
+                    <p class="text-slate-500 dark:text-zink-200">Data transaksi selama ini</p>
+                </div>
+                <div
+                    class="grid grid-cols-1 gap-5 text-center divide-y md:divide-y-0 md:divide-x sm:grid-cols-3 2xl:grid-cols-12 divide-slate-200 divide-dashed dark:divide-zink-500 rtl:divide-x-reverse">
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->all->count }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Terjual</p>
+                    </div><!--end col-->
+                    <div class="p-2 2xl:col-span-6">
+                        <h6 class="mb-1">{{ $revenue->all->sum }}</h6>
+                        <p class="text-slate-500 dark:text-zink-200">Pendapatan</p>
+                    </div><!--end col-->
+                </div><!--end grid-->
+            </div>
+        </div><!--end col-->
+    </div>
+
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Transaksi UPTD</h5>
+                <h5 class="mb-0">Daftar Transaksi UPTD {{ request('periode') ? '(' . request('periode') . ' ini)' : '' }}
+                </h5>
                 {{-- <button type="button" href="" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
                     <i class="ri-user-add-line"></i> Tambah Transaksi UPTD
@@ -81,7 +165,7 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('laporan.transaksi-uptd.index') }}",
+                    url: "{{ route('laporan.transaksi-uptd.index') }}?periode={{ request('periode') }}",
                     type: 'GET',
                 },
                 columns: [{
@@ -115,7 +199,7 @@
                         orderable: true,
                     },
                     {
-                        data: 'total',
+                        data: 'total_data',
                         name: 'total',
                         searchable: true,
                         orderable: true,

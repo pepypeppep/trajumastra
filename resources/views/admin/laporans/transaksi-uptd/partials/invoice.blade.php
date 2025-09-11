@@ -25,8 +25,8 @@
         <div>
             <p class="mb-2 text-sm uppercase text-slate-500 dark:text-zink-200">Petugas</p>
             <h6 class="mb-1 text-15">{{ $data->staff->name }}</h6>
-            <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $data->staff->uptd->name }}</p>
-            <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $data->staff->uptd->address }}</p>
+            <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $data->uptd->name }}</p>
+            <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $data->uptd->address }}</p>
         </div><!--end col-->
         <div>
             <p class="mb-2 text-sm uppercase text-slate-500 dark:text-zink-200">Pembeli</p>
@@ -75,9 +75,11 @@
                         </td>
                         <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">{{ $detail->unit }}
                         </td>
-                        <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">{{ $detail->size }}
+                        <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
+                            {{ str_replace('ukuran ', '', $detail->size) }}
                         </td>
-                        <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">{{ $detail->amount }}
+                        <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">
+                            {{ $detail->quantity }}
                         </td>
                         <td class="px-3.5 py-2.5 border-b border-slate-200 dark:border-zink-500">{{ $detail->price }}
                         </td>
@@ -95,7 +97,7 @@
                     </td>
                     <td
                         class="border-b border-slate-200 px-3.5 py-2.5 text-slate-500 dark:border-zink-500 dark:text-zink-200">
-                        {{ rupiah($data->amount) }}
+                        {{ rupiah($data->total) }}
                     </td>
                 </tr>
                 <tr>
