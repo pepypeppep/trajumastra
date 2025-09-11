@@ -5,6 +5,8 @@
 @section('content')
     @include('guest.home')
 
+    {{-- @include('guest.feedback') --}}
+
     @include('guest.news')
 
     @include('guest.peoples')
@@ -14,8 +16,6 @@
     @include('guest.tpi')
 
     @include('guest.transaction')
-
-    @include('guest.feedback')
 
     @include('guest.newsletter')
 @endsection
