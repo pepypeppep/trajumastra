@@ -104,8 +104,6 @@ class TransaksiService
 
             foreach ($transactions as $transactionData) {
                 $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])->first();
-                $fishStock = StokIkan::where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])
-                    ->where('uptd_id', $user->uptd_id)->first();
 
                 if (!$fish) {
                     return response()->json([
@@ -115,20 +113,26 @@ class TransaksiService
                     ], 500);
                 }
 
-                if (!$fishStock) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia',
-                        'error' => 'Internal server error'
-                    ], 500);
-                }
+                // If fish type is BBI check stock
+                if ($fish->jenis_ikan->type == 2) {
+                    $fishStock = StokIkan::where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])
+                        ->where('uptd_id', $user->uptd_id)->first();
 
-                if ($fishStock->stock < $transactionData['quantity']) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak cukup',
-                        'error' => 'Internal server error'
-                    ], 500);
+                    if (!$fishStock) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia',
+                            'error' => 'Internal server error'
+                        ], 500);
+                    }
+
+                    if ($fishStock->stock < $transactionData['quantity']) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak cukup',
+                            'error' => 'Internal server error'
+                        ], 500);
+                    }
                 }
 
                 $transaction = Transaksi::create([
@@ -138,17 +142,27 @@ class TransaksiService
                     'name' => $user->name,
                 ]);
 
-                $priceTotal = $transactionData['quantity'] * $fish->price;
-                $transaction->details()->create([
+                $data = [
                     'master_jenis_ikans_id' => $transactionData['master_jenis_ikan_id'],
                     'name' => $fish->jenis_ikan->name,
                     'unit' => $fish->unit,
                     'size' => $fish->size,
                     'price' => $fish->price,
                     'weight' => $fish->weight,
-                    'quantity' => $transactionData['quantity'],
-                    'total' => $priceTotal,
-                ]);
+                    'quantity' => $transactionData['quantity']
+                ];
+
+                // If fish type is BBI set total from Price
+                if ($fish->jenis_ikan->type == 2) {
+                    $priceTotal = $transactionData['quantity'] * $fish->price;
+                    $data['total'] = $priceTotal;
+                }
+                // If fish type is TPI set total from Retribution
+                else if ($fish->jenis_ikan->type == 1) {
+                    $data['total'] = $fish->retribution;
+                }
+
+                $transaction->details()->create($data);
 
                 $total += $priceTotal;
 
