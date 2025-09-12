@@ -18,18 +18,21 @@ class TransaksiService
     /* Get alls */
     public function getAll($request)
     {
-        // $user = $request->user();
-        $data = Transaksi::with('uptd')->where('user_id', 2);
+        $user = User::with('uptd')->find($request->user()->id);
+        $dataQuery = Transaksi::query();
+
+        if ($user->uptd_id) {
+            $dataQuery->where('uptd_id', $user->uptd_id);
+        }
 
         if ($request->has('keyword')) {
-            $data->where('name', 'like', '%' . $request->keyword . '%');
+            $dataQuery->where('name', 'like', '%' . $request->keyword . '%')
+                ->orWhere('invoice_id', 'like', '%' . $request->keyword . '%');
         }
 
-        if ($request->has('transaction_type')) {
-            $data->where('transaction_type', $request->transaction_type);
-        }
+        $data = $dataQuery->orderBy('created_at', 'desc')->paginate(10);
 
-        return $data->paginate(10);
+        return $data;
     }
 
     /* Get products by User */
