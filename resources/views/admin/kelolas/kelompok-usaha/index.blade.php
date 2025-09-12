@@ -1,31 +1,33 @@
 @extends('layouts.master')
 
-@section('title', 'Kelola Pelaku Usaha')
+@section('title', 'Kelompok Usaha')
 
 @section('breadcrumb')
-    {{ Breadcrumbs::render('kelola.pelaku-usaha') }}
+    {{ Breadcrumbs::render('kelola.kelompok-usaha') }}
 @endsection
 
 @section('content-admin')
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Pelaku Usaha</h5>
+                <h5 class="mb-0">Daftar Kelompok usaha</h5>
                 <button type="button" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
+                    <i class="ri-user-add-line"></i> Tambah Kelompok usaha
                 </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="text-left" style="width: 30%;">Nama Ketua Binaan</th>
-                        <th class="text-center" style="width: 15%;">Kelompok Binaan</th>
-                        <th class="text-center" style="width: 10%;">Email Ketua Binaan</th>
-                        <th class="text-center" style="width: 10%;">NIB</th>
-                        <th class="text-center" style="width: 10%;">NPWP</th>
-                        <th class="text-left" style="width: 15%;">Alamat Skretariat</th>
-                        <th class="text-center" style="width: 10%;">Aksi</th>
+                        <th class="ltr:!text-left rtl:!text-right">Nama</th>
+                        <th class="ltr:!text-left rtl:!text-right">Kalurahan</th>
+                        <th class="ltr:!text-left rtl:!text-right">Alamat</th>
+                        <th class="ltr:!text-left rtl:!text-right">Ketua</th>
+                        <th class="ltr:!text-left rtl:!text-right">Anggota</th>
+                        <th class="ltr:!text-left rtl:!text-right">Bentuk Usaha</th>
+                        <th class="ltr:!text-left rtl:!text-right">NIB</th>
+                        <th class="ltr:!text-left rtl:!text-right">Penghasilan</th>
+                        <th class="ltr:!text-left rtl:!text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +35,7 @@
                     <tr class="data-row">
                         <td colspan="6">
                             <div class="flex justify-center items-center">
-                                <span class="text-gray-500 dark:text-zink-300">Memuat data ...</span>
+                                <span class="text-gray-500 dark:text-zink-300">Memuat data kelompok usaha</span>
                             </div>
                         </td>
                     </tr>
@@ -42,10 +44,10 @@
         </div>
     </div>
 
-    {{-- Include Modal Add --}}
-    @include('admin.kelolas.pelaku-usaha.partials.modal-add')
-    {{-- Include Modal Edit --}}
-    @include('admin.kelolas.pelaku-usaha.partials.modal-edit')
+    {{-- Load modal add --}}
+    @include('admin.kelolas.kelompok-usaha.partials.modal-add')
+    {{-- Load modal edit --}}
+    @include('admin.kelolas.kelompok-usaha.partials.modal-edit')
     {{-- Form Delete --}}
     <form id="form-delete" action="" method="POST" class="hidden">
         @csrf
@@ -82,54 +84,67 @@
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
                 },
                 ajax: {
-                    url: "{{ route('kelola.pelaku-usaha.index') }}",
+                    url: "{{ route('kelola.kelompok-usaha.index') }}",
                     type: 'GET',
                 },
                 columns: [
                     {
-                        data: 'user.name',
-                        name: 'user.name',
+                        data: 'name',
+                        name: 'name',
                         searchable: true,
                         orderable: true,
-                        className: 'border border-gray-300 dark:border-zink-50 text-left'
-                    },{
-                        data: 'kelompok_binaan.name',
-                        name: 'kelompok_binaan.name',
+                    },
+                    {
+                        data: 'kalurahan.name',
+                        name: 'kalurahan.name',
                         searchable: true,
                         orderable: true,
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
-                    },{
-                        data: 'user.email',
-                        name: 'user.email',
-                        searchable: true,
-                        orderable: true,
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
-                    },{
-                        data: 'siup',
-                        name: 'siup',
-                        searchable: true,
-                        orderable: true,
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
-                    },{
-                        data: 'npwp',
-                        name: 'npwp',
-                        searchable: true,
-                        orderable: true,
-                        className: 'border border-gray-300 dark:border-zink-50 text-center'
-                    },{
+                    },
+                    {
                         data: 'address',
                         name: 'address',
                         searchable: true,
                         orderable: true,
-                        className: 'border border-gray-300 dark:border-zink-50 text-left'
-                    },{
+                    },
+                    {
+                        data: 'leader',
+                        name: 'leader',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'members',
+                        name: 'members',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'bentuk_usaha.name',
+                        name: 'bentuk_usaha.name',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'nib',
+                        name: 'nib',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
+                        data: 'income_range',
+                        name: 'income_range',
+                        searchable: true,
+                        orderable: true,
+                    },
+                    {
                         data: 'aksi',
                         name: 'aksi',
                         searchable: false,
                         orderable: false,
-                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                        className: 'text-center'
                     },
-                    // etc ...
+                    
+                    // etc kelompok-usaha
                 ],
             })
         }
@@ -143,7 +158,7 @@
             var id = $(this).data('id');
             var urlFormAction = $(this).data('url-action');
             Swal.fire({
-                title: 'Yakin ingin menghapusss?',
+                title: 'Yakin ingin menghapus?',
                 text: "Data tidak bisa dikembalikan setelah dihapus!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -162,18 +177,56 @@
     </script>
     {{-- End action delete data --}}
 
+
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2
-        function initSelect2UserId(context) {
-            $(context).find('[name="user_id"]').select2({
+        function initSelect2KelompokBinaan(context) {
+            $(context).find('[name="kelompok_binaan_id"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
-                placeholder: "Pilih pengguna untuk dijadikan ketua binaan",
+                placeholder: "Pilih Kelompok Binaan",
                 allowClear: true
             });
         }
-        
+
+        function initAppendDataWhenSelectedKelompokBinaan(context) {
+            // On change event
+            $(context + ' #kelompok_binaan_id').on('change', function() {
+                var kelompokBinaanId = $(this).val();
+                if (kelompokBinaanId) {
+                    $.ajax({
+                        url: "{{ url('kelola/kelompok-usaha/kelompok-binaan') }}/" + kelompokBinaanId,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            // Auto fill the form fields
+                            $(context + ' #name').val(data.name);
+                            $(context + ' #phone').val(data.phone);
+                            $(context + ' #leader').val(data.leader);
+                            $(context + ' #members').val(data.members);
+                            $(context + ' #address').val(data.address);
+                            $(context + ' #year').val(data.year);
+                            // Set kalurahan_id hidden input
+                            $(context + ' #kalurahan_id').val(data.kalurahan_id);
+                        },
+                        error: function() {
+                            console.error('Failed to fetch kelompok binaan details.');
+                        }
+                    });
+                } else {
+                    // Clear the form fields if no kelompok binaan is selected
+                    $(context + ' #name').val('');
+                    $(context + ' #phone').val('');
+                    $(context + ' #leader').val('');
+                    $(context + ' #members').val('');
+                    $(context + ' #address').val('');
+                    // Clear kalurahan_id hidden input
+                    $(context + ' #kalurahan_id').val('');
+                }
+            });
+        }
+
         function initSelect2Kalurahan(context) {
             $(context).find('[name="kalurahan_id"]').select2({
                 dropdownParent: $(context),
@@ -183,30 +236,12 @@
             });
         }
 
-        function initSelect2JenisUsaha(context) {
-            $(context).find('[name="jenis_usaha_id"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih Jenis Usaha",
-                allowClear: true,
-            });
-        }
-
         function initSelect2BentukUsaha(context) {
             $(context).find('[name="bentuk_usaha_id"]').select2({
                 dropdownParent: $(context),
                 width: '100%',
                 placeholder: "Pilih Bentuk Usaha",
-                allowClear: true,
-            });
-        }
-
-        function initSelect2KelompokBinaan(context) {
-            $(context).find('[name="kelompok_binaan_id"]').select2({
-                dropdownParent: $(context),
-                width: '100%',
-                placeholder: "Pilih Kelompok Binaan",
-                allowClear: true,
+                allowClear: true
             });
         }
 
@@ -215,27 +250,24 @@
                 dropdownParent: $(context),
                 width: '100%',
                 placeholder: "Pilih Range Penghasilan",
-                allowClear: true,
+                allowClear: true
             });
         }
 
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
-            initSelect2UserId('#modal-add');
-            initSelect2Kalurahan('#modal-add');
-            initSelect2JenisUsaha('#modal-add');
-            initSelect2BentukUsaha('#modal-add');
             initSelect2KelompokBinaan('#modal-add');
+            initAppendDataWhenSelectedKelompokBinaan('#modal-add');
+            initSelect2Kalurahan('#modal-add');
+            initSelect2BentukUsaha('#modal-add');
             initSelect2RangePenghasilan('#modal-add');
         });
 
         // Modal EDIT
         $(document).on('click', '[data-modal-target="modal-edit"]', function() {
-            initSelect2UserId('#modal-edit');
-            initSelect2Kalurahan('#modal-edit');
-            initSelect2JenisUsaha('#modal-edit');
-            initSelect2BentukUsaha('#modal-edit');
             initSelect2KelompokBinaan('#modal-edit');
+            initSelect2Kalurahan('#modal-edit');
+            initSelect2BentukUsaha('#modal-edit');
             initSelect2RangePenghasilan('#modal-edit');
         });
     </script>

@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('master_bidangs', function (Blueprint $table) {
+        /* Khusus untuk kelompok binaan POKMASWAS. Karena HANYA POKMASWAS yang memiliki data Bidang */
+        Schema::create('kelompok_binaan_bidang', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->softDeletes();
+            $table->unsignedBigInteger('kelompok_binaan_id')->comment('ID Kelompok Binaan dengan jenis_kelompok = pokmaswas');
+            $table->unsignedBigInteger('master_bidang_id');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('master_bidangs');
+        Schema::dropIfExists('kelompok_binaan_bidang');
     }
 };

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Kalurahan;
 use App\Models\PelakuUsaha;
+use App\Models\MasterBidang;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,12 +33,6 @@ class KelompokBinaan extends Model
     {
         return $this->belongsTo(Kecamatan::class);
     }
-    
-    /* Jenis Usaha (Pivot) */
-    public function jenis_usahas(): BelongsToMany
-    {
-        return $this->belongsToMany(MasterJenisUsaha::class, 'kelompok_binaan_jenis_usaha', 'kelompok_binaan_id', 'jenis_usaha_id');
-    }
 
     /* =========================== POKDAKAN RELATIONSHIPS */
 
@@ -54,5 +49,18 @@ class KelompokBinaan extends Model
     }
 
     /* =========================== POKLASHAR RELATIONSHIPS */
+
+    /* Jenis Usaha (Pivot) */
+    public function jenis_usahas(): BelongsToMany
+    {
+        return $this->belongsToMany(MasterJenisUsaha::class, 'kelompok_binaan_jenis_usaha', 'kelompok_binaan_id', 'jenis_usaha_id');
+    }
+
+    /* =========================== POKMASWAS RELATIONSHIPS */
+    /* Bidang (Pivot) */
+    public function bidangs(): BelongsToMany
+    {
+        return $this->belongsToMany(MasterBidang::class, 'kelompok_binaan_bidang', 'kelompok_binaan_id', 'master_bidang_id');
+    }
 
 }

@@ -30,11 +30,13 @@ use App\Http\Controllers\Admin\Master\AssetDigunakanController;
 use App\Http\Controllers\Admin\Master\JenisTransaksiController;
 use App\Http\Controllers\Admin\Kelola\KelolaHargaIkanController;
 use App\Http\Controllers\Admin\Kelola\KelolaPoklasharController;
+use App\Http\Controllers\Admin\Kelola\KelolaPokmaswasController;
 use App\Http\Controllers\Admin\Master\JenisPendaratanController;
 use App\Http\Controllers\Admin\Master\JenisPenyuluhanController;
 use App\Http\Controllers\Admin\Master\JenisUsahaSaranaController;
 use App\Http\Controllers\Admin\Master\RangePenghasilanController;
 use App\Http\Controllers\Admin\Kelola\KelolaPelakuUsahaController;
+use App\Http\Controllers\Admin\Kelola\KelolaKelompokUsahaController;
 use App\Http\Controllers\Admin\Kelola\KelolaKelompokBinaanController;
 use App\Http\Controllers\Admin\Master\PersyaratanPengajuanController;
 use App\Http\Controllers\Admin\Master\JenisKlasifikasiUsahaController;
@@ -127,6 +129,11 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('pokdakan', KelolaPokdakanController::class)->names('pokdakan');
         /* Kelola Poklashar */
         Route::resource('poklashar', KelolaPoklasharController::class)->names('poklashar');
+        /* Kelola Pokmaswas */
+        Route::resource('pokmaswas', KelolaPokmaswasController::class)->names('pokmaswas');
+        /* Kelola Kelompok Usaha */
+        Route::resource('kelompok-usaha', KelolaKelompokUsahaController::class)->names('kelompok-usaha');
+        Route::get('kelompok-usaha/kelompok-binaan/{id}', [KelolaKelompokUsahaController::class, 'getKelompokBinaanById'])->name('kelompok-usaha.kelompok-binaan');
     });
 
     /* ---- Laporan */
