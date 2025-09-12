@@ -2,15 +2,15 @@
 
 namespace App\Http\Services\Api;
 
-use App\Models\Uptd;
 use App\Models\User;
-use App\Models\HargaIkan;
-use App\Models\KoordinatorUptd;
-use App\Models\Transaksi;
-use App\Models\MasterJenisIkan;
 use App\Models\StokIkan;
+use App\Models\HargaIkan;
+use App\Models\Transaksi;
+use Illuminate\Http\Request;
+use App\Models\MasterJenisIkan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 
 class TransaksiService
@@ -33,10 +33,16 @@ class TransaksiService
     }
 
     /* Get products by User */
-    public function getProductByUser($request)
+    public function getProductByUser(Request $request)
     {
-        // $user = $request->user();
-        $data = HargaIkan::with('jenis_ikan:id,name')->where('uptd_id', 2);
+        $user = User::with('uptd')->find($request->user()->id);
+        $uptdType = $user->uptd?->type;
+
+        $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
+            ->where('is_active', 1)
+            ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
+                $query->where('type', $uptdType);
+            });
 
         if ($request->has('keyword')) {
             $data->whereHas('jenis_ikan', function ($query) use ($request) {
@@ -48,7 +54,9 @@ class TransaksiService
             $data->where('transaction_type', $request->transaction_type);
         }
 
-        return $data->get();
+        $products = $data->get();
+
+        return ProductResource::collectionWithUptdType($products, $uptdType);
     }
 
     /* Get data by ID */
@@ -88,7 +96,6 @@ class TransaksiService
 
         try {
             // $user = User::with('uptd')->find(2);
-            $koordinatorUptd = KoordinatorUptd::with('uptd')->where('user_id', $user->id)->first();
             $transactions = $attributes['transactions'];
             $savedTransactions = [];
             // $amount = 0;
@@ -98,7 +105,7 @@ class TransaksiService
             foreach ($transactions as $transactionData) {
                 $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])->first();
                 $fishStock = StokIkan::where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])
-                    ->where('uptd_id', $koordinatorUptd->uptd_id)->first();
+                    ->where('uptd_id', $user->uptd_id)->first();
 
                 if (!$fish) {
                     return response()->json([
@@ -126,7 +133,7 @@ class TransaksiService
 
                 $transaction = Transaksi::create([
                     'user_id' => $user->id,
-                    'uptd_id' => $koordinatorUptd->uptd_id,
+                    'uptd_id' => $user->uptd_id,
                     'transaction_type' => $attributes['transaction_type'] ?? 'cash',
                     'name' => $user->name,
                 ]);

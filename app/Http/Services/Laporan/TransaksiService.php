@@ -2,8 +2,6 @@
 
 namespace App\Http\Services\Laporan;
 
-use App\Models\KoordinatorUptd;
-use App\Models\Uptd;
 use App\Models\Transaksi;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +85,7 @@ class TransaksiService
         $query = Transaksi::query();
 
         if (!$isSuperadmin) {
-            $koordinator = KoordinatorUptd::where('user_id', $id)->first();
+            $koordinator = $user;
 
             if ($koordinator) {
                 $query->where('uptd_id', $koordinator->uptd_id);

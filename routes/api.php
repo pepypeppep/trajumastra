@@ -12,6 +12,7 @@ Route::get('/user', function (Request $request) {
 Route::as('api.')->middleware('auth:sso-api')->group(function () {
     Route::get('/whoami',  [SSOController::class, 'whoami'])->name('whoami');
 
-    Route::get('/product/{id}',  [TransaksiController::class, 'getImage'])->name('product.image');
+    Route::get('/products',  [TransaksiController::class, 'index'])->name('product.index');
+    Route::get('/products/{id}/thumbnail',  [TransaksiController::class, 'getImage'])->name('product.image');
     Route::resource('transaksi', TransaksiController::class)->names('transaksi');
 });

@@ -65,16 +65,18 @@ class UserSeeder extends Seeder
         $developerAccount->assignRole($developerRole);
 
         $petugasUPTDAccount = User::factory()->create([
+            'uptd_id' => 1,
             'name' => 'Petugas UPTD',
-            'username' => 'petugas_uptd',
-            'email' => 'petugas_uptd@petugas_uptd.net'
+            'username' => 'admin_uptd',
+            'email' => 'uptd@uptd.net'
         ]);
         $petugasUPTDAccount->assignRole($petugasTPIRole);
 
         $petugasTPIAccount = User::factory()->create([
+            'uptd_id' => 7,
             'name' => 'Petugas TPI',
-            'username' => 'petugas_tpi',
-            'email' => 'petugas_tpi@petugas_tpi.net'
+            'username' => 'admin_tpi',
+            'email' => 'tpi@tpi.net'
         ]);
         $petugasTPIAccount->assignRole($petugasTPIRole);
 

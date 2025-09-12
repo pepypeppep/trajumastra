@@ -9,7 +9,6 @@ use App\Models\Transaksi;
 use App\Models\PelakuUsaha;
 use App\Models\KelompokBinaan;
 use Illuminate\Support\Carbon;
-use App\Models\KoordinatorUptd;
 use App\Models\TransaksiDetail;
 use Illuminate\Support\Facades\DB;
 use App\Models\SuratRekomendasiBbm;
@@ -27,7 +26,6 @@ class DashboardService
         $total_rekomendasi_bbm = SuratRekomendasiBbm::count();
         $total_uptd = Uptd::where('type', Uptd::UPTD)->count();
         $total_tpi = Uptd::where('type', Uptd::TPI)->count();
-        $total_koordinator = KoordinatorUptd::count();
 
         return [
             'total_pelaku_usaha' => $total_pelaku_usaha,
@@ -37,7 +35,7 @@ class DashboardService
             'total_rekomendasi_bbm' => $total_rekomendasi_bbm,
             'total_uptd' => $total_uptd,
             'total_tpi' => $total_tpi,
-            'total_koordinator' => $total_koordinator
+            'total_koordinator' => 0
         ];
     }
 
