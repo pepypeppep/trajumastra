@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\MasterPenghasilan;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\MasterRangePenghasilan;
 
 class PenghasilanSeeder extends Seeder
 {
@@ -13,12 +12,12 @@ class PenghasilanSeeder extends Seeder
      */
     public function run(): void
     {
-        MasterPenghasilan::create(['name' => 'Kurang dari Rp 1.000.000']);
-        MasterPenghasilan::create(['name' => 'Rp 1.000.000 - Rp 3.000.000']);
-        MasterPenghasilan::create(['name' => 'Rp 3.000.000 - Rp 5.000.000']);
-        MasterPenghasilan::create(['name' => 'Rp 5.000.000 - Rp 10.000.000']);
-        MasterPenghasilan::create(['name' => 'Rp 10.000.000 - Rp 20.000.000']);
-        MasterPenghasilan::create(['name' => 'Rp 20.000.000 - Rp 50.000.000']);
-        MasterPenghasilan::create(['name' => 'Rp 50.000.000 - Rp 100.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Kurang dari Rp 1.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Rp 1.000.000 - Rp 3.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Rp 3.000.000 - Rp 5.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Rp 5.000.000 - Rp 10.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Rp 10.000.000 - Rp 20.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Rp 20.000.000 - Rp 50.000.000']);
+        MasterRangePenghasilan::create(['name' => 'Rp 50.000.000 - Rp 100.000.000']);
     }
 }

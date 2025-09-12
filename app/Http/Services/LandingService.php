@@ -8,7 +8,7 @@ use App\Models\Transaksi;
 use App\Models\KelompokBinaan;
 use App\Models\MasterJenisUsaha;
 use App\Models\MasterBentukUsaha;
-use App\Models\MasterPenghasilan;
+use App\Models\MasterRangePenghasilan;
 use App\Models\PelakuUsaha;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -77,7 +77,7 @@ class LandingService
     /* Get data Penghasilan */
     public function getPenghasilan()
     {
-        $data = MasterPenghasilan::all();
+        $data = MasterRangePenghasilan::all();
         return $data;
     }
 
