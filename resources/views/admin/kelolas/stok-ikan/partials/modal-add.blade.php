@@ -15,14 +15,23 @@
                 <div class="mt-3">
                     <label for="" class="inline-block mb-2 text-base font-medium">UPTD <strong
                             class="text-red-500">*</strong></label>
-                    <select
-                        class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        name="uptd_id" id="uptd_id">
-                        <option value="">Pilih UPTD</option>
-                        @foreach ($uptds as $uptd)
-                            <option value="{{ $uptd->id }}">{{ $uptd->name }}</option>
-                        @endforeach
-                    </select>
+                    @if (auth()->user()->uptd_id)
+                        <select
+                            class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            name="uptd_id" id="uptd_id">
+                            <option value="{{ auth()->user()->uptd->id }}" selected>{{ auth()->user()->uptd->name }}
+                            </option>
+                        </select>
+                    @else
+                        <select
+                            class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            name="uptd_id" id="uptd_id">
+                            <option value="">Pilih UPTD</option>
+                            @foreach ($uptds as $uptd)
+                                <option value="{{ $uptd->id }}">{{ $uptd->name }}</option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-1 mt-3">
                     <div class="col-span">

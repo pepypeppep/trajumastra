@@ -12,12 +12,13 @@ use Illuminate\Support\Carbon;
 use App\Models\TransaksiDetail;
 use Illuminate\Support\Facades\DB;
 use App\Models\SuratRekomendasiBbm;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class DashboardService
 {
     /* Get data count */
-    public function getDataCount()
+    public function getDataCount(Request $request)
     {
         $total_pelaku_usaha = PelakuUsaha::count();
         $total_penyuluh = Penyuluh::count();
@@ -40,11 +41,21 @@ class DashboardService
     }
 
     /* Get popular fish */
-    public function getPopularFish()
+    public function getPopularFish(Request $request)
     {
+        $user = $request->user();
         $detail = TransaksiDetail::selectRaw('master_jenis_ikans_id, sum(quantity) as total_quantity, sum(total) as total_price')
             ->groupBy('master_jenis_ikans_id')
-            ->with('jenis_ikan')
+            ->with(['transaksi' => function ($query) use ($user) {
+                if ($user->uptd_id) {
+                    $query->where('uptd_id', $user->uptd_id);
+                }
+            }, 'jenis_ikan'])
+            ->whereHas('transaksi', function ($query) use ($user) {
+                if ($user->uptd_id) {
+                    $query->where('uptd_id', $user->uptd_id);
+                }
+            })
             ->orderByDesc('total_price')
             ->limit(4)
             ->get();
@@ -53,8 +64,9 @@ class DashboardService
     }
 
     /* Get transaction count*/
-    public function getTransactionCount()
+    public function getTransactionCount(Request $request)
     {
+        $user = $request->user();
         $currentMonth = Carbon::now()->startOfMonth();
         $nextMonth = Carbon::now()->addMonth()->startOfMonth();
 
@@ -75,6 +87,9 @@ class DashboardService
                 DB::raw('COUNT(t.id) as count')
             )
             ->whereBetween('t.created_at', [$currentMonth, $nextMonth])
+            ->when($user->uptd_id, function ($query) use ($user) {
+                $query->where('t.uptd_id', $user->uptd_id);
+            })
             ->groupBy(DB::raw('DATE(t.created_at)'), 'u.type')
             ->get()
             ->groupBy('date');
@@ -114,8 +129,9 @@ class DashboardService
     }
 
     /* Get transaction amount */
-    public function getTransactionAmount()
+    public function getTransactionAmount(Request $request)
     {
+        $user = $request->user();
         $currentMonth = Carbon::now()->startOfMonth();
         $nextMonth = Carbon::now()->addMonth()->startOfMonth();
 
@@ -136,6 +152,9 @@ class DashboardService
                 DB::raw('SUM(t.total) as total_amount')
             )
             ->whereBetween('t.created_at', [$currentMonth, $nextMonth])
+            ->when($user->uptd_id, function ($query) use ($user) {
+                $query->where('t.uptd_id', $user->uptd_id);
+            })
             ->groupBy(DB::raw('DATE(t.created_at)'), 'u.type')
             ->get()
             ->groupBy('date');

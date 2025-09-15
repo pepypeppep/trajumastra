@@ -18,16 +18,16 @@ class DashboardController extends Controller
         $this->setRule('dashboard.read');
 
         if ($request->ajax()) {
-            $transactionCount = $this->service->getTransactionCount();
-            $transactions = $this->service->getTransactionAmount();
+            $transactionCount = $this->service->getTransactionCount($request);
+            $transactions = $this->service->getTransactionAmount($request);
             return [
                 'transactionCount' => $transactionCount,
                 'transactions' => $transactions
             ];
         }
 
-        $dataCount = $this->service->getDataCount();
-        $popularFish = $this->service->getPopularFish();
+        $dataCount = $this->service->getDataCount($request);
+        $popularFish = $this->service->getPopularFish($request);
 
         return view('admin.dashboard.index', compact('dataCount', 'popularFish'));
     }

@@ -43,6 +43,10 @@ class UserSeeder extends Seeder
         // Sync permissions for petugas role
         $tpiPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
             'dashboard.read',
+            'kelola.read',
+            'kelola.create',
+            'kelola.update',
+            'kelola.delete',
             'kelola-stok-ikan.read',
             'kelola-stok-ikan.create',
             'kelola-stok-ikan.update',
@@ -67,6 +71,10 @@ class UserSeeder extends Seeder
         $petugasTPIRole->syncPermissions($tpiPermissions);
         $uptdPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
             'dashboard.read',
+            'kelola.read',
+            'kelola.create',
+            'kelola.update',
+            'kelola.delete',
             'kelola-stok-ikan.read',
             'kelola-stok-ikan.create',
             'kelola-stok-ikan.update',

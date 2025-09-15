@@ -12,7 +12,12 @@ class TransaksiService
     /* Get alls */
     public function getAll($request)
     {
+        $user = $request->user();
         $query = Transaksi::with('uptd', 'staff');
+
+        if ($user->uptd_id) {
+            $query->where('uptd_id', $user->uptd_id);
+        }
 
         if ($request->has('periode')) {
             if ($request->periode == 'hari') {

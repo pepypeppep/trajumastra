@@ -5,20 +5,27 @@ namespace App\Http\Services\Kelola;
 use App\Models\Uptd;
 use App\Models\StokIkan;
 use App\Models\MasterJenisIkan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class StokIkanService
 {
     /* Get alls */
-    public function getAll()
+    public function getAll(Request $request)
     {
+        $user = $request->user();
+
         $data = StokIkan::select(
             'stok_ikans.id as stok_id',
             'stok_ikans.uptd_id',
             'stok_ikans.jenis_ikan_id',
             'stok_ikans.stock'
-        )->with('uptd:id,name', 'jenis_ikan:id,name');
+        )
+            ->when($user->uptd_id, function ($query) use ($user) {
+                $query->where('uptd_id', $user->uptd_id);
+            })
+            ->with('uptd:id,name', 'jenis_ikan:id,name');
 
         return DataTables::eloquent($data)
             ->addIndexColumn()

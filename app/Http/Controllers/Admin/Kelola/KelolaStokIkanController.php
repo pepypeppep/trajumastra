@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\Kelola\StokIkanService;
 use App\Http\Requests\Kelola\StokIkan\CreateRequest;
 use App\Http\Requests\Kelola\StokIkan\UpdateRequest;
+use Illuminate\Http\Request;
 
 class KelolaStokIkanController extends Controller
 {
@@ -14,13 +15,13 @@ class KelolaStokIkanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->setRule('kelola-stok-ikan.read');
 
         // Get data jenis ikan for data table
         if (request()->ajax()) {
-            return $this->service->getAll();
+            return $this->service->getAll($request);
         }
 
         $uptds = $this->service->getAllUptd();
