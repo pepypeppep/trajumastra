@@ -32,6 +32,7 @@ class UserSeeder extends Seeder
         $sekdinRole = Role::create(['name' => RoleEnum::SEKDIN->value]);
         $kepalaDinasRole = Role::create(['name' => RoleEnum::KEPALA_DINAS->value]);
         $petugasTPIRole = Role::create(['name' => RoleEnum::PETUGAS_TPI->value]);
+        $petugasUPTDRole = Role::create(['name' => RoleEnum::PETUGAS_UPTD->value]);
         $penyuluhRole = Role::create(['name' => RoleEnum::PENYULUH->value]);
         $pelakuUsahaRole = Role::create(['name' => RoleEnum::PELAKU_USAHA->value]);
 
@@ -40,13 +41,54 @@ class UserSeeder extends Seeder
         $developerRole->syncPermissions($developerPermissions);
 
         // Sync permissions for petugas role
-        $transaksiPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
+        $tpiPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
+            'dashboard.read',
+            'kelola-stok-ikan.read',
+            'kelola-stok-ikan.create',
+            'kelola-stok-ikan.update',
+            'kelola-stok-ikan.delete',
             'transaksi.read',
             'transaksi.create',
             'transaksi.update',
-            'transaksi.delete'
+            'transaksi.delete',
+            'laporan.read',
+            'laporan.create',
+            'laporan.update',
+            'laporan.delete',
+            'laporan-transaksi-tpi.read',
+            'laporan-transaksi-tpi.create',
+            'laporan-transaksi-tpi.update',
+            'laporan-transaksi-tpi.delete',
+            'profile.read',
+            'profile.create',
+            'profile.update',
+            'profile.delete',
         ]));
-        $petugasTPIRole->syncPermissions($transaksiPermissions);
+        $petugasTPIRole->syncPermissions($tpiPermissions);
+        $uptdPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
+            'dashboard.read',
+            'kelola-stok-ikan.read',
+            'kelola-stok-ikan.create',
+            'kelola-stok-ikan.update',
+            'kelola-stok-ikan.delete',
+            'transaksi.read',
+            'transaksi.create',
+            'transaksi.update',
+            'transaksi.delete',
+            'laporan.read',
+            'laporan.create',
+            'laporan.update',
+            'laporan.delete',
+            'laporan-transaksi-uptd.read',
+            'laporan-transaksi-uptd.create',
+            'laporan-transaksi-uptd.update',
+            'laporan-transaksi-uptd.delete',
+            'profile.read',
+            'profile.create',
+            'profile.update',
+            'profile.delete',
+        ]));
+        $petugasUPTDRole->syncPermissions($uptdPermissions);
 
         // Sync permissions for pelakuusaha role
         $rekomendasiBbmPermissions = $developerPermissions->filter(fn($permission) => in_array($permission->name, [
@@ -70,7 +112,7 @@ class UserSeeder extends Seeder
             'username' => 'admin_uptd',
             'email' => 'uptd@uptd.net'
         ]);
-        $petugasUPTDAccount->assignRole($petugasTPIRole);
+        $petugasUPTDAccount->assignRole($petugasUPTDRole);
 
         $petugasTPIAccount = User::factory()->create([
             'uptd_id' => 7,
@@ -85,7 +127,6 @@ class UserSeeder extends Seeder
             'username' => 'penyuluh',
             'email' => 'penyuluh@penyuluh.net'
         ]);
-        $penyuluhRole->syncPermissions($transaksiPermissions);
         $penyuluhAccount->assignRole($penyuluhRole);
 
         $pelakuUsahaAccount = User::factory()->create([

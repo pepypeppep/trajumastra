@@ -12,6 +12,7 @@ enum RoleEnum: string
     case SEKDIN = 'Sekdin';
     case KEPALA_DINAS = 'Kepala Dinas';
     case PETUGAS_TPI = 'Petugas TPI';
+    case PETUGAS_UPTD = 'Petugas BBI';
     case PENYULUH = 'Penyuluh';
     case PELAKU_USAHA = 'Pelaku Usaha';
 
@@ -26,8 +27,9 @@ enum RoleEnum: string
             self::SEKDIN => 6,
             self::KEPALA_DINAS => 7,
             self::PETUGAS_TPI => 8,
-            self::PENYULUH => 9,
-            self::PELAKU_USAHA => 10,
+            self::PETUGAS_UPTD => 9,
+            self::PENYULUH => 10,
+            self::PELAKU_USAHA => 11,
         };
     }
 }
