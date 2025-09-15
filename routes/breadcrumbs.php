@@ -233,6 +233,18 @@ Breadcrumbs::for('kelola.poklashar', function (BreadcrumbTrail $trail) {
     $trail->push('Poklashar', route('kelola.poklashar.index'));
 });
 
+/* Kelola Pokmaswas */
+Breadcrumbs::for('kelola.pokmaswas', function (BreadcrumbTrail $trail) {
+    $trail->parent('kelola');
+    $trail->push('Pokmaswas', route('kelola.pokmaswas.index'));
+});
+
+/* Kelola Kelompok Usaha */
+Breadcrumbs::for('kelola.kelompok-usaha', function (BreadcrumbTrail $trail) {
+    $trail->parent('kelola');
+    $trail->push('Kelompok Usaha', route('kelola.kelompok-usaha.index'));
+});
+
 /**
  * ------------------------------------------------------------------------------------------------------------------------
  * Laporan

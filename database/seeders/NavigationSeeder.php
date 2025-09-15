@@ -443,6 +443,7 @@ class NavigationSeeder extends Seeder
             //     'active' => true,
             //     'display' => true,
             // ],
+
             // Kelola Pokdakan
             [
                 'id' => 212,
@@ -465,6 +466,32 @@ class NavigationSeeder extends Seeder
                 'slug' => 'kelola-poklashar',
                 'icon' => '',
                 'order' => 12,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Pokmaswas
+            [
+                'id' => 214,
+                'name' => 'Kelola Pokmaswas',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.pokmaswas.index',
+                'slug' => 'kelola-pokmaswas',
+                'icon' => '',
+                'order' => 13,
+                'parent_id' => 200,
+                'active' => true,
+                'display' => true,
+            ],
+            // Kelola Kelompok Usaha
+            [
+                'id' => 215,
+                'name' => 'Kelola Kelompok Usaha',
+                'page' => 'admin', // or 'guest'
+                'url' => 'kelola.kelompok-usaha.index',
+                'slug' => 'kelola-kelompok-usaha',
+                'icon' => '',
+                'order' => 11,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,
