@@ -53,6 +53,9 @@ Route::post('/register-store', [BerandaController::class, 'store'])->name('penda
 
 /* ======================== ADMIN */
 Route::middleware('auth', 'verified')->group(function () {
+    Route::get('/home', function () {
+        return redirect()->route('dashboard');
+    });
     /* ---- Dashboard */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route::redirect('/', '/dashboard');
