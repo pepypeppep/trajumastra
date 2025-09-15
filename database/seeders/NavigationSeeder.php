@@ -282,7 +282,7 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            
+
             // Persyaratan Pengajuan BBM
             [
                 'id' => 118,
@@ -400,19 +400,6 @@ class NavigationSeeder extends Seeder
                 'slug' => 'kelola-tpi',
                 'icon' => '',
                 'order' => 5,
-                'parent_id' => 200,
-                'active' => true,
-                'display' => true,
-            ],
-            // Kelola Koordinator UPTD/TPI
-            [
-                'id' => 206,
-                'name' => 'Kelola Koordinator UPTD/TPI',
-                'page' => 'admin', // or 'guest'
-                'url' => 'kelola.koordinator-uptd-tpi.index',
-                'slug' => 'kelola-koordinator-uptd-tpi',
-                'icon' => '',
-                'order' => 6,
                 'parent_id' => 200,
                 'active' => true,
                 'display' => true,

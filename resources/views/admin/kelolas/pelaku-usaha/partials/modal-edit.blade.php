@@ -17,11 +17,12 @@
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                 <div class="mt-3">
-                    <label for="user_id" class="inline-block text-base font-medium">Pengguna untuk dijadikan Ketua Binaan <strong
-                            class="text-red-500">*</strong>
+                    <label for="user_id" class="inline-block text-base font-medium">Pengguna untuk dijadikan Ketua
+                        Binaan <strong class="text-red-500">*</strong>
                     </label>
                     <div class="mb-2">
-                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai ketua binaan.</small>
+                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai ketua
+                            binaan.</small>
                     </div>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -36,10 +37,10 @@
                 {{-- Alamat --}}
                 <div class="mt-3">
                     <label for="" class="inline-block mb-2 text-base font-medium">Alamat Sekretariat <strong
-                        class="text-red-500">*</strong></label>
-                    <textarea name="secretariat_address"
+                            class="text-red-500">*</strong></label>
+                    <textarea name="address"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        id="secretariat_address" rows="3" required></textarea>
+                        id="address" rows="3" required></textarea>
                 </div>
 
                 {{-- Kelurahan --}}
@@ -51,7 +52,8 @@
                         name="kalurahan_id" id="kalurahan_id" required>
                         <option value="">Pilih Kalurahan</option>
                         @foreach ($kalurahans as $kalurahan)
-                            <option value="{{ $kalurahan->id }}">{{ $kalurahan->name }}, {{ $kalurahan->kecamatan->name }}, {{ $kalurahan->kecamatan->kabupaten->name }}</option>
+                            <option value="{{ $kalurahan->id }}">{{ $kalurahan->name }},
+                                {{ $kalurahan->kecamatan->name }}, {{ $kalurahan->kecamatan->kabupaten->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -164,20 +166,23 @@
                 url: urlGetData, // Url for get data edit
                 type: 'GET',
                 success: function(response) {
-                    console.log(response);  
+                    console.log(response);
                     // Modal title
                     $('#modal-title').text('Ubah Data Pelaku Usaha - ' + response.user.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
                     $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
-                    $('#form-edit').find('#secretariat_address').val(response.secretariat_address);
+                    $('#form-edit').find('#address').val(response.address);
                     $('#form-edit').find('#npwp').val(response.npwp);
                     $('#form-edit').find('#siup').val(response.siup);
                     $('#form-edit').find('#kalurahan_id').val(response.kalurahan_id).trigger('change');
-                    $('#form-edit').find('#jenis_usaha_id').val(response.jenis_usaha_id).trigger('change');
-                    $('#form-edit').find('#bentuk_usaha_id').val(response.bentuk_usaha_id).trigger('change');
-                    $('#form-edit').find('#kelompok_binaan_id').val(response.kelompok_binaan_id).trigger('change');
+                    $('#form-edit').find('#jenis_usaha_id').val(response.jenis_usaha_id).trigger(
+                        'change');
+                    $('#form-edit').find('#bentuk_usaha_id').val(response.bentuk_usaha_id).trigger(
+                        'change');
+                    $('#form-edit').find('#kelompok_binaan_id').val(response.kelompok_binaan_id)
+                        .trigger('change');
                     $('#form-edit').find('#income_range').val(response.income_range).trigger('change');
 
                     // ==== Jenis Ikan (multiple select2 with tags) ====

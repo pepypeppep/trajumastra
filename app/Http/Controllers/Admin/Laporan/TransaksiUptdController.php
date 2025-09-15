@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Laporan;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Laporan\TransaksiService;
 
@@ -13,15 +15,17 @@ class TransaksiUptdController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->setRule('laporan-transaksi-uptd.read');
 
         if (request()->ajax()) {
-            return $this->service->getAll();
+            return $this->service->getAll($request);
         }
 
-        return view('admin.laporans.transaksi-uptd.index');
+        $revenue = $this->service->getRevenue(auth()->user());
+
+        return view('admin.laporans.transaksi-uptd.index', compact('revenue'));
     }
 
     /**

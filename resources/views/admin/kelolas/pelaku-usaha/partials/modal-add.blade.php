@@ -12,11 +12,12 @@
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
                 <div class="mt-3">
-                    <label for="user_id" class="inline-block text-base font-medium">Pengguna untuk dijadikan Ketua Binaan <strong
-                            class="text-red-500">*</strong>
+                    <label for="user_id" class="inline-block text-base font-medium">Pengguna untuk dijadikan Ketua
+                        Binaan <strong class="text-red-500">*</strong>
                     </label>
                     <div class="mb-2">
-                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai ketua binaan.</small>
+                        <small class="text-gray-500">Silahkan pilih pengguna yang akan ditambahkan sebagai ketua
+                            binaan.</small>
                     </div>
                     <select
                         class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -31,8 +32,8 @@
                 {{-- Alamat --}}
                 <div class="mt-3">
                     <label for="" class="inline-block mb-2 text-base font-medium">Alamat Sekretariat <strong
-                        class="text-red-500">*</strong></label>
-                    <textarea name="secretariat_address"
+                            class="text-red-500">*</strong></label>
+                    <textarea name="address"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         id="" rows="3"></textarea>
                 </div>
@@ -46,7 +47,8 @@
                         name="kalurahan_id" id="kalurahan_id">
                         <option value="">Pilih Kalurahan</option>
                         @foreach ($kalurahans as $kalurahan)
-                            <option value="{{ $kalurahan->id }}">{{ $kalurahan->name }}, {{ $kalurahan->kecamatan->name }}, {{ $kalurahan->kecamatan->kabupaten->name }}</option>
+                            <option value="{{ $kalurahan->id }}">{{ $kalurahan->name }},
+                                {{ $kalurahan->kecamatan->name }}, {{ $kalurahan->kecamatan->kabupaten->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -142,6 +144,3 @@
         </form>
     </div>
 </div>
-
-
-

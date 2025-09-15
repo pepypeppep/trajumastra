@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('image')->nullable();
+            $table->integer('type')->nullable(); //1: tpi; 2: uptd
+            $table->integer('economic_value')->nullable(); //1: rendah; 2: sedang; 3: tinggi
             $table->softDeletes();
             $table->timestamps();
         });

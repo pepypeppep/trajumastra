@@ -17,6 +17,7 @@ return new class extends Migration
             // $table->unsignedBigInteger('uptd_id')->index()->nullable();
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->integer('price')->nullable();
+            $table->integer('retribution')->nullable();
             $table->longText('unit')->nullable();
             $table->longText('size')->nullable();
             // $table->integer('stock')->default(0);

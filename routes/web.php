@@ -41,7 +41,6 @@ use App\Http\Controllers\Admin\Kelola\KelolaKelompokBinaanController;
 use App\Http\Controllers\Admin\Master\PersyaratanPengajuanController;
 use App\Http\Controllers\Admin\Master\JenisKlasifikasiUsahaController;
 use App\Http\Controllers\Admin\Kelola\KelolaJadwalPendampinganController;
-use App\Http\Controllers\Admin\Kelola\KelolaKoordinatorUptdTpiController;
 use App\Http\Controllers\Admin\Kelola\PermohonanRekomendasiBbmController;
 
 /** ======================== BYPASS SSO
@@ -56,6 +55,9 @@ Route::post('/register-store', [BerandaController::class, 'store'])->name('penda
 
 /* ======================== ADMIN */
 Route::middleware('auth', 'verified')->group(function () {
+    Route::get('/home', function () {
+        return redirect()->route('dashboard');
+    });
     /* ---- Dashboard */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route::redirect('/', '/dashboard');
@@ -115,8 +117,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('jadwal-pendampingan', KelolaJadwalPendampinganController::class)->names('jadwal-pendampingan');
         /* Kelola UPTD */
         Route::resource('uptd', KelolaUptdController::class)->names('uptd');
-        /* Kelola Koordinator UPTD TPI */
-        Route::resource('koordinator-uptd-tpi', KelolaKoordinatorUptdTpiController::class)->names('koordinator-uptd-tpi');
         /* Kelola TPI */
         Route::resource('tpi', KelolaTpiController::class)->names('tpi');
         /* Kelola Stok Ikan */
