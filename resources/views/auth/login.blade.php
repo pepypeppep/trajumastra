@@ -16,7 +16,7 @@
 
                             <div class="text-center">
                                 <h4 class="mb-2 text-purple-500 dark:text-purple-500">Welcome Back !</h4>
-                                <p class="text-slate-500 dark:text-zink-200">Sign in to continue to Tailwick.</p>
+                                <p class="text-slate-500 dark:text-zink-200">Sign in to continue to Trajumastra.</p>
                             </div>
 
                             @if (session('status'))
@@ -86,7 +86,7 @@
                     </div>
                     <div class="mx-2 mt-2 mb-2 border-none shadow-none lg:col-span-7 card bg-white/60 dark:bg-zink-500/60">
                         <div class="!px-10 !pt-10 h-full !pb-0 card-body flex flex-col">
-                            <div class="flex items-center justify-between gap-3">
+                            {{-- <div class="flex items-center justify-between gap-3">
                                 <div class="grow">
                                     <a href="{{ url('index') }}">
                                         <x-application-logo />
@@ -95,7 +95,7 @@
                                 <div class="shrink-0">
                                     <x-language />
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="mt-auto">
                                 <img src="{{ URL::asset('assets/images/auth/img-01.png') }}" alt=""
                                     class="md:max-w-[32rem] mx-auto">

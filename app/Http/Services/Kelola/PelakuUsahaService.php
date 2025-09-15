@@ -19,7 +19,7 @@ class PelakuUsahaService
     public function getAll()
     {
         $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha', 'user')
-                ->select('pelaku_usahas.*');
+            ->select('pelaku_usahas.*');
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
@@ -28,7 +28,7 @@ class PelakuUsahaService
                 $btnDelete = '';
                 // Btn Edit
                 if (auth()->user()->can('kelola-pelaku-usaha.update')) {
-                    $btnEdit = '<button title="Ubah data pelaku usaha" 
+                    $btnEdit = '<button title="Ubah data pelaku usaha"
                         data-id="' . $row->id . '"  data-url-action="' . route('kelola.pelaku-usaha.update', $row->id) . '" data-url-get="' . route('kelola.pelaku-usaha.edit', $row->id) . '"
                         class="btn-modal-edit items-center justify-center size-[37.5px] p-0 text-white btn bg-yellow-500 border-yellow-500 hover:text-white hover:bg-yellow-600 hover:border-yellow-600 focus:text-white focus:bg-yellow-600 focus:border-yellow-600 focus:ring focus:ring-yellow-100 active:text-white active:bg-yellow-600 active:border-yellow-600 active:ring active:ring-yellow-100 dark:ring-yellow-400/20">
                         <i class="ri-edit-line"></i>
@@ -89,7 +89,7 @@ class PelakuUsahaService
     public function getById(int $id)
     {
         $data = PelakuUsaha::with('user')->findOrFail($id);
-        return $data;   
+        return $data;
     }
 
     /* Get User Has Pelaku Usaha Role */
@@ -112,7 +112,7 @@ class PelakuUsahaService
                 'kelompok_binaan_id' => $datas['kelompok_binaan_id'],
                 'bentuk_usaha_id' => $datas['bentuk_usaha_id'],
                 'jenis_usaha_id' => $datas['jenis_usaha_id'],
-                'secretariat_address' => $datas['secretariat_address'],
+                'address' => $datas['address'],
                 'npwp' => $datas['npwp'],
                 'siup' => $datas['siup'],
                 'income_range' => $datas['income_range'],
@@ -144,7 +144,7 @@ class PelakuUsahaService
                 'kelompok_binaan_id' => $attributes['kelompok_binaan_id'] ?? $data->kelompok_binaan_id,
                 'bentuk_usaha_id' => $attributes['bentuk_usaha_id'] ?? $data->bentuk_usaha_id,
                 'jenis_usaha_id' => $attributes['jenis_usaha_id'] ?? $data->jenis_usaha_id,
-                'secretariat_address' => $attributes['secretariat_address'] ?? $data->secretariat_address,
+                'address' => $attributes['address'] ?? $data->address,
                 'npwp' => $attributes['npwp'] ?? $data->npwp,
                 'siup' => $attributes['siup'] ?? $data->siup,
                 'income_range' => $attributes['income_range'] ?? $data->income_range,
@@ -180,5 +180,4 @@ class PelakuUsahaService
             return redirect()->back()->withErrors(['error' => 'Pelaku usaha gagal dihapus. Error :' . $e->getMessage()]);
         }
     }
-
 }
