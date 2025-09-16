@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Kelola;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Kelola\PermohonanRekomendasiBbmService;
 
 class PermohonanRekomendasiBbmController extends Controller
 {
-    public function __construct(protected PermohonanRekomendasiBbm $permohonanRekomendasiBbm)
+    public function __construct(protected PermohonanRekomendasiBbmService $permohonanRekomendasiBbmService)
     {
         
     }
@@ -17,7 +18,7 @@ class PermohonanRekomendasiBbmController extends Controller
      */
     public function index()
     {
-        $this->setRule('permohonan-rekomendasi-bbm.read');
+        $this->setRule('kelola-permohonan-rekomendasi-bbm.read');
         return view('admin.kelolas.permohonan-rekomendasi-bbm.index');
     }
 

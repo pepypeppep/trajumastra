@@ -345,7 +345,7 @@ class NavigationSeeder extends Seeder
                 'name' => 'Permohonan Rekomendasi BBM',
                 'page' => 'admin', // or 'guest'
                 'url' => 'kelola.permohonan-rekomendasi-bbm.index',
-                'slug' => 'permohonan-rekomendasi-bbm',
+                'slug' => 'kelola-permohonan-rekomendasi-bbm',
                 'icon' => '',
                 'order' => 1,
                 'parent_id' => 200,
