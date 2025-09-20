@@ -11,6 +11,7 @@
         </div>
         <div class="mt-5 text-center">
             <h6 class="mb-2 text-16">{{ $tpi->name }}</h6>
+            <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $tpi->phone }}</p>
             <p class="mb-5 text-slate-500 dark:text-zink-200">{{ $tpi->address }}<br>{{ $tpi->dusun }},
                 {{ $tpi->kalurahan->name }}, {{ $tpi->kalurahan->kecamatan->name }},
                 {{ $tpi->kalurahan->kecamatan->kabupaten->name }}</p>
@@ -21,7 +22,7 @@
                 target="_blank" rel="noopener noreferrer">({{ $tpi->latitude }},{{ $tpi->longitude }})</a>
         </div>
         <div class="mt-3 text-center">
-            <div data-simplebar class="flex flex-col h-[350px] gap-4">
+            <div data-simplebar class="flex flex-col gap-4" style="height: 230px;">
                 <div class="flex flex-col gap-3">
                     @foreach ($tpi->stok_ikans as $stok)
                         <div class="border rounded-md border-slate-200 dark:border-zink-500">

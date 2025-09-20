@@ -165,6 +165,10 @@
                 marker._id = "marker-bbi-{{ $bbi->id }}";
                 bbiMarkers["{{ $bbi->id }}"] = marker;
             @endforeach
+
+            mapBbi.on('popupclose', function() {
+                mapBbi.setView([lat, lng], 10);
+            });
         }
 
         initMapBbi();
@@ -211,6 +215,10 @@
                 marker._id = "marker-tpi-{{ $tpi->id }}";
                 tpiMarkers["{{ $tpi->id }}"] = marker;
             @endforeach
+
+            mapTpi.on('popupclose', function() {
+                mapTpi.setView([lat, lng], 10);
+            });
         }
 
         initMapTpi();

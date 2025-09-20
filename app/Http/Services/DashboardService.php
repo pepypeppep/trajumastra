@@ -47,27 +47,59 @@ class DashboardService
     public function getPopularFish(Request $request)
     {
         $user = $request->user();
+        $limit = 4;
+        if ($request->uptd) {
+            $limit = 999;
+        }
+        // $detail = TransaksiDetail::selectRaw('master_jenis_ikans_id, sum(quantity) as total_quantity, sum(total) as total_price')
+        //     ->groupBy('master_jenis_ikans_id')
+        //     ->with(['transaksi' => function ($query) use ($user, $request) {
+        //         if ($request->uptd) {
+        //             $query->where('uptd_id', $request->uptd);
+        //         }
+        //         if ($user->uptd_id) {
+        //             $query->where('uptd_id', $user->uptd_id);
+        //         }
+        //     }, 'jenis_ikan'])
+        //     ->whereHas('transaksi', function ($query) use ($user, $request) {
+        //         if ($request->uptd) {
+        //             $query->where('uptd_id', $request->uptd);
+        //         }
+        //         if ($user->uptd_id) {
+        //             $query->where('uptd_id', $user->uptd_id);
+        //         }
+        //     })
+        //     ->orderByDesc('total_price')
+        //     ->limit($limit)
+        //     ->get();
         $detail = TransaksiDetail::selectRaw('master_jenis_ikans_id, sum(quantity) as total_quantity, sum(total) as total_price')
             ->groupBy('master_jenis_ikans_id')
-            ->with(['transaksi' => function ($query) use ($user) {
-                if ($user->uptd_id) {
-                    $query->where('uptd_id', $user->uptd_id);
-                }
-            }, 'jenis_ikan'])
-            ->whereHas('transaksi', function ($query) use ($user) {
-                if ($user->uptd_id) {
+            ->with(['jenis_ikan'])
+            ->whereHas('transaksi', function ($query) use ($user, $request) {
+                if ($request->uptd) {
+                    $query->where('uptd_id', $request->uptd);
+                } elseif ($user->uptd_id) {
                     $query->where('uptd_id', $user->uptd_id);
                 }
             })
-            ->orderByDesc('total_price')
-            ->limit(4)
+            ->orderByDesc('total_quantity')
+            ->limit($limit)
             ->get();
 
         return $detail;
     }
 
     /* Get transaction count*/
-    public function getTransactionCount(Request $request)
+    public function getTransactionCount($request)
+    {
+        if ($request->uptd) {
+            return $this->getUptdTransactionCount($request);
+        } else {
+            return $this->getGlobalTransactionCount($request);
+        }
+    }
+
+    public function getGlobalTransactionCount($request)
     {
         $user = $request->user();
         $currentMonth = Carbon::now()->startOfMonth();
@@ -131,8 +163,72 @@ class DashboardService
         ];
     }
 
+    public function getUptdTransactionCount($request)
+    {
+        $uptd_id = $request->uptd;
+        $uptd = Uptd::find($uptd_id);
+        $currentMonth = Carbon::now()->startOfMonth();
+        $nextMonth = Carbon::now()->addMonth()->startOfMonth();
+
+        // Generate all dates for current month
+        $dates = [];
+        $currentDate = $currentMonth->copy();
+        while ($currentDate->lt($nextMonth)) {
+            $dates[] = $currentDate->format('Y-m-d');
+            $currentDate->addDay();
+        }
+
+        // Get transaction data
+        $transactions = DB::table('transaksis as t')
+            ->join('uptds as u', 't.uptd_id', '=', 'u.id')
+            ->select(
+                DB::raw('DATE(t.created_at) as date'),
+                'u.type',
+                DB::raw('COUNT(t.id) as count')
+            )
+            ->whereBetween('t.created_at', [$currentMonth, $nextMonth])
+            ->where('t.uptd_id', $uptd_id)
+            ->groupBy(DB::raw('DATE(t.created_at)'), 'u.type')
+            ->get()
+            ->groupBy('date');
+
+        // Prepare data arrays
+        $respData = array_fill(0, count($dates), 0);
+
+        // Fill data arrays
+        foreach ($dates as $index => $date) {
+            if (isset($transactions[$date])) {
+                foreach ($transactions[$date] as $transaction) {
+                    $respData[$index] = $transaction->count;
+                }
+            }
+        }
+
+        $type = $uptd->type == Uptd::UPTD ? 'BBI' : 'TPI';
+
+        return [
+            'series' => [
+                [
+                    'name' => 'Transaksi ' . $type,
+                    'type' => 'area',
+                    'data' => $respData
+                ]
+            ],
+            'labels' => $dates
+        ];
+    }
+
     /* Get transaction amount */
     public function getTransactionAmount(Request $request)
+    {
+        if ($request->uptd) {
+            return $this->getUptdTransactionAmount($request);
+        } else {
+            return $this->getGlobalTransactionAmount($request);
+        }
+    }
+
+    public function getGlobalTransactionAmount($request)
     {
         $user = $request->user();
         $currentMonth = Carbon::now()->startOfMonth();
@@ -199,5 +295,73 @@ class DashboardService
             'tpiTotal' => $tpiTotal,
             'grandTotal' => $grandTotal
         ];
+    }
+
+    public function getUptdTransactionAmount($request)
+    {
+        $uptd_id = $request->uptd;
+        $uptd = Uptd::find($uptd_id);
+        $currentMonth = Carbon::now()->startOfMonth();
+        $nextMonth = Carbon::now()->addMonth()->startOfMonth();
+
+        // Generate all dates for current month
+        $dates = [];
+        $currentDate = $currentMonth->copy();
+        while ($currentDate->lt($nextMonth)) {
+            $dates[] = $currentDate->format('Y-m-d');
+            $currentDate->addDay();
+        }
+
+        // Get transaction data
+        $transactions = DB::table('transaksis as t')
+            ->join('uptds as u', 't.uptd_id', '=', 'u.id')
+            ->select(
+                DB::raw('DATE(t.created_at) as date'),
+                'u.type',
+                DB::raw('SUM(t.total) as total_amount')
+            )
+            ->whereBetween('t.created_at', [$currentMonth, $nextMonth])
+            ->where('t.uptd_id', $uptd_id)
+            ->groupBy(DB::raw('DATE(t.created_at)'), 'u.type')
+            ->get()
+            ->groupBy('date');
+
+        // Prepare data arrays
+        $respData = array_fill(0, count($dates), 0);
+
+        // Fill data arrays
+        foreach ($dates as $index => $date) {
+            if (isset($transactions[$date])) {
+                foreach ($transactions[$date] as $transaction) {
+                    $respData[$index] = $transaction->total_amount;
+                }
+            }
+        }
+
+        $respTotal = array_sum($respData);
+        $grandTotal = $respTotal;
+
+        return [
+            'series' => [
+                [
+                    'name' => 'Transaksi BBI',
+                    'data' => $respData
+                ]
+            ],
+            'labels' => $dates,
+            'grandTotal' => $grandTotal
+        ];
+    }
+
+    /* Get data UPTD */
+    public function getUptd()
+    {
+        $data = Uptd::orderBy('name')->get();
+
+        if (!$data) {
+            return null;
+        }
+
+        return $data;
     }
 }

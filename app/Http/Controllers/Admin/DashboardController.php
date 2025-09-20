@@ -28,8 +28,9 @@ class DashboardController extends Controller
 
         $dataCount = $this->service->getDataCount($request);
         $popularFish = $this->service->getPopularFish($request);
+        $uptds = $this->service->getUptd();
 
-        return view('admin.dashboard.index', compact('dataCount', 'popularFish'));
+        return view('admin.dashboard.index', compact('dataCount', 'popularFish', 'uptds'));
     }
 
     /**

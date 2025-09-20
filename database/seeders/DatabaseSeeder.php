@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             JenisIkanSeeder::class,
             TransaksiTableSeeder::class,
             PenghasilanSeeder::class,
+            UptdSeeder::class,
         ]);
     }
 }
