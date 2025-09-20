@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -31,6 +32,16 @@ class Uptd extends Model
     public function kalurahan(): BelongsTo
     {
         return $this->belongsTo(Kalurahan::class);
+    }
+
+    /**
+     * Get all of the stok_ikans for the Uptd
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stok_ikans(): HasMany
+    {
+        return $this->hasMany(StokIkan::class);
     }
 
     /**

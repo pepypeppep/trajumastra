@@ -7,8 +7,7 @@
                 <h1 class="mb-3 leading-normal capitalize" data-aos="fade-right" data-aos-delay="400">Pelaku Usaha
                 </h1>
                 <p class="mb-5 text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-right" data-aos-delay="500">
-                    Whatever your running gait, a good pair of running shoes will provide
-                    flexibility, durability, and support.</p>
+                    Jumlah pelaku usaha berdasar Kalurahan</p>
                 {{-- <ul class="flex flex-col gap-2 mb-6 list-disc list-inside text-15" data-aos="fade-right"
                     data-aos-delay="500">
                     <li>Matches Your Foot Shape & Type</li>
@@ -20,7 +19,7 @@
                 <a href="#!" class="text-custom-500 text-16" data-aos="fade-right" data-aos-delay="600">Shopping
                     Now <i data-lucide="move-right"
                         class="inline-block align-middle size-4 ltr:ml-1 rtl:mr-1 rtl:rotate-180"></i></a> --}}
-                <table id="rowBorder" class="hover-group dataTables" style="width:100%" data-aos="fade-right"
+                {{-- <table id="rowBorder" class="hover-group dataTables" style="width:100%" data-aos="fade-right"
                     data-aos-delay="600">
                     <thead>
                         <tr>
@@ -46,11 +45,16 @@
                             <td>Edinburgh</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> --}}
+
+                <div id="pagesInteraction" class="apex-charts" data-chart-colors='["bg-custom-500", "bg-purple-500"]'
+                    dir="ltr"></div>
             </div><!--end col-->
             <div class="relative lg:col-start-8 lg:col-span-5">
-                <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 bg-[url('../images/product/cta-2.png')] rounded-md"
-                    data-aos="fade-left" data-aos-delay="400">
+                {{-- <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 bg-[url('../images/product/cta-2.png')] rounded-md"
+                    data-aos="fade-left" data-aos-delay="400"> --}}
+                <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 rounded-md" data-aos="fade-left"
+                    data-aos-delay="400">
                     <div
                         class="absolute inset-0 bg-gradient-to-b from-purple-500/30 to-white dark:to-zinc-900 from-30%">
                     </div>

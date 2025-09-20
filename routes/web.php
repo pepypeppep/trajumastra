@@ -140,8 +140,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::group(['prefix' => 'laporan', 'as' => 'laporan.'], function () {
         /* Transaksi TPI */
         Route::resource('transaksi-tpi', TransaksiTpiController::class)->names('transaksi-tpi');
-        /* Transaksi UPTD */
-        Route::resource('transaksi-uptd', TransaksiUptdController::class)->names('transaksi-uptd');
+        /* Transaksi BBI */
+        Route::resource('transaksi-bbi', TransaksiUptdController::class)->names('transaksi-bbi');
     });
 
     /* ---- My Profile */

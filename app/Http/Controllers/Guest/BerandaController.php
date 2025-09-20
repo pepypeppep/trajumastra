@@ -15,12 +15,17 @@ class BerandaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $news = $this->service->getNews();
         $bbis = $this->service->getBbi();
         $tpis = $this->service->getTpi();
         $transaksis = $this->service->getTransaction();
+
+        if ($request->ajax()) {
+            $pelakuUsahaChart = $this->service->getPelakuUsahaChart();
+            return $pelakuUsahaChart;
+        }
 
         return view('guest.index', compact('news', 'bbis', 'tpis', 'transaksis'));
     }

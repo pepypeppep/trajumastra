@@ -525,13 +525,13 @@ class NavigationSeeder extends Seeder
                 'active' => true,
                 'display' => true,
             ],
-            // Transaksi UPTD
+            // Transaksi BBI
             [
                 'id' => 302,
-                'name' => 'Transaksi UPTD',
+                'name' => 'Transaksi BBI',
                 'page' => 'admin', // or 'guest'
-                'url' => 'laporan.transaksi-uptd.index',
-                'slug' => 'laporan-transaksi-uptd',
+                'url' => 'laporan.transaksi-bbi.index',
+                'slug' => 'laporan-transaksi-bbi',
                 'icon' => '',
                 'order' => 2,
                 'parent_id' => 300,

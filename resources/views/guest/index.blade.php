@@ -25,6 +25,7 @@
     <script src="{{ URL::asset('assets/libs/leaflet/leaflet.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet.js') }}"></script>
     <script src="{{ URL::asset('assets/libs/leaflet/esri-leaflet-geocoder.js') }}"></script>
+    <script src="{{ URL::asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script>
         new Swiper(".feedback-slider2", {
             slidesPerView: 1,
@@ -51,6 +52,84 @@
         });
     </script>
 
+    {{-- Start Pelaku Usaha --}}
+    <script>
+        getPelakuUsahaChart();
+
+        //Pages Interaction
+        function getPelakuUsahaChart() {
+            $.ajax({
+                url: "/",
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    pelakuUsahaChart(data)
+                }
+            });
+        }
+
+        function pelakuUsahaChart(data) {
+            const maxDataValue = Math.max(...data.data);
+            const yaxisMax = maxDataValue + 1;
+            var options = {
+                series: [{
+                    name: 'Jumlah',
+                    data: data.data
+                }, ],
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                    toolbar: {
+                        show: false,
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        borderRadiusApplication: 'end',
+                        borderRadiusWhenStacked: 'last',
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    offsetY: -20,
+                    style: {
+                        fontSize: '12px',
+                        colors: ["#304758"]
+                    }
+                },
+
+                xaxis: {
+                    categories: data.categories,
+                },
+                yaxis: {
+                    title: {
+                        text: 'Jumlah'
+                    },
+                    // tickAmount: 1,
+                    type: 'integer',
+                    min: 0,
+                    max: yaxisMax,
+                    labels: {
+                        formatter: function(value) {
+                            return parseInt(value);
+                        }
+                    }
+                },
+                stroke: {
+                    show: true,
+                    width: 4,
+                    colors: ['transparent']
+                },
+                colors: ['#5895f7']
+            };
+
+            var chart = new ApexCharts(document.querySelector("#pagesInteraction"), options);
+            chart.render();
+        }
+    </script>
+    {{-- End Pelaku Usaha --}}
+
     {{-- Start BBI --}}
     <script>
         let mapBbi = null;
@@ -63,7 +142,8 @@
             mapBbi = L.map('map-bbi', {
                 center: [lat, lng],
                 zoom: 10,
-                doubleClickZoom: false
+                scrollWheelZoom: false,
+                // doubleClickZoom: false
             });
 
             const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -79,21 +159,7 @@
                 shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
             });
             @foreach ($bbis as $bbi)
-                var customPopupContent = `<div class="card shadow-none">
-                        <div class="!px-6 card-body flex flex-col h-full">
-                            <div class="flex items-center justify-center mx-auto text-xl bg-white rounded-full shadow size-16 dark:bg-zink-600 -mt-14">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="map-pin" class="lucide lucide-map-pin text-sky-500 fill-sky-100 dark:fill-sky-500/20"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            </div>
-                            <div class="mt-5 text-center">
-                                <h6 class="mb-2 text-16">{{ $bbi->name }}</h6>
-                                <p class="mb-5 text-slate-500 dark:text-zink-200">{{ $bbi->address }}<br>{{ $bbi->dusun }}, {{ $bbi->kalurahan->name }}, {{ $bbi->kalurahan->kecamatan->name }}, {{ $bbi->kalurahan->kecamatan->kabupaten->name }}</p>
-
-                            </div>
-                            <div class="mt-auto text-center">
-                                <a href="#!" class="transition-all duration-200 ease-linear text-custom-500 hover:text-custom-800 dark:hover:text-custom-400">({{ $bbi->latitude }}, {{ $bbi->longitude }})</a>
-                            </div>
-                        </div>
-                    </div>`;
+                var customPopupContent = `@include('guest.partials.bbi-tooltip')`
                 var marker = L.marker([{{ $bbi->latitude }}, {{ $bbi->longitude }}]).addTo(mapBbi).bindPopup(
                     customPopupContent);
                 marker._id = "marker-bbi-{{ $bbi->id }}";
@@ -122,7 +188,8 @@
             mapTpi = L.map('map-tpi', {
                 center: [lat, lng],
                 zoom: 10,
-                doubleClickZoom: false
+                scrollWheelZoom: false,
+                // doubleClickZoom: false
             });
 
             const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -138,21 +205,7 @@
                 shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
             });
             @foreach ($tpis as $tpi)
-                var customPopupContent = `<div class="card shadow-none">
-                        <div class="!px-6 card-body flex flex-col h-full">
-                            <div class="flex items-center justify-center mx-auto text-xl bg-white rounded-full shadow size-16 dark:bg-zink-600 -mt-14">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="map-pin" class="lucide lucide-map-pin text-sky-500 fill-sky-100 dark:fill-sky-500/20"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            </div>
-                            <div class="mt-5 text-center">
-                                <h6 class="mb-2 text-16">{{ $tpi->name }}</h6>
-                                <p class="mb-5 text-slate-500 dark:text-zink-200">{{ $tpi->address }}<br>{{ $tpi->dusun }}, {{ $tpi->kalurahan->name }}, {{ $tpi->kalurahan->kecamatan->name }}, {{ $tpi->kalurahan->kecamatan->kabupaten->name }}</p>
-
-                            </div>
-                            <div class="mt-auto text-center">
-                                <a href="#!" class="transition-all duration-200 ease-linear text-custom-500 hover:text-custom-800 dark:hover:text-custom-400">({{ $tpi->latitude }}, {{ $tpi->longitude }})</a>
-                            </div>
-                        </div>
-                    </div>`;
+                var customPopupContent = `@include('guest.partials.tpi-tooltip')`
                 var marker = L.marker([{{ $tpi->latitude }}, {{ $tpi->longitude }}]).addTo(mapTpi).bindPopup(
                     customPopupContent);
                 marker._id = "marker-tpi-{{ $tpi->id }}";

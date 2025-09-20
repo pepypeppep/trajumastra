@@ -17,15 +17,16 @@ class TransaksiUptdController extends Controller
      */
     public function index(Request $request)
     {
-        $this->setRule('laporan-transaksi-uptd.read');
+        $this->setRule('laporan-transaksi-bbi.read');
 
         if (request()->ajax()) {
             return $this->service->getAll($request);
         }
 
+        $uptds = $this->service->getUptd();
         $revenue = $this->service->getRevenue(auth()->user());
 
-        return view('admin.laporans.transaksi-uptd.index', compact('revenue'));
+        return view('admin.laporans.transaksi-bbi.index', compact('revenue', 'uptds'));
     }
 
     /**
@@ -49,11 +50,11 @@ class TransaksiUptdController extends Controller
      */
     public function show(string $id)
     {
-        $this->setRule('laporan-transaksi-uptd.read');
+        $this->setRule('laporan-transaksi-bbi.read');
 
         $data = $this->service->getById($id);
 
-        return view('admin.laporans.transaksi-uptd.partials.invoice', compact('data'));
+        return view('admin.laporans.transaksi-bbi.partials.invoice', compact('data'));
     }
 
     /**

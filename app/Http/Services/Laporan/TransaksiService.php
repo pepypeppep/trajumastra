@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Laporan;
 
+use App\Models\Uptd;
 use App\Models\Transaksi;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -15,8 +16,37 @@ class TransaksiService
         $user = $request->user();
         $query = Transaksi::with('uptd', 'staff');
 
-        if ($user->uptd_id) {
+        // Keyword filter
+        if ($request->keyword) {
+            $query->where(function ($q) use ($request) {
+                $q->where('invoice_id', 'like', '%' . $request->keyword . '%')
+                    ->orWhereHas('uptd', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->keyword . '%');
+                    })
+                    ->orWhereHas('staff', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->keyword . '%');
+                    })
+                    ->orWhere('total', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        // UPTD filter
+        if ($request->uptd_id) {
+            $query->where('uptd_id', $request->uptd_id);
+        } elseif ($user->uptd_id) {
             $query->where('uptd_id', $user->uptd_id);
+        }
+
+        if ($request->date) {
+            if (strpos($request->date, ' to ') === false) {
+                $query->whereBetween('created_at', [Carbon::parse($request->date)->startOfDay(), Carbon::parse($request->date)->endOfDay()]);
+            }
+            $dates = explode(' to ', $request->date);
+            if (count($dates) == 2) {
+                $start = Carbon::parse(trim($dates[0]))->startOfDay();
+                $end   = Carbon::parse(trim($dates[1]))->endOfDay();
+                $query->whereBetween('created_at', [$start, $end]);
+            }
         }
 
         if ($request->has('periode')) {
@@ -41,25 +71,15 @@ class TransaksiService
             })
             ->addColumn('aksi', function ($row) {
                 $btnView = '';
-                $btnDelete = '';
 
                 // Btn View
-                if (auth()->user()->can('laporan-transaksi-uptd.update')) {
+                if (auth()->user()->can('laporan-transaksi-bbi.update')) {
                     $btnView = '<button href="javascript:void(0);" title="Ubah data transaksi" id="btn-modal-show"
-                        data-id="' . $row->id . '"  data-url-action="' . route('laporan.transaksi-uptd.update', $row->id) . '" data-url-get="' . route('laporan.transaksi-uptd.show', $row->id) . '"
+                        data-id="' . $row->id . '"  data-url-action="' . route('laporan.transaksi-bbi.update', $row->id) . '" data-url-get="' . route('laporan.transaksi-bbi.show', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-sky-500 border-sky-500 hover:text-white hover:bg-sky-600 hover:border-sky-600 focus:text-white focus:bg-sky-600 focus:border-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:border-sky-600 active:ring active:ring-sky-100 dark:ring-sky-400/20">
                         <i class="ri-eye-line"></i>
                         </button>';
                 }
-
-                // Btn Delete
-                // if (auth()->user()->can('laporan-transaksi-uptd.delete')) {
-                //     $btnDelete = '<button href="javascript:void(0);" title="Hapus data transaksi" id="btn-delete" onclick="confirmDelete(this)"
-                //         data-id="' . $row->id . '"  data-url-action="' . route('kelola.uptd.destroy', $row->id) . '"
-                //         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20">
-                //         <i class="ri-delete-bin-line"></i>
-                //         </button>';
-                // }
 
                 return $btnView;
             })
@@ -71,6 +91,18 @@ class TransaksiService
     public function getById(int $id)
     {
         $data = Transaksi::with('staff', 'uptd', 'details')->find($id);
+
+        if (!$data) {
+            return null;
+        }
+
+        return $data;
+    }
+
+    /* Get data UPTD */
+    public function getUptd()
+    {
+        $data = Uptd::orderBy('name')->get();
 
         if (!$data) {
             return null;

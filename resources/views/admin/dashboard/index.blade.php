@@ -233,6 +233,17 @@
         <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
             <div class="text-center card-body">
                 <div
+                    class="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20">
+                    <i data-lucide="users-round"></i>
+                </div>
+                <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $dataCount['total_kelompok_usaha'] }}"
+                        id="total_rekomendasi_bbm">0</span></h5>
+                <p class="text-slate-500 dark:text-zink-200">Kelompok Usaha</p>
+            </div>
+        </div><!--end col-->
+        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
+            <div class="text-center card-body">
+                <div
                     class="flex items-center justify-center mx-auto text-sky-500 bg-sky-100 rounded-full size-14 dark:bg-sky-500/20">
                     <i data-lucide="fish"></i>
                 </div>
@@ -252,7 +263,7 @@
                 <p class="text-slate-500 dark:text-zink-200">Poklahsar</p>
             </div>
         </div><!--end col-->
-        <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
+        {{-- <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
             <div class="text-center card-body">
                 <div
                     class="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20">
@@ -262,7 +273,7 @@
                         id="total_rekomendasi_bbm">0</span></h5>
                 <p class="text-slate-500 dark:text-zink-200">Rekomendasi BBM</p>
             </div>
-        </div><!--end col-->
+        </div><!--end col--> --}}
 
         <div class="col-span-12 card 2xl:col-span-8">
             <div class="card-body">
@@ -289,7 +300,7 @@
             <div class="grid grid-cols-12 gap-x-5">
                 <div class="col-span-12 card lg:col-span-6 2xl:col-span-12">
                     <div class="p-4">
-                        <div class="grid grid-cols-3">
+                        <div class="grid grid-cols-2">
                             <div
                                 class="px-4 text-center ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500 ltr:last:border-r-0 rtl:last:border-l-0">
                                 <h6 class="mb-1 font-bold"><span class="counter-value"
@@ -302,13 +313,13 @@
                                         data-target="{{ $dataCount['total_tpi'] }}" id="total_tpi"></span></h6>
                                 <p class="text-slate-500 dark:text-zink-200">TPI</p>
                             </div>
-                            <div
+                            {{-- <div
                                 class="px-4 text-center ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500 ltr:last:border-r-0 rtl:last:border-l-0">
                                 <h6 class="mb-1 font-bold"><span class="counter-value"
                                         data-target="{{ $dataCount['total_koordinator'] }}" id="total_koordinator"></span>
                                 </h6>
                                 <p class="text-slate-500 dark:text-zink-200">Koordinator</p>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div><!--end col-->
@@ -551,7 +562,7 @@
             var applicationReceivedChart = "";
             var options = {
                 // series: [{
-                //     name: 'Transaksi UPTD',
+                //     name: 'Transaksi BBI',
                 //     type: 'area',
                 //     data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
                 // }, {
@@ -596,7 +607,7 @@
                     }
                 },
                 labels: resp.labels,
-                colors: ['#3b82f6', '#249782'],
+                colors: ['#3b82f6', '#ff0000'],
                 markers: {
                     size: 0
                 },
@@ -649,7 +660,7 @@
                     curve: 'smooth',
                     width: 2,
                 },
-                colors: ['#3b82f6', '#249782'],
+                colors: ['#3b82f6', '#ff0000'],
                 dataLabels: {
                     enabled: false
                 },

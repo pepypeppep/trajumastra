@@ -8,6 +8,7 @@ use App\Models\Penyuluh;
 use App\Models\Transaksi;
 use App\Models\PelakuUsaha;
 use App\Models\KelompokBinaan;
+use App\Models\KelompokUsaha;
 use Illuminate\Support\Carbon;
 use App\Models\TransaksiDetail;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ class DashboardService
         $total_pelaku_usaha = PelakuUsaha::count();
         $total_penyuluh = Penyuluh::count();
         $total_kelompok_binaan = KelompokBinaan::count();
+        $total_kelompok_usaha = KelompokUsaha::count();
         $total_pokdakan = KelompokBinaan::where('jenis_kelompok', JenisKelompokBinaanEnum::POKDAKAN->value)->count();
         $total_rekomendasi_bbm = SuratRekomendasiBbm::count();
         $total_uptd = Uptd::where('type', Uptd::UPTD)->count();
@@ -32,6 +34,7 @@ class DashboardService
             'total_pelaku_usaha' => $total_pelaku_usaha,
             'total_penyuluh' => $total_penyuluh,
             'total_kelompok_binaan' => $total_kelompok_binaan,
+            'total_kelompok_usaha' => $total_kelompok_usaha,
             'total_pokdakan' => $total_pokdakan,
             'total_rekomendasi_bbm' => $total_rekomendasi_bbm,
             'total_uptd' => $total_uptd,
@@ -114,7 +117,7 @@ class DashboardService
         return [
             'series' => [
                 [
-                    'name' => 'Transaksi UPTD',
+                    'name' => 'Transaksi BBI',
                     'type' => 'area',
                     'data' => $uptdData
                 ],
@@ -183,7 +186,7 @@ class DashboardService
         return [
             'series' => [
                 [
-                    'name' => 'Transaksi UPTD',
+                    'name' => 'Transaksi BBI',
                     'data' => $uptdData
                 ],
                 [

@@ -259,10 +259,10 @@ Breadcrumbs::for('laporan.transaksi-tpi', function (BreadcrumbTrail $trail) {
     $trail->push('Transaksi TPI', route('laporan.transaksi-tpi.index'));
 });
 
-/* Transaksi UPTD */
-Breadcrumbs::for('laporan.transaksi-uptd', function (BreadcrumbTrail $trail) {
+/* Transaksi BBI */
+Breadcrumbs::for('laporan.transaksi-bbi', function (BreadcrumbTrail $trail) {
     $trail->parent('laporan');
-    $trail->push('Transaksi UPTD', route('laporan.transaksi-uptd.index'));
+    $trail->push('Transaksi BBI', route('laporan.transaksi-bbi.index'));
 });
 
 /**
