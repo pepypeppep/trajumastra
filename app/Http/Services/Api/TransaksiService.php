@@ -18,7 +18,12 @@ class TransaksiService
     /* Get alls */
     public function getAll($request)
     {
-        $user = User::with('uptd')->find($request->user()->id);
+        if (env('LOGIN_TYPE') == 'sso') {
+            $userId = $request->user()->id;
+        } else {
+            $userId = 2;
+        }
+        $user = User::with('uptd')->find($userId);
         $dataQuery = Transaksi::query();
 
         if ($user->uptd_id) {
@@ -38,7 +43,12 @@ class TransaksiService
     /* Get products by User */
     public function getProductByUser(Request $request)
     {
-        $user = User::with('uptd')->find($request->user()->id);
+        if (env('LOGIN_TYPE') == 'sso') {
+            $userId = $request->user()->id;
+        } else {
+            $userId = 2;
+        }
+        $user = User::with('uptd')->find($userId);
         $uptdType = $user->uptd?->type;
 
         $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
@@ -136,6 +146,9 @@ class TransaksiService
                             'error' => 'Internal server error'
                         ], 500);
                     }
+
+                    // Update stok ikan
+                    $fishStock->decrement('stock', $transactionData['quantity']);
                 }
 
                 $transaction = Transaksi::create([

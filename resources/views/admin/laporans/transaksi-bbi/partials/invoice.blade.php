@@ -28,13 +28,13 @@
             <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $data->uptd->name }}</p>
             <p class="mb-1 text-slate-500 dark:text-zink-200">{{ $data->uptd->address }}</p>
         </div><!--end col-->
-        <div>
+        {{-- <div>
             <p class="mb-2 text-sm uppercase text-slate-500 dark:text-zink-200">Pembeli</p>
             <h6 class="mb-1 text-15">{{ $data->name }}</h6>
-            {{-- <p class="mb-1 text-slate-500 dark:text-zink-200">176 Arvid Crest Sheastad, IA</p>
+            <p class="mb-1 text-slate-500 dark:text-zink-200">176 Arvid Crest Sheastad, IA</p>
             <p class="mb-1 text-slate-500 dark:text-zink-200">+(211) 0123 456 897</p>
-            <p class="mb-1 text-slate-500 dark:text-zink-200">TAX No. 5415421</p> --}}
-        </div><!--end col-->
+            <p class="mb-1 text-slate-500 dark:text-zink-200">TAX No. 5415421</p>
+        </div><!--end col--> --}}
     </div><!--end grid-->
 
     <div class="mt-6 overflow-x-auto">
@@ -100,7 +100,7 @@
                         {{ rupiah($data->total) }}
                     </td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td colspan="5"></td>
                     <td
                         class="border-b border-slate-200 px-3.5 py-2.5 text-slate-500 dark:border-zink-500 dark:text-zink-200">
@@ -110,7 +110,7 @@
                         class="border-b border-slate-200 px-3.5 py-2.5 text-slate-500 dark:border-zink-500 dark:text-zink-200">
                         {{ rupiah($data->retribution) }}
                     </td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td colspan="5"></td>
                     <td class="border-b border-slate-200 px-3.5 py-2.5 font-medium dark:border-zink-500">
@@ -127,12 +127,12 @@
     <div class="my-5">
         <p class="mb-2 text-sm uppercase text-slate-500 dark:text-zink-200">Rincian Pembayaran</p>
         <p class="mb-1 text-slate-500 dark:text-zink-200">Metode Pembayaran: Cash</p>
-        <p class="mb-1 text-slate-500 dark:text-zink-200">Nama: {{ $data->name }}</p>
+        {{-- <p class="mb-1 text-slate-500 dark:text-zink-200">Nama: {{ $data->name }}</p> --}}
         <p class="mb-0 text-slate-500 dark:text-zink-200">Total Transaksi: <b>{{ rupiah($data->total) }}</b></p>
     </div>
 
-    <div
+    {{-- <div
         class="flex gap-1 px-4 py-3 text-sm border rounded-md md:items-center border-sky-200 text-sky-500 bg-sky-50 dark:bg-sky-400/20 dark:border-sky-500/50">
         <p><span class="font-bold">CATATAN:</span> -</p>
-    </div>
+    </div> --}}
 </div>

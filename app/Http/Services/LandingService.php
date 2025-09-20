@@ -32,7 +32,7 @@ class LandingService
     /* Get data bbi */
     public function getBbi()
     {
-        $data = Uptd::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans')->where('type', Uptd::UPTD)->orderByDesc('created_at')->get();
+        $data = Uptd::with('kalurahan.kecamatan.kabupaten', 'jenis_ikans', 'stok_ikans')->where('type', Uptd::UPTD)->orderByDesc('created_at')->get();
 
         return $data;
     }
@@ -86,6 +86,25 @@ class LandingService
     {
         $data = Kalurahan::with('kecamatan.kabupaten')->get();
         return $data;
+    }
+
+    /* Get data chart pelaku usaha */
+    public function getPelakuUsahaChart()
+    {
+        $data = DB::table('pelaku_usahas')
+            ->join('kalurahans', 'pelaku_usahas.kalurahan_id', '=', 'kalurahans.id')
+            ->whereNotNull('pelaku_usahas.kalurahan_id')
+            ->select('kalurahans.name', DB::raw('COUNT(pelaku_usahas.id) as count'))
+            ->groupBy('pelaku_usahas.kalurahan_id', 'kalurahans.name')
+            ->orderBy('kalurahans.name')
+            ->get();
+
+        $result = [
+            'data' => $data->pluck('count')->toArray(),
+            'categories' => $data->pluck('name')->toArray()
+        ];
+
+        return $result;
     }
 
     public function store(array $attributes)

@@ -11,14 +11,14 @@
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
                 <h5 class="mb-0">Daftar Pelaku Usaha</h5>
-                {{-- <button type="button" data-modal-target="modal-add"
+                <button type="button" data-modal-target="modal-add"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
                     <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
-                </button> --}}
-                <a href="/register" target="_blank"
+                </button>
+                {{-- <a href="/register" target="_blank"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
                     <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
-                </a>
+                </a> --}}
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>

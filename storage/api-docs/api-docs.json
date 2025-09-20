@@ -6,6 +6,562 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/fish-stock": {
+            "get": {
+                "tags": [
+                    "Fish Stock"
+                ],
+                "summary": "Get all stock ikan data",
+                "description": "Retrieve all fish stock data for the authenticated user's UPTD.",
+                "operationId": "33d8fb6f35d9d9d5beb56767f6459f38",
+                "parameters": [
+                    {
+                        "name": "keyword",
+                        "in": "query",
+                        "description": "Search keyword for fish type name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok Ikan fetched successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "uptd_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "jenis_ikan_id": {
+                                                        "type": "integer",
+                                                        "example": 41
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "stock": {
+                                                        "type": "integer",
+                                                        "example": 97
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-09-20T06:24:35.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-09-20T06:24:35.000000Z"
+                                                    },
+                                                    "jenis_ikan": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 41
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Kakap"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "ikan/92b13c1e-278f-4fb6-870d-77dfe8cf5eb4.png"
+                                                            },
+                                                            "type": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "economic_value": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "deleted_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "nullable": true
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-09-20T06:24:35.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-09-20T06:24:35.000000Z"
+                                                            },
+                                                            "imageUrl": {
+                                                                "type": "string",
+                                                                "example": "http://127.0.0.1:8000/api/products/41/thumbnail"
+                                                            },
+                                                            "economicLabel": {
+                                                                "type": "string",
+                                                                "example": "<span class='px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20'>Tinggi</span>"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden - User doesn't have access (not UPTD type 2)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Access denied"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/fish-stock/{id}": {
+            "get": {
+                "tags": [
+                    "Fish Stock"
+                ],
+                "summary": "Get stock ikan by ID",
+                "description": "Retrieve specific fish stock data by ID for the authenticated user's UPTD",
+                "operationId": "c16207f78288007d8fe40bc141424c41",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the stock ikan to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok Ikan fetched successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "uptd_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "jenis_ikan_id": {
+                                                    "type": "integer",
+                                                    "example": 41
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "stock": {
+                                                    "type": "integer",
+                                                    "example": 97
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-09-20T06:24:35.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-09-20T06:24:35.000000Z"
+                                                },
+                                                "jenis_ikan": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 41
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Kakap"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "ikan/92b13c1e-278f-4fb6-870d-77dfe8cf5eb4.png"
+                                                        },
+                                                        "type": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "economic_value": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "deleted_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "nullable": true
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-09-20T06:24:35.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-09-20T06:24:35.000000Z"
+                                                        },
+                                                        "imageUrl": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/products/41/thumbnail"
+                                                        },
+                                                        "economicLabel": {
+                                                            "type": "string",
+                                                            "example": "<span class='px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20'>Tinggi</span>"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - Stock ikan not found or doesn't belong to user's UPTD",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok Ikan not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Fish Stock"
+                ],
+                "summary": "Update stock ikan",
+                "description": "Update fish stock quantity for a specific stock item belonging to the authenticated user's UPTD",
+                "operationId": "ce13bcd828232eae2834332efcbd1652",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the stock ikan to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "stock"
+                                ],
+                                "properties": {
+                                    "stock": {
+                                        "description": "New stock quantity",
+                                        "type": "integer",
+                                        "example": 100
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok Ikan updated successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "uptd_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "jenis_ikan_id": {
+                                                    "type": "integer",
+                                                    "example": 41
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "stock": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-09-20T06:24:35.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-09-20T08:30:15.000000Z"
+                                                },
+                                                "jenis_ikan": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 41
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Kakap"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "ikan/92b13c1e-278f-4fb6-870d-77dfe8cf5eb4.png"
+                                                        },
+                                                        "type": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "economic_value": {
+                                                            "type": "integer",
+                                                            "example": 3
+                                                        },
+                                                        "deleted_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "nullable": true
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-09-20T06:24:35.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-09-20T06:24:35.000000Z"
+                                                        },
+                                                        "imageUrl": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/api/products/41/thumbnail"
+                                                        },
+                                                        "economicLabel": {
+                                                            "type": "string",
+                                                            "example": "<span class='px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20'>Tinggi</span>"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "stock": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The stock field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found - Stock ikan not found or doesn't belong to user's UPTD",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Stok Ikan not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/api/transactions": {
             "get": {
                 "tags": [
@@ -536,6 +1092,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Fish Stock",
+            "description": "Fish Stock"
+        },
         {
             "name": "Transactions",
             "description": "Transactions"

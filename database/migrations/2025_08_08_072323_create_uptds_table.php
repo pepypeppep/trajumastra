@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
             $table->string('name');
             $table->string('dusun')->nullable();
+            $table->string('phone')->nullable();
             $table->longText('address')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();

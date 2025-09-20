@@ -1,8 +1,8 @@
 <section class="relative py-24 xl:py-32" id="tpi">
     <div class="absolute bottom-0 right-0 size-64 bg-custom-500/10 blur-3xl"></div>
     <div class="container 2xl:max-w-[87.5rem] px-4 mx-auto">
-        <div class="grid items-center grid-cols-1 gap-6 mt-20 lg:grid-cols-12">
-            <div class="relative lg:col-span-6">
+        <div class="grid items-center grid-cols-1 gap-6 mt-0 lg:grid-cols-12">
+            {{-- <div class="relative lg:col-span-6">
                 <p class="mb-2 text-purple-500 text-15" data-aos="fade-right" data-aos-delay="300">Data</p>
                 <h1 class="mb-3 leading-normal capitalize" data-aos="fade-right" data-aos-delay="400">TPI (Tempat
                     Pelelangan Ikan)</h1>
@@ -27,11 +27,13 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div><!--end col-->
-            <div class="ml-auto lg:col-span-12 lg:col-start-8 w-full">
+            </div><!--end col--> --}}
+            <div class="ml-auto lg:col-span-12 lg:col-start-12 w-full">
                 <p class="mb-2 text-purple-500 text-15" data-aos="fade-left" data-aos-delay="300">Peta Sebaran</p>
+                <h1 class="mb-3 leading-normal capitalize" data-aos="fade-right" data-aos-delay="400">TPI (Tempat
+                    Pelelangan Ikan)</h1>
                 <p class="mb-5 text-lg text-slate-500 dark:text-zinc-400" data-aos="fade-left" data-aos-delay="500">
-                    Berikut ini adalah peta sebaran data TPI (Tempat Pelelangan Ikan)</p>
+                    Berikut ini adalah peta sebaran data TPI</p>
                 <div class="leaflet-map w-full" style="height: 35rem;" id="map-tpi"></div>
             </div><!--end col-->
         </div><!--end grid-->
