@@ -95,17 +95,17 @@
             <div class="flex justify-between items-center mb-4">
                 <h5 class="mb-0">Daftar Transaksi BBI {{ request('periode') ? '(' . request('periode') . ' ini)' : '' }}
                 </h5>
-                {{-- <button type="button" href="" data-modal-target="modal-add"
+                <button type="button" onclick="exportData();"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Transaksi BBI
-                </button> --}}
+                    <i class="ri-download-2-fill"></i> Ekspor Transaksi
+                </button>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <div class="grid items-center grid-cols-1 gap-5 xl:grid-cols-3">
                     <div>
                         <select
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            data-choices name="uptd_id" id="uptd_id">
+                            data-choices name="uptd_id" id="uptdx_id">
                             <option value="">Pilih UPTD</option>
                             @foreach ($uptds as $uptd)
                                 <option value="{{ $uptd->id }}">{{ $uptd->name }}</option>
@@ -148,15 +148,8 @@
         </div>
     </div>
 
-    {{-- Modal Add --}}
-    {{-- @include('admin.kelolas.stok-ikan.partials.modal-add') --}}
-    {{-- Modal Edit --}}
+    {{-- Modal Show --}}
     @include('admin.laporans.transaksi-bbi.partials.modal-show')
-    {{-- Form Delete --}}
-    {{-- <form id="form-delete" action="" method="POST" class="hidden">
-        @csrf
-        @method('DELETE')
-    </form> --}}
 @endsection
 
 @push('scripts')
@@ -187,7 +180,7 @@
                     url: "{{ route('laporan.transaksi-bbi.index') }}?periode={{ request('periode') }}",
                     type: 'GET',
                     data: function(d) {
-                        d.uptd_id = $('#uptd_id').val();
+                        d.uptd_id = $('#uptdx_id').val();
                         d.date = $('#date').val();
                         d.keyword = $('#keyword').val();
                     },
@@ -231,7 +224,7 @@
                     },
                 ],
             });
-            $('#uptd_id').on('change', function() {
+            $('#uptdx_id').on('change', function() {
                 tbl.ajax.reload();
             });
 
@@ -251,6 +244,41 @@
         // -- End Load Datatable
     </script>
     {{-- End Implement datatable --}}
+
+    {{-- Start action export data --}}
+    <script>
+        function exportData() {
+            // Get filter values
+            const uptdId = document.getElementById('uptdx_id').value;
+            const dateRange = document.getElementById('date').value;
+            const keyword = document.getElementById('keyword').value;
+
+            // Build query string
+            const params = new URLSearchParams();
+
+            if (uptdId) params.append('uptd_id', uptdId);
+            if (dateRange) params.append('date', dateRange);
+            if (keyword) params.append('keyword', keyword);
+
+            // Create download URL
+            const url = '{{ route('laporan.transaksi.export') }}?' + params.toString();
+
+            // Open in new tab (triggers download)
+            window.open(url, '_blank');
+
+            // Optional: Show success message after a short delay
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Berhasil mengekspor data!',
+                    icon: 'success',
+                    timer: 1000,
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                });
+            }, 1000);
+        }
+    </script>
+    {{-- End action export data --}}
 
     {{-- Start action delete data --}}
     <script>

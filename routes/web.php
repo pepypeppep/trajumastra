@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Guest\BerandaController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Export\TransaksiExportController;
 use App\Http\Controllers\Admin\Master\SpbuController;
 use App\Http\Controllers\Admin\Master\BidangController;
 use App\Http\Controllers\Admin\Master\MateriController;
@@ -142,6 +143,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::resource('transaksi-tpi', TransaksiTpiController::class)->names('transaksi-tpi');
         /* Transaksi BBI */
         Route::resource('transaksi-bbi', TransaksiUptdController::class)->names('transaksi-bbi');
+
+        Route::get('/export', [TransaksiExportController::class, 'export'])->name('transaksi.export');
     });
 
     /* ---- My Profile */
