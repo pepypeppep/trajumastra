@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: trajumastra
+      MYSQL_USER: trajumastra
+      MYSQL_PASSWORD: trajumastra
+    ports:
+      - "127.0.0.1:33065:3306"
+    volumes:
+      - trajumastra_data:/var/lib/mysql
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d
+
+  nginx:
+    image: nginx:stable
+    ports:
+      - "8258:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+volumes:
+  trajumastra_data:
+    external: true
