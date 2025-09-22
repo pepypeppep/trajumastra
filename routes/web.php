@@ -113,6 +113,9 @@ Route::middleware('auth', 'verified')->group(function () {
         /* Permohonan Rekomendasi BBM */
         Route::resource('permohonan-rekomendasi-bbm', PermohonanRekomendasiBbmController::class)->names('permohonan-rekomendasi-bbm');
         /* Kelola Pelaku Usaha */
+        Route::get('/pelaku-usaha/import', [KelolaPelakuUsahaController::class, 'import'])->name('pelaku-usaha.import');
+        Route::get('/pelaku-usaha/export', [KelolaPelakuUsahaController::class, 'export'])->name('pelaku-usaha.export');
+        Route::get('/pelaku-usaha/download-template', [KelolaPelakuUsahaController::class, 'downloadTemplate'])->name('pelaku-usaha.download-template');
         Route::resource('pelaku-usaha', KelolaPelakuUsahaController::class)->names('pelaku-usaha');
         /* Kelola Jadwal Pendampingan */
         Route::get('/jadwal-pendampingan/attachment/{id}', [KelolaJadwalPendampinganController::class, 'attachmentDownload'])->name('jadwal-pendampingan.attachment-download');

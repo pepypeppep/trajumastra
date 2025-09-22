@@ -31,6 +31,8 @@ class CreateRequest extends FormRequest
             'npwp' => 'required|numeric',
             'siup' => 'required|numeric',
             'income_range' => 'required|string',
+            'have_ship' => 'required|in:0,1',
+            'attachment' => 'nullable|file|max:10240', // Maksimal 10MB
         ];
     }
 }

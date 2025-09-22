@@ -11,6 +11,7 @@ use App\Models\MasterJenisUsaha;
 use App\Models\MasterBentukUsaha;
 use Illuminate\Support\Facades\DB;
 use App\Models\MasterRangePenghasilan;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class PelakuUsahaService
@@ -23,6 +24,20 @@ class PelakuUsahaService
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
+            ->addColumn('kelompok_binaan_data', function ($row) {
+                return $row->kelompokBinaan ? $row->kelompokBinaan->name : '-';
+            })
+            ->filterColumn('kelompok_binaan_data', function ($query, $keyword) {
+                $query->whereHas('kelompokBinaan', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('kelompok_binaan_data', function ($query, $order) {
+                $query->orderBy(
+                    DB::raw('(SELECT name FROM kelompok_binaans WHERE kelompok_binaans.id = pelaku_usahas.kelompok_binaan_id)'),
+                    $order
+                );
+            })
             ->addColumn('aksi', function ($row) {
                 $btnEdit = '';
                 $btnDelete = '';
@@ -105,6 +120,12 @@ class PelakuUsahaService
         try {
             // DB Transaction
             DB::beginTransaction();
+            // Check attachment
+            if ($datas['attachment'] != null) {
+                $attachmentName = strtotime(now()) . '.' . $datas['attachment']->getClientOriginalExtension();
+                $attachmentPath = Storage::disk('local')->put('pelaku_usaha/' . $attachmentName, file_get_contents($datas['attachment']));
+                $attachment = 'pelaku_usaha/' . $attachmentName;
+            }
 
             $pelakuUsaha = PelakuUsaha::create([
                 'user_id' => $datas['user_id'],
@@ -116,6 +137,8 @@ class PelakuUsahaService
                 'npwp' => $datas['npwp'],
                 'siup' => $datas['siup'],
                 'income_range' => $datas['income_range'],
+                'have_ship' => $datas['have_ship'],
+                'attachment' => $attachment ?? null,
             ]);
 
             // Return success response
@@ -137,6 +160,16 @@ class PelakuUsahaService
 
             // Get data
             $data = PelakuUsaha::findOrFail($id);
+            // Check attachment
+            if ($attributes['attachment'] != null) {
+                $attachmentName = strtotime(now()) . '.' . $attributes['attachment']->getClientOriginalExtension();
+                $attachmentPath = Storage::disk('local')->put('pelaku_usaha/' . $attachmentName, file_get_contents($attributes['attachment']));
+                $attachment = 'pelaku_usaha/' . $attachmentName;
+                // Delete old attachment if exists
+                if ($data->attachment && Storage::disk('local')->exists($data->attachment)) {
+                    Storage::disk('local')->delete($data->attachment);
+                }
+            }
             // Update data data
             $data->update([
                 'user_id' => $datas['user_id'] ?? $data['user_id'],
@@ -148,6 +181,8 @@ class PelakuUsahaService
                 'npwp' => $attributes['npwp'] ?? $data->npwp,
                 'siup' => $attributes['siup'] ?? $data->siup,
                 'income_range' => $attributes['income_range'] ?? $data->income_range,
+                'have_ship' => $attributes['have_ship'] ?? $data->have_ship,
+                'attachment' => $attachment ?? $data->attachment,
             ]);
 
             // Return success response

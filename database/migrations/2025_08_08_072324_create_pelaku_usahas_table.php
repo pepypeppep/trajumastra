@@ -35,6 +35,8 @@ return new class extends Migration
             $table->integer('family_member')->nullable();
             $table->integer('is_verified')->default(0); //0. baru, 1.verif
             $table->integer('is_import')->default(0); //0. no, 1.yes
+            $table->integer('have_ship')->default(0); //0. no, 1.yes
+            $table->string('attachment')->nullable(); // file lampiran
             $table->softDeletes();
             $table->timestamps();
         });

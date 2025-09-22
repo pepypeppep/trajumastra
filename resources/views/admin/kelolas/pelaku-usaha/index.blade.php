@@ -11,21 +11,27 @@
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
                 <h5 class="mb-0">Daftar Pelaku Usaha</h5>
-                <button type="button" data-modal-target="modal-add"
-                    class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
-                </button>
-                {{-- <a href="/register" target="_blank"
-                    class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                    <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
-                </a> --}}
+                <div class="">
+                    <a href="{{ route('kelola.pelaku-usaha.export') }}" data-modal-target="modal-add"
+                        class="btn bg-green-500 text-white hover:bg-green-600 focus:bg-green-600">
+                        <i class="ri-upload-2-line"></i> Export Pelaku Usaha
+                    </a>
+                    <button type="button" data-modal-target="modal-import"
+                        class="btn bg-red-500 text-white hover:bg-red-600 focus:bg-red-600">
+                        <i class="ri-download-2-line"></i> Import Pelaku Usaha
+                    </button>
+                    <button type="button" data-modal-target="modal-add"
+                        class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
+                        <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
+                    </button>
+                </div>
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="text-left" style="width: 30%;">Nama Ketua Binaan</th>
+                        <th class="text-left" style="width: 30%;">Nama Pelaku Usaha</th>
                         <th class="text-center" style="width: 15%;">Kelompok Binaan</th>
-                        <th class="text-center" style="width: 10%;">Email Ketua Binaan</th>
+                        <th class="text-center" style="width: 10%;">Email</th>
                         <th class="text-center" style="width: 10%;">NIB</th>
                         <th class="text-center" style="width: 10%;">NPWP</th>
                         <th class="text-left" style="width: 15%;">Alamat Skretariat</th>
@@ -50,6 +56,8 @@
     @include('admin.kelolas.pelaku-usaha.partials.modal-add')
     {{-- Include Modal Edit --}}
     @include('admin.kelolas.pelaku-usaha.partials.modal-edit')
+    {{-- Include Modal Import --}}
+    @include('admin.kelolas.pelaku-usaha.partials.modal-import')
     {{-- Form Delete --}}
     <form id="form-delete" action="" method="POST" class="hidden">
         @csrf
@@ -96,8 +104,8 @@
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
                     }, {
-                        data: 'kelompok_binaan.name',
-                        name: 'kelompok_binaan.name',
+                        data: 'kelompok_binaan_data',
+                        name: 'kelompok_binaan_data',
                         searchable: true,
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
@@ -222,6 +230,15 @@
             });
         }
 
+        function initSelect2HaveShip(context) {
+            $(context).find('[name="have_ship"]').select2({
+                dropdownParent: $(context),
+                width: '100%',
+                placeholder: "Pilih Kepemilikan Kapal",
+                allowClear: true,
+            });
+        }
+
         // Modal ADD
         $(document).on('click', '[data-modal-target="modal-add"]', function() {
             initSelect2UserId('#modal-add');
@@ -230,6 +247,7 @@
             initSelect2BentukUsaha('#modal-add');
             initSelect2KelompokBinaan('#modal-add');
             initSelect2RangePenghasilan('#modal-add');
+            initSelect2HaveShip('#modal-add');
         });
 
         // Modal EDIT
@@ -240,6 +258,7 @@
             initSelect2BentukUsaha('#modal-edit');
             initSelect2KelompokBinaan('#modal-edit');
             initSelect2RangePenghasilan('#modal-edit');
+            initSelect2HaveShip('#modal-edit');
         });
     </script>
     {{-- End Select 2 --}}
