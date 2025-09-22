@@ -11,7 +11,7 @@
                 class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
                     data-lucide="x" class="size-5"></i></button>
         </div>
-        <form action="{{ route('kelola.kelompok-binaan.store') }}" method="POST" id="form-edit">
+        <form action="{{ route('kelola.kelompok-binaan.store') }}" method="POST" id="form-edit" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             {{-- Start Modal Body --}}
@@ -40,7 +40,7 @@
                     <label for="" class="inline-block mb-2 text-base font-medium">Deskripsi <strong
                             class="text-red-500">*</strong></label>
                     <textarea name="description" id="description"
-                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        class="ckeditor-classic form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                         id="" rows="3"></textarea>
                 </div>
                 {{-- Jenis Penyuluhan --}}
@@ -69,29 +69,13 @@
                         @endforeach
                     </select>
                 </div>
-                {{-- Tema dan Materi --}}
-                <div class="grid grid-cols-2 gap-4 mb-1 mt-3">
-                    {{-- Tema --}}
-                    <div class="col-span">
-                        <label for="" class="inline-block mb-2 text-base font-medium">Tema<strong
-                                class="text-red-500">*</strong></label>
-                        <input type="text" id="theme" name="theme"
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            placeholder="Masukkan nama Jadwal Penyuluhan / Pendampingan" required>
-                    </div>
-                    {{-- Materi --}}
-                    <div class="col-span">
-                        <label for="" class="inline-block mb-2 text-base font-medium">Materi <strong
+                    {{-- Start Tema --}}
+                <div class="mt-3">
+                    <label for="" class="inline-block mb-2 text-base font-medium">Tema<strong
                             class="text-red-500">*</strong></label>
-                        <select
-                            class="select2 form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            name="materi_id" id="materi_id" required>
-                            <option value=""></option>
-                            @foreach ($materis as $materi)
-                                <option value="{{ $materi->id }}">{{ $materi->title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <input type="text" id="theme" name="theme"
+                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        placeholder="Masukkan nama Jadwal Penyuluhan / Pendampingan" required>
                 </div>
                 {{-- Penyuluh / Pembawa Materi --}}
                 <div class="mt-3">
@@ -133,6 +117,15 @@
                         </select>
                     </div>
                 </div>
+                {{-- Start: Attachment --}}
+                <div class="mt-3">
+                    <label for="" class="inline-block mb-2 text-base font-medium">Lampiran <strong
+                            class="text-red-500">*</strong></label>
+                    <input type="file" id="attachment" name="attachment"
+                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                        accept="application/pdf,image/jpeg,image/png,image/jpg" required>
+                </div>
+                {{-- End: Attachment --}}
             </div>
             {{-- End Modal Body --}}
 
@@ -173,7 +166,6 @@
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
                     $('#form-edit').find('#name').val(response.name);
-                    $('#form-edit').find('#description').val(response.description);
                     $('#form-edit').find('#theme').val(response.theme);
                     $('#form-edit').find('#quota').val(response.quota);
                     $('#form-edit').find('#jenis_penyuluhan_id').val(response.jenis_penyuluhan_id).trigger('change');
@@ -194,6 +186,11 @@
                         // kalau format dari backend "2025-08-01 to 2025-08-10"
                         // maka akan otomatis select range nya
                     });
+
+                    // Set data to CKEditor
+                    if (editors['description']) {
+                        editors['description'].setData(response.description);
+                    }
                 },
                 error: function(xhr) {
                     Swal.fire({

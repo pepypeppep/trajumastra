@@ -162,8 +162,8 @@ class NavigationSeeder extends Seeder
                 'icon' => '',
                 'order' => 8,
                 'parent_id' => 100,
-                'active' => true,
-                'display' => true,
+                'active' => false,
+                'display' => false,
             ],
             // Penyuluh
             [
@@ -293,8 +293,8 @@ class NavigationSeeder extends Seeder
                 'icon' => '',
                 'order' => 18,
                 'parent_id' => 100,
-                'active' => true,
-                'display' => true,
+                'active' => false,
+                'display' => false,
             ],
             // SPBU
             [
@@ -407,7 +407,7 @@ class NavigationSeeder extends Seeder
             // Kelola Jadwal Pendampingan
             [
                 'id' => 209,
-                'name' => 'Kelola Jadwal Pendampingan',
+                'name' => 'Kelola Jadwal Pendampingan ',
                 'page' => 'admin', // or 'guest'
                 'url' => 'kelola.jadwal-pendampingan.index',
                 'slug' => 'kelola-jadwal-pendampingan',

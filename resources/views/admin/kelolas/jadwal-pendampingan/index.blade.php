@@ -20,14 +20,14 @@
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="text-center-">Judul Penyuluhan</th>
-                        <th class="text-left">Jenis Penyuluhan</th>
-                        <th class="text-center">Deskripsi</th>
-                        <th class="text-center">Kuota</th>
-                        <th class="text-center">Periode</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Materi</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center" style="width: 25%">Judul Penyuluhan</th>
+                        <th class="text-center" style="width: 10%">Jenis Penyuluhan</th>
+                        <th class="text-center" style="width: 25%">Deskripsi</th>
+                        <th class="text-center" style="width: 5%">Kuota</th>
+                        <th class="text-center" style="width: 10%">Periode</th>
+                        <th class="text-center" style="width: 10%">Status</th>
+                        <th class="text-center" style="width: 5%">Lampiran</th>
+                        <th class="text-center" style="width: 10%">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +64,32 @@
     <script src="{{ URL::asset('assets/js/datatables/pdfmake.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/datatables/buttons.print.min.js') }}"></script>
+    {{-- Form Editor Classic --}}
+    <script src="{{ URL::asset('assets/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
 
+    {{-- Implement Form Editor Classic --}}
+    <script>
+        let editors = {};
+
+        function initCKEditor() {
+            document.querySelectorAll('.ckeditor-classic').forEach(function(el) {
+                // Prevent multiple init
+                if (editors[el.id]) return;
+
+                ClassicEditor
+                    .create(el)
+                    .then(editor => {
+                        editors[el.id] = editor;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        }
+
+        // Run once after DOM ready
+        initCKEditor();
+    </script>
         
     {{-- Implement datatable --}}
     <script>
@@ -93,7 +118,7 @@
                         name: 'name',
                         searchable: true,
                         orderable: true,
-                        width: '20%',
+                        width: '25%',
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
                     },{
                         data: 'jenis_penyuluhan_name',
@@ -107,7 +132,7 @@
                         name: 'description',
                         searchable: true,
                         orderable: true,
-                        width: '20%',
+                        width: '25%',
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
                     },{
                         data: 'quota',
@@ -131,12 +156,12 @@
                         width: '10%',
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
-                        data: 'materi_title',
-                        name: 'materi_title',
+                        data: 'attachment_data',
+                        name: 'attachment_data',
                         searchable: true,
                         orderable: false,
-                        width: '15%',
-                        className: 'border border-gray-300 dark:border-zink-50 text-left'
+                        width: '5%',
+                        className: 'border border-gray-300 dark:border-zink-50 text-center'
                     },{
                         data: 'aksi',
                         name: 'aksi',

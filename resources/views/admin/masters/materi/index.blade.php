@@ -158,7 +158,7 @@
                     },
                     {
                         data: 'attachment_data',
-                        name: 'attachment',
+                        name: 'attachment_data',
                         searchable: false,
                         orderable: false,
                     },
@@ -180,6 +180,7 @@
         // -- End Load Datatable
     </script>
     {{-- End Implement datatable --}}
+
 
     {{-- Start action delete data --}}
     <script>

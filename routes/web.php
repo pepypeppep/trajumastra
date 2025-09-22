@@ -115,6 +115,7 @@ Route::middleware('auth', 'verified')->group(function () {
         /* Kelola Pelaku Usaha */
         Route::resource('pelaku-usaha', KelolaPelakuUsahaController::class)->names('pelaku-usaha');
         /* Kelola Jadwal Pendampingan */
+        Route::get('/jadwal-pendampingan/attachment/{id}', [KelolaJadwalPendampinganController::class, 'attachmentDownload'])->name('jadwal-pendampingan.attachment-download');
         Route::resource('jadwal-pendampingan', KelolaJadwalPendampinganController::class)->names('jadwal-pendampingan');
         /* Kelola UPTD */
         Route::resource('uptd', KelolaUptdController::class)->names('uptd');

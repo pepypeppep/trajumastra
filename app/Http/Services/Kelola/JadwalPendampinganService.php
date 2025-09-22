@@ -10,6 +10,7 @@ use App\Models\MasterKategori;
 use App\Models\JadwalPenyuluhan;
 use Illuminate\Support\Facades\DB;
 use App\Models\MasterJenisPenyuluhan;
+use Illuminate\Support\Facades\Storage;
 use App\Enums\JenisPenyuluhanStatusEnum;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -33,8 +34,18 @@ class JadwalPendampinganService
             ->addColumn('periode', function ($row) {
                 return ($row->start ? tanggal_indonesia($row->start) : '-') . '<br>s/d<br>' . ($row->end ? tanggal_indonesia($row->end) : '-');
             })
-            ->addColumn('materi_title', function ($row) {
-                return $row->materi ? (Str::length($row->materi->title) > 25 ? Str::substr($row->materi->title, 0, 25) . '...' : $row->materi->title) : '-';
+            ->addColumn('attachment_data', function ($row) {
+                if (!$row->attachment) {
+                    return '-';
+                }
+
+                $content = '<a href="' . route('kelola.jadwal-pendampingan.attachment-download', $row->id) . '" title="Download data materi" id="btn-download-file"
+                        data-id="' . $row->id . '" data-url-get="' . route('kelola.jadwal-pendampingan.attachment-download', $row->id) . '"
+                        class="btn-download-file btn text-sky-500 btn bg-sky-100 hover:bg-sky-600 focus:bg-sky-600">
+                        <i class="ri-file-line"></i>
+                        </a>';
+
+                return $content;
             })
             ->addColumn('status', function ($row) {
                 if($row->status == JenisPenyuluhanStatusEnum::VERIFIED->value){
@@ -128,17 +139,24 @@ class JadwalPendampinganService
         try {
             // DB Transaction
             DB::beginTransaction();
+            // Check attachment
+            if ($datas['attachment'] != null) {
+                $attachmentName = strtotime(now()) . '.' . $datas['attachment']->getClientOriginalExtension();
+                $attachmentPath = Storage::disk('local')->put('materi/' . $attachmentName, file_get_contents($datas['attachment']));
+                $attachment = 'materi/' . $attachmentName;
+            }
+
             $jadwalPenyuluhan = JadwalPenyuluhan::create([
                 'jenis_penyuluhan_id' => $datas['jenis_penyuluhan_id'],
                 'kategori_id' => $datas['kategori_id'],
-                'materi_id' => $datas['materi_id'],
                 'name' => $datas['name'],
                 'description' => $datas['description'],
                 'start' => $start,
                 'end' => $end,
                 'theme' => $datas['theme'],
                 'quota' => $datas['quota'],
-                'status' => $datas['status']
+                'status' => $datas['status'],
+                'attachment' => $attachment ?? null,
             ]);
 
             // Attach penyuluh
@@ -180,18 +198,30 @@ class JadwalPendampinganService
             
             // Get data
             $data = JadwalPenyuluhan::findOrFail($id);
+
+            // Check attachment
+            if ($attributes['attachment'] != null) {
+                $attachmentName = strtotime(now()) . '.' . $attributes['attachment']->getClientOriginalExtension();
+                $attachmentPath = Storage::disk('local')->put('materi/' . $attachmentName, file_get_contents($attributes['attachment']));
+                $attachment = 'materi/' . $attachmentName;
+                // Delete old attachment if exists
+                if ($data->attachment && Storage::disk('local')->exists($data->attachment)) {
+                    Storage::disk('local')->delete($data->attachment);
+                }
+            }
+
             // Update data data
             $data->update([
                 'jenis_penyuluhan_id' => $attributes['jenis_penyuluhan_id'],
                 'kategori_id' => $attributes['kategori_id'],
-                'materi_id' => $attributes['materi_id'],
                 'name' => $attributes['name'],
                 'description' => $attributes['description'],
                 'start' => $start,
                 'end' => $end,
                 'theme' => $attributes['theme'],
                 'quota' => $attributes['quota'],
-                'status' => $attributes['status']
+                'status' => $attributes['status'],
+                'attachment' => $attachment ?? $data->attachment,
             ]);
 
             // Attach penyuluh / pembawa materi
@@ -228,5 +258,22 @@ class JadwalPendampinganService
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => 'Jadwal pendampingan gagal dihapus. Error :' . $e->getMessage()]);
         }
+    }
+
+    /* Download attachment */
+    public function downloadAttachment($id)
+    {
+        try {
+            // Get data
+            $data = JadwalPenyuluhan::findOrFail($id);
+            $filePath = Storage::disk('local')->path($data->attachment);
+            if (!$data->attachment || !file_exists($filePath)) {
+                return redirect()->back()->withErrors(['error' => 'Lampiran tidak ditemukan.']);
+            }
+
+            return response()->download($filePath);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Gagal mengunduh lampiran. Error :' . $e->getMessage()]);
+        } 
     }
 }

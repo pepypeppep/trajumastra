@@ -39,7 +39,7 @@ class KelolaJadwalPendampinganController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $this->setRule('kelola-kelompok-binaan.create');
+        $this->setRule('kelola-jadwal-pendampingan.create');
 
         // Store Process
         return $this->jadwalPendampinganService->store($request->validated());
@@ -50,7 +50,7 @@ class KelolaJadwalPendampinganController extends Controller
      */
     public function edit(string $id)
     {
-        $this->setRule('kelola-kelompok-binaan.update');
+        $this->setRule('kelola-jadwal-pendampingan.update');
         return $this->jadwalPendampinganService->getById($id);
     }
 
@@ -59,7 +59,7 @@ class KelolaJadwalPendampinganController extends Controller
      */
     public function update(UpdateRequest $request, string $id)
     {
-        $this->setRule('kelola-kelompok-binaan.update');
+        $this->setRule('kelola-jadwal-pendampingan.update');
 
         // Update Process
         return $this->jadwalPendampinganService->update($id, $request->validated());
@@ -70,8 +70,17 @@ class KelolaJadwalPendampinganController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->setRule('kelola-kelompok-binaan.delete');
+        $this->setRule('kelola-jadwal-pendampingan.delete');
         // Delete Process
         return $this->jadwalPendampinganService->delete($id);
+    }
+
+    /** 
+     * Download attachment by ID 
+     */
+    public function attachmentDownload(string $id)
+    {
+        $this->setRule('kelola-jadwal-pendampingan.read');
+        return $this->jadwalPendampinganService->downloadAttachment($id);
     }
 }
