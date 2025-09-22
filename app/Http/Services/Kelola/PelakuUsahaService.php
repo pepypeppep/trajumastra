@@ -17,10 +17,20 @@ use Yajra\DataTables\Facades\DataTables;
 class PelakuUsahaService
 {
     /* Get alls */
-    public function getAll()
+    public function getAll(array $filters = [])
     {
         $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha', 'user')
             ->select('pelaku_usahas.*');
+        // Filter by kelompok binaan
+        if (isset($filters['kelompok_binaan']) && $filters['kelompok_binaan'] != '') {
+            if ($filters['kelompok_binaan'] == '__tanpa_kelompok__') {
+                $data->whereNull('kelompok_binaan_id');
+            } else {
+                $data->whereHas('kelompokBinaan', function ($q) use ($filters) {
+                    $q->where('jenis_kelompok', $filters['kelompok_binaan']);
+                });
+            }
+        }
 
         return DataTables::eloquent($data)
             ->addIndexColumn()

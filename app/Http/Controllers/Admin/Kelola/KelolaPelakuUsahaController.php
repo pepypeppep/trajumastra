@@ -22,8 +22,9 @@ class KelolaPelakuUsahaController extends Controller
         $this->setRule('kelola-pelaku-usaha.read');
 
         // Load data for data table (server side - AJAX)
+         /* Get Filter By Kelompok Binaan */
         if (request()->ajax()) {
-            return $this->pelakuUsahaService->getAll();
+            return $this->pelakuUsahaService->getAll(request()->all());
         }
 
         /* Get all kalurahan */

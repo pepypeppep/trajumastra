@@ -9,23 +9,45 @@
 @section('content-admin')
     <div class="card">
         <div class="card-body">
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex flex-wrap items-center mb-4 gap-4">
+                <!-- Judul -->
                 <h5 class="mb-0">Daftar Pelaku Usaha</h5>
-                <div class="">
-                    <a href="{{ route('kelola.pelaku-usaha.export') }}" data-modal-target="modal-add"
-                        class="btn bg-green-500 text-white hover:bg-green-600 focus:bg-green-600">
-                        <i class="ri-upload-2-line"></i> Export Pelaku Usaha
+
+                <!-- Filter di kanan -->
+                <div class="ml-auto">
+                    <select id="filterKelompokBinaan"
+                        class="select2 form-input w-48 border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
+                        <option value="">Tampilkan Semua Data</option>
+                        <option value="__tanpa_kelompok__">Tanpa Kelompok Binaan</option>
+                        @foreach (\App\Enums\JenisKelompokBinaanEnum::cases() as $enum)
+                            <option value="{{ $enum->value }}">{{ $enum->label() }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="flex gap-2">
+                    <a href="{{ route('kelola.pelaku-usaha.export') }}"
+                        class="btn bg-green-500 text-white hover:bg-green-600">
+                        <i class="ri-upload-2-line"></i> Export
                     </a>
                     <button type="button" data-modal-target="modal-import"
-                        class="btn bg-red-500 text-white hover:bg-red-600 focus:bg-red-600">
-                        <i class="ri-download-2-line"></i> Import Pelaku Usaha
+                        class="btn bg-red-500 text-white hover:bg-red-600">
+                        <i class="ri-download-2-line"></i> Import
                     </button>
                     <button type="button" data-modal-target="modal-add"
-                        class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
-                        <i class="ri-user-add-line"></i> Tambah Pelaku Usaha
+                        class="btn bg-custom-500 text-white hover:bg-custom-600">
+                        <i class="ri-user-add-line"></i> Tambah
                     </button>
                 </div>
             </div>
+
+            {{-- Start: Additional Data Table Filter --}}
+            <div class="flex justify-between items-center mb-4">
+                <div></div>
+
+            </div>
+            {{-- End: Additional Data Table Filter --}}
             <table id="data-table" class="display stripe group" style="width:100%">
                 <thead>
                     <tr>
@@ -80,11 +102,15 @@
     <script>
         // -- Start Load Datatable
         var filter = {
-            status: '',
-            pilar: '',
-            keyword: ''
+            kelompok_binaan: $('#filterKelompokBinaan').val()
         }
         loadTable(filter);
+        // Filter change
+        $('#filterKelompokBinaan').on('change', function() {
+            filter.kelompok_binaan = $(this).val();
+            $('#data-table').DataTable().destroy();
+            loadTable(filter);
+        });
 
         function loadTable(filter) {
             var tbl = $('#data-table').DataTable({
@@ -96,6 +122,9 @@
                 ajax: {
                     url: "{{ route('kelola.pelaku-usaha.index') }}",
                     type: 'GET',
+                    data: function(d) {
+                        d.kelompok_binaan = filter.kelompok_binaan;
+                    }
                 },
                 columns: [{
                         data: 'user.name',
