@@ -16,7 +16,7 @@ class TransaksiController extends BaseApiController
      */
     /**
      * @OA\Get(
-     *     path="/api/transactions",
+     *     path="/api/transactionss",
      *     summary="Get all transactions",
      *     description="Retrieve paginated transactions list filtered by user's UPTD with optional search",
      *     operationId="getAllTransactions",
@@ -134,7 +134,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="first_page_url",
      *                 type="string",
-     *                 example="http://localhost/api/transactions?page=1"
+     *                 example="http://localhost/api/transactionss?page=1"
      *             ),
      *             @OA\Property(
      *                 property="from",
@@ -149,7 +149,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="last_page_url",
      *                 type="string",
-     *                 example="http://localhost/api/transactions?page=5"
+     *                 example="http://localhost/api/transactionss?page=5"
      *             ),
      *             @OA\Property(
      *                 property="links",
@@ -179,7 +179,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="path",
      *                 type="string",
-     *                 example="http://localhost/api/transactions"
+     *                 example="http://localhost/api/transactionss"
      *             ),
      *             @OA\Property(
      *                 property="per_page",
@@ -362,7 +362,7 @@ class TransaksiController extends BaseApiController
      */
     /**
      * @OA\Post(
-     *     path="/api/transaction",
+     *     path="/api/transactions",
      *     summary="Create a new transaction",
      *     description="Process and save a new fish transaction with multiple items",
      *     operationId="transaction.store",
@@ -427,9 +427,15 @@ class TransaksiController extends BaseApiController
      */
     public function store(CreateRequest $request)
     {
-        $product = $this->service->store($request->user(), $request->validated());
-
-        return $this->successResponse($product, "Product created successfully");
+        try {
+            $product = $this->service->store($request->user(), $request->validated());
+            return $this->successResponse($product, "Transaksi berhasil disimpan", 201);
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                config('app.debug') ? $e->getMessage() : 'Terjadi kesalahan saat menyimpan transaksi',
+                500
+            );
+        }
     }
 
     public function getImage(string $id)

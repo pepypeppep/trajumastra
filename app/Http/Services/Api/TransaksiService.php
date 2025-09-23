@@ -108,7 +108,7 @@ class TransaksiService
         DB::beginTransaction();
 
         try {
-            // $user = User::with('uptd')->find(2);
+            $user = User::with('uptd')->find(2);
             $transactions = $attributes['transactions'];
             $savedTransactions = [];
             // $amount = 0;
@@ -119,11 +119,7 @@ class TransaksiService
                 $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])->first();
 
                 if (!$fish) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia',
-                        'error' => 'Internal server error'
-                    ], 500);
+                    throw new \Exception('Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia', 500);
                 }
 
                 // If fish type is BBI check stock
@@ -132,19 +128,11 @@ class TransaksiService
                         ->where('uptd_id', $user->uptd_id)->first();
 
                     if (!$fishStock) {
-                        return response()->json([
-                            'success' => false,
-                            'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia',
-                            'error' => 'Internal server error'
-                        ], 500);
+                        throw new \Exception('Transaksi tidak dapat dilakukan karena stok ikan tidak tersedia', 500);
                     }
 
                     if ($fishStock->stock < $transactionData['quantity']) {
-                        return response()->json([
-                            'success' => false,
-                            'message' => 'Transaksi tidak dapat dilakukan karena stok ikan tidak cukup',
-                            'error' => 'Internal server error'
-                        ], 500);
+                        throw new \Exception('Transaksi tidak dapat dilakukan karena stok ikan tidak mencukupi', 500);
                     }
 
                     // Update stok ikan
@@ -204,11 +192,7 @@ class TransaksiService
 
             Log::error('Cashier transaction error: ' . $e->getMessage());
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat menyimpan transaksi',
-                'error' => config('app.debug') ? $e->getMessage() : 'Internal server error'
-            ], 500);
+            throw $e;
         }
     }
 

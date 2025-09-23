@@ -562,7 +562,7 @@
                 ]
             }
         },
-        "/api/transactions": {
+        "/api/transactionss": {
             "get": {
                 "tags": [
                     "Transactions"
@@ -672,7 +672,7 @@
                                         },
                                         "first_page_url": {
                                             "type": "string",
-                                            "example": "http://localhost/api/transactions?page=1"
+                                            "example": "http://localhost/api/transactionss?page=1"
                                         },
                                         "from": {
                                             "type": "integer",
@@ -684,7 +684,7 @@
                                         },
                                         "last_page_url": {
                                             "type": "string",
-                                            "example": "http://localhost/api/transactions?page=5"
+                                            "example": "http://localhost/api/transactionss?page=5"
                                         },
                                         "links": {
                                             "type": "array",
@@ -710,7 +710,7 @@
                                         },
                                         "path": {
                                             "type": "string",
-                                            "example": "http://localhost/api/transactions"
+                                            "example": "http://localhost/api/transactionss"
                                         },
                                         "per_page": {
                                             "type": "integer",
@@ -899,7 +899,7 @@
                 ]
             }
         },
-        "/api/transaction": {
+        "/api/transactions": {
             "post": {
                 "tags": [
                     "Transactions"
