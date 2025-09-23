@@ -21,7 +21,7 @@ class TransaksiService
         if (env('LOGIN_TYPE') == 'sso') {
             $userId = $request->user()->id;
         } else {
-            $userId = 2;
+            $userId = $request->userId ?? 2;
         }
         $user = User::with('uptd')->find($userId);
         $dataQuery = Transaksi::with('details');
@@ -167,7 +167,8 @@ class TransaksiService
         DB::beginTransaction();
 
         try {
-            $user = User::with('uptd')->find(2);
+            $userId = $request->userId ?? 2;
+            $user = User::with('uptd')->find($userId);
             $transactions = $attributes['transactions'];
             $savedTransactions = [];
             // $amount = 0;

@@ -697,6 +697,16 @@
                             "type": "integer",
                             "default": 10
                         }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "Filter by user ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 2
+                        }
                     }
                 ],
                 "responses": {
@@ -878,6 +888,18 @@
                 "summary": "Create a new transaction",
                 "description": "Process and save a new fish transaction with multiple items",
                 "operationId": "transaction.store",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "description": "Filter by user ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 2
+                        }
+                    }
+                ],
                 "requestBody": {
                     "description": "Transaction data with multiple items",
                     "required": true,

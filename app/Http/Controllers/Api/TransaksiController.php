@@ -55,6 +55,17 @@ class TransaksiController extends BaseApiController
      *         )
      *     ),
      *
+     *     @OA\Parameter(
+     *         name="userId",
+     *         in="query",
+     *         description="Filter by user ID",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=2
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
@@ -500,6 +511,17 @@ class TransaksiController extends BaseApiController
      *     operationId="transaction.store",
      *     tags={"Transactions"},
      *     security={{"bearer":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="userId",
+     *         in="query",
+     *         description="Filter by user ID",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=2
+     *         )
+     *     ),
      *
      *     @OA\RequestBody(
      *         required=true,
