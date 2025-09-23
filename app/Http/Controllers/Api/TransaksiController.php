@@ -16,7 +16,7 @@ class TransaksiController extends BaseApiController
      */
     /**
      * @OA\Get(
-     *     path="/api/transactionss",
+     *     path="/api/transactions",
      *     summary="Get all transactions",
      *     description="Retrieve paginated transactions list filtered by user's UPTD with optional search",
      *     operationId="getAllTransactions",
@@ -134,7 +134,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="first_page_url",
      *                 type="string",
-     *                 example="http://localhost/api/transactionss?page=1"
+     *                 example="http://localhost/api/transactions?page=1"
      *             ),
      *             @OA\Property(
      *                 property="from",
@@ -149,7 +149,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="last_page_url",
      *                 type="string",
-     *                 example="http://localhost/api/transactionss?page=5"
+     *                 example="http://localhost/api/transactions?page=5"
      *             ),
      *             @OA\Property(
      *                 property="links",
@@ -179,7 +179,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="path",
      *                 type="string",
-     *                 example="http://localhost/api/transactionss"
+     *                 example="http://localhost/api/transactions"
      *             ),
      *             @OA\Property(
      *                 property="per_page",
