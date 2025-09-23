@@ -97,6 +97,42 @@ class TransaksiService
         // return ProductResource::collectionWithUptdType($products, $uptdType);
     }
 
+    /* Get products by User */
+    public function getProductByUser2(Request $request)
+    {
+        if (env('LOGIN_TYPE') == 'sso') {
+            $userId = $request->user()->id;
+        } else {
+            $userId = 2;
+        }
+        $user = User::with('uptd')->find($userId);
+        $uptdType = $user->uptd?->type;
+
+        // $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
+        //     ->where('is_active', 1)
+        //     ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
+        //         $query->where('type', $uptdType);
+        //     });
+
+        $data = StokIkan::with('jenis_ikan.harga_ikans');
+
+        if ($request->has('keyword')) {
+            $data->whereHas('jenis_ikan', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->keyword . '%');
+            });
+        }
+
+        if ($request->has('transaction_type')) {
+            $data->where('transaction_type', $request->transaction_type);
+        }
+
+        $products = $data->get();
+
+        return $products;
+
+        // return ProductResource::collectionWithUptdType($products, $uptdType);
+    }
+
     /* Get data by ID */
     public function getById(int $id)
     {
