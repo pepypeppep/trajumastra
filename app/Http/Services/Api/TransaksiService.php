@@ -24,7 +24,7 @@ class TransaksiService
             $userId = 2;
         }
         $user = User::with('uptd')->find($userId);
-        $dataQuery = Transaksi::query();
+        $dataQuery = Transaksi::with('details');
 
         if ($user->uptd_id) {
             $dataQuery->where('uptd_id', $user->uptd_id);
@@ -53,31 +53,54 @@ class TransaksiService
         $user = User::with('uptd')->find($userId);
         $uptdType = $user->uptd?->type;
 
-        $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
-            ->where('is_active', 1)
-            ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
-                $query->where('type', $uptdType);
-            });
+        // $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
+        //     ->where('is_active', 1)
+        //     ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
+        //         $query->where('type', $uptdType);
+        //     });
+
+        // if ($request->has('keyword')) {
+        //     $data->whereHas('jenis_ikan', function ($query) use ($request) {
+        //         $query->where('name', 'like', '%' . $request->keyword . '%');
+        //     });
+        // }
+
+        // if ($request->has('transaction_type')) {
+        //     $data->where('transaction_type', $request->transaction_type);
+        // }
+
+        // $products = $data->get();
+
+        $data = StokIkan::with('jenis_ikan.harga_ikans')
+            ->join('master_jenis_ikans', 'stok_ikans.jenis_ikan_id', '=', 'master_jenis_ikans.id')
+            ->leftJoin('harga_ikans', 'master_jenis_ikans.id', '=', 'harga_ikans.jenis_ikan_id')
+            ->where('stok_ikans.uptd_id', $user->uptd_id)
+            ->select([
+                'master_jenis_ikans.*',
+                'stok_ikans.stock',
+                'harga_ikans.price',
+                'harga_ikans.retribution',
+                'harga_ikans.unit',
+                'harga_ikans.size',
+                'harga_ikans.spelled'
+            ])
+            ->orderBy('master_jenis_ikans.name');
 
         if ($request->has('keyword')) {
-            $data->whereHas('jenis_ikan', function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->keyword . '%');
-            });
-        }
-
-        if ($request->has('transaction_type')) {
-            $data->where('transaction_type', $request->transaction_type);
+            $data->where('master_jenis_ikans.name', 'like', '%' . $request->keyword . '%');
         }
 
         $products = $data->get();
 
-        return ProductResource::collectionWithUptdType($products, $uptdType);
+        return $products;
+
+        // return ProductResource::collectionWithUptdType($products, $uptdType);
     }
 
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = Transaksi::with('uptd.kalurahan', 'staff:id,name')->find($id);
+        $data = Transaksi::with('details', 'uptd.kalurahan', 'staff:id,name')->find($id);
 
         if (!$data) {
             return null;
