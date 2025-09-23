@@ -7,7 +7,7 @@
 
     {{-- @include('guest.feedback') --}}
 
-    @include('guest.news')
+    {{-- @include('guest.news') --}}
 
     @include('guest.peoples')
 
