@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class MasterJenisIkan extends Model
 {
     protected $guarded = ['id'];
-    protected $appends = ['imageUrl', 'economicLabel'];
+    protected $appends = ['imageUrl', 'economicLevel', 'economicLabel'];
 
     /**
      * The uptds that belong to the MasterJenisIkan
@@ -18,6 +18,19 @@ class MasterJenisIkan extends Model
     public function uptds(): BelongsToMany
     {
         return $this->belongsToMany(Uptd::class, 'uptd_jenis_ikan', 'jenis_ikan_id', 'uptd_id');
+    }
+
+    function getEconomicLevelAttribute($value)
+    {
+        if ($this->economic_value == 1) {
+            return 'Rendah';
+        } elseif ($this->economic_value == 2) {
+            return 'Sedang';
+        } elseif ($this->economic_value == 3) {
+            return 'Tinggi';
+        } else {
+            return null;
+        }
     }
 
     function getEconomicLabelAttribute($value)

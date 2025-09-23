@@ -25,62 +25,96 @@ class StokIkanController extends BaseApiController
      *         in="query",
      *         description="Search keyword for fish type name",
      *         required=false,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
+     *         @OA\Schema(type="string")
      *     ),
-     *
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Number of items per page (default: 10, max: 100)",
+     *         required=false,
+     *         @OA\Schema(type="integer", minimum=1, maximum=100, default=10)
+     *     ),
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number",
+     *         required=false,
+     *         @OA\Schema(type="integer", minimum=1, default=1)
+     *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="Successful response",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=true),
-     *             @OA\Property(property="message", type="string", example="Stok Ikan fetched successfully"),
+     *             @OA\Property(property="message", type="string", example="Fish stock fetched successfully"),
      *             @OA\Property(
      *                 property="data",
      *                 type="array",
      *                 @OA\Items(
      *                     type="object",
-     *                     @OA\Property(property="id", type="integer", example=5),
+     *                     @OA\Property(property="id", type="integer", example=1),
      *                     @OA\Property(property="uptd_id", type="integer", example=1),
-     *                     @OA\Property(property="jenis_ikan_id", type="integer", example=41),
-     *                     @OA\Property(property="user_id", type="integer", example=1),
-     *                     @OA\Property(property="stock", type="integer", example=97),
-     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-09-20T06:24:35.000000Z"),
-     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-09-20T06:24:35.000000Z"),
+     *                     @OA\Property(property="jenis_ikan_id", type="integer", example=1),
+     *                     @OA\Property(property="quantity", type="number", format="float", example=150.5),
+     *                     @OA\Property(property="unit", type="string", example="kg"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-09-23T00:50:46.000000Z"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-09-23T00:50:46.000000Z"),
      *                     @OA\Property(
      *                         property="jenis_ikan",
      *                         type="object",
-     *                         @OA\Property(property="id", type="integer", example=41),
-     *                         @OA\Property(property="name", type="string", example="Kakap"),
-     *                         @OA\Property(property="image", type="string", example="ikan/92b13c1e-278f-4fb6-870d-77dfe8cf5eb4.png"),
-     *                         @OA\Property(property="type", type="integer", example=1),
-     *                         @OA\Property(property="economic_value", type="integer", example=3),
-     *                         @OA\Property(property="deleted_at", type="string", format="date-time", nullable=true),
-     *                         @OA\Property(property="created_at", type="string", format="date-time", example="2025-09-20T06:24:35.000000Z"),
-     *                         @OA\Property(property="updated_at", type="string", format="date-time", example="2025-09-20T06:24:35.000000Z"),
-     *                         @OA\Property(property="imageUrl", type="string", example="http://127.0.0.1:8000/api/products/41/thumbnail"),
-     *                         @OA\Property(property="economicLabel", type="string", example="<span class='px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20'>Tinggi</span>")
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="name", type="string", example="Salmon"),
+     *                         @OA\Property(property="scientific_name", type="string", example="Salmo salar"),
+     *                         @OA\Property(property="category", type="string", example="Saltwater"),
+     *                         @OA\Property(property="created_at", type="string", format="date-time", example="2025-09-23T00:50:46.000000Z"),
+     *                         @OA\Property(property="updated_at", type="string", format="date-time", example="2025-09-23T00:50:46.000000Z")
      *                     )
      *                 )
+     *             ),
+     *             @OA\Property(
+     *                 property="meta",
+     *                 type="object",
+     *                 @OA\Property(property="current_page", type="integer", example=1),
+     *                 @OA\Property(property="first_page_url", type="string", example="http://api.example.com/stok-ikan?page=1"),
+     *                 @OA\Property(property="from", type="integer", example=1),
+     *                 @OA\Property(property="last_page", type="integer", example=5),
+     *                 @OA\Property(property="last_page_url", type="string", example="http://api.example.com/stok-ikan?page=5"),
+     *                 @OA\Property(
+     *                     property="links",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="url", type="string", nullable=true, example=null),
+     *                         @OA\Property(property="label", type="string", example="&laquo; Previous"),
+     *                         @OA\Property(property="page", type="integer", nullable=true, example=null),
+     *                         @OA\Property(property="active", type="boolean", example=false)
+     *                     )
+     *                 ),
+     *                 @OA\Property(property="next_page_url", type="string", nullable=true, example="http://api.example.com/stok-ikan?page=2"),
+     *                 @OA\Property(property="path", type="string", example="http://api.example.com/stok-ikan"),
+     *                 @OA\Property(property="per_page", type="integer", example=10),
+     *                 @OA\Property(property="prev_page_url", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="to", type="integer", example=10),
+     *                 @OA\Property(property="total", type="integer", example=50)
      *             )
      *         )
      *     ),
-     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthorized",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *             @OA\Property(property="data", type="object", nullable=true, example=null)
      *         )
      *     ),
-     *
      *     @OA\Response(
-     *         response=403,
-     *         description="Forbidden - User doesn't have access (not UPTD type 2)",
+     *         response=500,
+     *         description="Internal server error",
      *         @OA\JsonContent(
      *             @OA\Property(property="success", type="boolean", example=false),
-     *             @OA\Property(property="message", type="string", example="Access denied")
+     *             @OA\Property(property="message", type="string", example="Internal server error"),
+     *             @OA\Property(property="data", type="object", nullable=true, example=null)
      *         )
      *     )
      * )
