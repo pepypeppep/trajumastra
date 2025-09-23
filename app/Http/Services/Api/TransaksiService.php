@@ -109,12 +109,13 @@ class TransaksiService
         $uptdType = $user->uptd?->type;
 
         $data = StokIkan::with('jenis_ikan.harga_ikan')
+            ->where('uptd_id', $user->uptd_id)
             ->whereHas('jenis_ikan.harga_ikan', function ($query) use ($uptdType) {
                 $query->where('is_active', 1);
-            })
-            ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
-                $query->where('type', $uptdType);
             });
+        // ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
+        //     $query->where('type', $uptdType);
+        // });
 
         if ($request->has('keyword')) {
             $data->whereHas('jenis_ikan', function ($query) use ($request) {
