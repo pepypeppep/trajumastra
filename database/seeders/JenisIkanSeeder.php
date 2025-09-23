@@ -996,10 +996,15 @@ class JenisIkanSeeder extends Seeder
 
         $hargaIkans = HargaIkan::inRandomOrder()->limit(50)->get();
         foreach ($hargaIkans as $hargaIkan) {
+            if ($hargaIkan->retribution > 0) {
+                $uptd = Uptd::where('type', 1)->inRandomOrder()->first();
+            } else {
+                $uptd = Uptd::where('type', 2)->inRandomOrder()->first();
+            }
             StokIkan::firstOrCreate([
-                'uptd_id' => Uptd::inRandomOrder()->first()->id,
+                'uptd_id' => $uptd->id,
                 'user_id' => 1,
-                'jenis_ikan_id' => MasterJenisIkan::inRandomOrder()->first()->id,
+                'jenis_ikan_id' => $hargaIkan->jenis_ikan_id,
             ], [
                 'stock' => fake()->numberBetween(1, 100),
             ]);
