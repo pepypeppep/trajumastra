@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MasterJenisIkan extends Model
 {
@@ -22,13 +22,13 @@ class MasterJenisIkan extends Model
     }
 
     /**
-     * Get all of the harga_ikans for the MasterJenisIkan
+     * Get all of the harga_ikan for the MasterJenisIkan
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function harga_ikans(): HasMany
+    public function harga_ikan(): HasOne
     {
-        return $this->hasMany(HargaIkan::class, 'jenis_ikan_id');
+        return $this->hasOne(HargaIkan::class, 'jenis_ikan_id');
     }
 
     function getEconomicLevelAttribute($value)

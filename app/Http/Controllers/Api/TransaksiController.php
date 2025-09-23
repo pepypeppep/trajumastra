@@ -236,6 +236,128 @@ class TransaksiController extends BaseApiController
         return $this->successResponse($products, "Products fetched successfully");
     }
 
+    // /**
+    //  * Display a listing of the resource.
+    //  */
+    // /**
+    //  * @OA\Get(
+    //  *     path="/api/products",
+    //  *     summary="Get products",
+    //  *     description="Retrieve products filtered by the user's UPTD and type with optional filtering",
+    //  *     operationId="getProductByUser",
+    //  *     tags={"Products"},
+    //  *     security={{"bearer":{}}},
+    //  *     @OA\Parameter(
+    //  *         name="keyword",
+    //  *         in="query",
+    //  *         description="Search keyword for product name",
+    //  *         required=false,
+    //  *         @OA\Schema(
+    //  *             type="string"
+    //  *         )
+    //  *     ),
+    //  *     @OA\Response(
+    //  *         response=200,
+    //  *         description="Successful operation",
+    //  *         @OA\JsonContent(
+    //  *             type="array",
+    //  *             @OA\Items(
+    //  *                 type="object",
+    //  *                 @OA\Property(
+    //  *                     property="id",
+    //  *                     type="integer",
+    //  *                     example=1
+    //  *                 ),
+    //  *                 @OA\Property(
+    //  *                     property="uptd_id",
+    //  *                     type="integer",
+    //  *                     example=5
+    //  *                 ),
+    //  *                 @OA\Property(
+    //  *                     property="transaction_type",
+    //  *                     type="string",
+    //  *                     example="jual"
+    //  *                 ),
+    //  *                 @OA\Property(
+    //  *                     property="price",
+    //  *                     type="number",
+    //  *                     format="float",
+    //  *                     example=25000.50
+    //  *                 ),
+    //  *                 @OA\Property(
+    //  *                     property="created_at",
+    //  *                     type="string",
+    //  *                     format="date-time"
+    //  *                 ),
+    //  *                 @OA\Property(
+    //  *                     property="updated_at",
+    //  *                     type="string",
+    //  *                     format="date-time"
+    //  *                 ),
+    //  *                 @OA\Property(
+    //  *                     property="jenis_ikan",
+    //  *                     type="object",
+    //  *                     @OA\Property(
+    //  *                         property="id",
+    //  *                         type="integer",
+    //  *                         example=3
+    //  *                     ),
+    //  *                     @OA\Property(
+    //  *                         property="name",
+    //  *                         type="string",
+    //  *                         example="Ikan Bandeng"
+    //  *                     ),
+    //  *                     @OA\Property(
+    //  *                         property="type",
+    //  *                         type="string",
+    //  *                         example="laut"
+    //  *                     ),
+    //  *                     @OA\Property(
+    //  *                         property="created_at",
+    //  *                         type="string",
+    //  *                         format="date-time"
+    //  *                     ),
+    //  *                     @OA\Property(
+    //  *                         property="updated_at",
+    //  *                         type="string",
+    //  *                         format="date-time"
+    //  *                     )
+    //  *                 )
+    //  *             )
+    //  *         )
+    //  *     ),
+    //  *     @OA\Response(
+    //  *         response=401,
+    //  *         description="Unauthorized",
+    //  *         @OA\JsonContent(
+    //  *             @OA\Property(
+    //  *                 property="message",
+    //  *                 type="string",
+    //  *                 example="Unauthenticated."
+    //  *             )
+    //  *         )
+    //  *     ),
+    //  *     @OA\Response(
+    //  *         response=500,
+    //  *         description="Internal Server Error",
+    //  *         @OA\JsonContent(
+    //  *             @OA\Property(
+    //  *                 property="message",
+    //  *                 type="string",
+    //  *                 example="Server error occurred"
+    //  *             )
+    //  *         )
+    //  *     )
+    //  * )
+    //  */
+    // public function indexProduct(Request $request)
+    // {
+    //     $products = $this->service->getProductByUser($request);
+
+    //     return $this->successResponse($products, "Products fetched successfully");
+    // }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -254,6 +376,16 @@ class TransaksiController extends BaseApiController
      *         required=false,
      *         @OA\Schema(
      *             type="string"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="userId",
+     *         in="query",
+     *         description="Filter by user ID",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             default=2
      *         )
      *     ),
      *     @OA\Response(
@@ -353,128 +485,6 @@ class TransaksiController extends BaseApiController
     public function indexProduct(Request $request)
     {
         $products = $this->service->getProductByUser($request);
-
-        return $this->successResponse($products, "Products fetched successfully");
-    }
-
-
-    /**
-     * Display a listing of the resource.
-     */
-    /**
-     * @OA\Get(
-     *     path="/api/products2",
-     *     summary="Get products 2",
-     *     description="Retrieve products filtered by the user's UPTD and type with optional filtering",
-     *     operationId="getProductByUser2",
-     *     tags={"Products"},
-     *     security={{"bearer":{}}},
-     *     @OA\Parameter(
-     *         name="keyword",
-     *         in="query",
-     *         description="Search keyword for product name",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(
-     *                 type="object",
-     *                 @OA\Property(
-     *                     property="id",
-     *                     type="integer",
-     *                     example=1
-     *                 ),
-     *                 @OA\Property(
-     *                     property="uptd_id",
-     *                     type="integer",
-     *                     example=5
-     *                 ),
-     *                 @OA\Property(
-     *                     property="transaction_type",
-     *                     type="string",
-     *                     example="jual"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="price",
-     *                     type="number",
-     *                     format="float",
-     *                     example=25000.50
-     *                 ),
-     *                 @OA\Property(
-     *                     property="created_at",
-     *                     type="string",
-     *                     format="date-time"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="updated_at",
-     *                     type="string",
-     *                     format="date-time"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="jenis_ikan",
-     *                     type="object",
-     *                     @OA\Property(
-     *                         property="id",
-     *                         type="integer",
-     *                         example=3
-     *                     ),
-     *                     @OA\Property(
-     *                         property="name",
-     *                         type="string",
-     *                         example="Ikan Bandeng"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="type",
-     *                         type="string",
-     *                         example="laut"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="created_at",
-     *                         type="string",
-     *                         format="date-time"
-     *                     ),
-     *                     @OA\Property(
-     *                         property="updated_at",
-     *                         type="string",
-     *                         format="date-time"
-     *                     )
-     *                 )
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 property="message",
-     *                 type="string",
-     *                 example="Unauthenticated."
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Internal Server Error",
-     *         @OA\JsonContent(
-     *             @OA\Property(
-     *                 property="message",
-     *                 type="string",
-     *                 example="Server error occurred"
-     *             )
-     *         )
-     *     )
-     * )
-     */
-    public function indexProduct2(Request $request)
-    {
-        $products = $this->service->getProductByUser2($request);
 
         return $this->successResponse($products, "Products fetched successfully");
     }

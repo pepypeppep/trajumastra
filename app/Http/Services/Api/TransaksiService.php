@@ -43,78 +43,78 @@ class TransaksiService
     }
 
     /* Get products by User */
+    // public function getProductByUser(Request $request)
+    // {
+    //     if (env('LOGIN_TYPE') == 'sso') {
+    //         $userId = $request->user()->id;
+    //     } else {
+    //         $userId = 2;
+    //     }
+    //     $user = User::with('uptd')->find($userId);
+    //     $uptdType = $user->uptd?->type;
+
+    //     // $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
+    //     //     ->where('is_active', 1)
+    //     //     ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
+    //     //         $query->where('type', $uptdType);
+    //     //     });
+
+    //     // if ($request->has('keyword')) {
+    //     //     $data->whereHas('jenis_ikan', function ($query) use ($request) {
+    //     //         $query->where('name', 'like', '%' . $request->keyword . '%');
+    //     //     });
+    //     // }
+
+    //     // if ($request->has('transaction_type')) {
+    //     //     $data->where('transaction_type', $request->transaction_type);
+    //     // }
+
+    //     // $products = $data->get();
+
+    //     $data = StokIkan::with('jenis_ikan.harga_ikans')
+    //         ->join('master_jenis_ikans', 'stok_ikans.jenis_ikan_id', '=', 'master_jenis_ikans.id')
+    //         ->leftJoin('harga_ikans', 'master_jenis_ikans.id', '=', 'harga_ikans.jenis_ikan_id')
+    //         ->where('stok_ikans.uptd_id', $user->uptd_id)
+    //         ->select([
+    //             'master_jenis_ikans.*',
+    //             'stok_ikans.stock',
+    //             'harga_ikans.price',
+    //             'harga_ikans.retribution',
+    //             'harga_ikans.unit',
+    //             'harga_ikans.size',
+    //             'harga_ikans.spelled'
+    //         ])
+    //         ->orderBy('master_jenis_ikans.name');
+
+    //     if ($request->has('keyword')) {
+    //         $data->where('master_jenis_ikans.name', 'like', '%' . $request->keyword . '%');
+    //     }
+
+    //     $products = $data->get();
+
+    //     return $products;
+
+    //     // return ProductResource::collectionWithUptdType($products, $uptdType);
+    // }
+
+    /* Get products by User */
     public function getProductByUser(Request $request)
     {
         if (env('LOGIN_TYPE') == 'sso') {
             $userId = $request->user()->id;
         } else {
-            $userId = 2;
+            $userId = $request->userId ?? 2;
         }
         $user = User::with('uptd')->find($userId);
         $uptdType = $user->uptd?->type;
 
-        // $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
-        //     ->where('is_active', 1)
-        //     ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
-        //         $query->where('type', $uptdType);
-        //     });
-
-        // if ($request->has('keyword')) {
-        //     $data->whereHas('jenis_ikan', function ($query) use ($request) {
-        //         $query->where('name', 'like', '%' . $request->keyword . '%');
-        //     });
-        // }
-
-        // if ($request->has('transaction_type')) {
-        //     $data->where('transaction_type', $request->transaction_type);
-        // }
-
-        // $products = $data->get();
-
-        $data = StokIkan::with('jenis_ikan.harga_ikans')
-            ->join('master_jenis_ikans', 'stok_ikans.jenis_ikan_id', '=', 'master_jenis_ikans.id')
-            ->leftJoin('harga_ikans', 'master_jenis_ikans.id', '=', 'harga_ikans.jenis_ikan_id')
-            ->where('stok_ikans.uptd_id', $user->uptd_id)
-            ->select([
-                'master_jenis_ikans.*',
-                'stok_ikans.stock',
-                'harga_ikans.price',
-                'harga_ikans.retribution',
-                'harga_ikans.unit',
-                'harga_ikans.size',
-                'harga_ikans.spelled'
-            ])
-            ->orderBy('master_jenis_ikans.name');
-
-        if ($request->has('keyword')) {
-            $data->where('master_jenis_ikans.name', 'like', '%' . $request->keyword . '%');
-        }
-
-        $products = $data->get();
-
-        return $products;
-
-        // return ProductResource::collectionWithUptdType($products, $uptdType);
-    }
-
-    /* Get products by User */
-    public function getProductByUser2(Request $request)
-    {
-        if (env('LOGIN_TYPE') == 'sso') {
-            $userId = $request->user()->id;
-        } else {
-            $userId = 2;
-        }
-        $user = User::with('uptd')->find($userId);
-        $uptdType = $user->uptd?->type;
-
-        // $data = HargaIkan::with('jenis_ikan:id,name,type,economic_value')
-        //     ->where('is_active', 1)
-        //     ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
-        //         $query->where('type', $uptdType);
-        //     });
-
-        $data = StokIkan::with('jenis_ikan.harga_ikans');
+        $data = StokIkan::with('jenis_ikan.harga_ikan')
+            ->whereHas('jenis_ikan.harga_ikan', function ($query) use ($uptdType) {
+                $query->where('is_active', 1);
+            })
+            ->whereHas('jenis_ikan', function ($query) use ($uptdType) {
+                $query->where('type', $uptdType);
+            });
 
         if ($request->has('keyword')) {
             $data->whereHas('jenis_ikan', function ($query) use ($request) {
@@ -129,8 +129,6 @@ class TransaksiService
         $products = $data->get();
 
         return $products;
-
-        // return ProductResource::collectionWithUptdType($products, $uptdType);
     }
 
     /* Get data by ID */
