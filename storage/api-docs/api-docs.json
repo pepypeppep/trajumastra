@@ -23,11 +23,34 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page (default: 10, max: 100)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
+                        "description": "Successful response",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -38,7 +61,7 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Stok Ikan fetched successfully"
+                                            "example": "Fish stock fetched successfully"
                                         },
                                         "data": {
                                             "type": "array",
@@ -46,7 +69,7 @@
                                                 "properties": {
                                                     "id": {
                                                         "type": "integer",
-                                                        "example": 5
+                                                        "example": 1
                                                     },
                                                     "uptd_id": {
                                                         "type": "integer",
@@ -54,70 +77,54 @@
                                                     },
                                                     "jenis_ikan_id": {
                                                         "type": "integer",
-                                                        "example": 41
-                                                    },
-                                                    "user_id": {
-                                                        "type": "integer",
                                                         "example": 1
                                                     },
-                                                    "stock": {
-                                                        "type": "integer",
-                                                        "example": 97
+                                                    "quantity": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 150.5
+                                                    },
+                                                    "unit": {
+                                                        "type": "string",
+                                                        "example": "kg"
                                                     },
                                                     "created_at": {
                                                         "type": "string",
                                                         "format": "date-time",
-                                                        "example": "2025-09-20T06:24:35.000000Z"
+                                                        "example": "2025-09-23T00:50:46.000000Z"
                                                     },
                                                     "updated_at": {
                                                         "type": "string",
                                                         "format": "date-time",
-                                                        "example": "2025-09-20T06:24:35.000000Z"
+                                                        "example": "2025-09-23T00:50:46.000000Z"
                                                     },
                                                     "jenis_ikan": {
                                                         "properties": {
                                                             "id": {
                                                                 "type": "integer",
-                                                                "example": 41
+                                                                "example": 1
                                                             },
                                                             "name": {
                                                                 "type": "string",
-                                                                "example": "Kakap"
+                                                                "example": "Salmon"
                                                             },
-                                                            "image": {
+                                                            "scientific_name": {
                                                                 "type": "string",
-                                                                "example": "ikan/92b13c1e-278f-4fb6-870d-77dfe8cf5eb4.png"
+                                                                "example": "Salmo salar"
                                                             },
-                                                            "type": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "economic_value": {
-                                                                "type": "integer",
-                                                                "example": 3
-                                                            },
-                                                            "deleted_at": {
+                                                            "category": {
                                                                 "type": "string",
-                                                                "format": "date-time",
-                                                                "nullable": true
+                                                                "example": "Saltwater"
                                                             },
                                                             "created_at": {
                                                                 "type": "string",
                                                                 "format": "date-time",
-                                                                "example": "2025-09-20T06:24:35.000000Z"
+                                                                "example": "2025-09-23T00:50:46.000000Z"
                                                             },
                                                             "updated_at": {
                                                                 "type": "string",
                                                                 "format": "date-time",
-                                                                "example": "2025-09-20T06:24:35.000000Z"
-                                                            },
-                                                            "imageUrl": {
-                                                                "type": "string",
-                                                                "example": "http://127.0.0.1:8000/api/products/41/thumbnail"
-                                                            },
-                                                            "economicLabel": {
-                                                                "type": "string",
-                                                                "example": "<span class='px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20'>Tinggi</span>"
+                                                                "example": "2025-09-23T00:50:46.000000Z"
                                                             }
                                                         },
                                                         "type": "object"
@@ -125,6 +132,83 @@
                                                 },
                                                 "type": "object"
                                             }
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "first_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/stok-ikan?page=1"
+                                                },
+                                                "from": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "last_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/stok-ikan?page=5"
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "label": {
+                                                                "type": "string",
+                                                                "example": "&laquo; Previous"
+                                                            },
+                                                            "page": {
+                                                                "type": "integer",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "next_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/stok-ikan?page=2",
+                                                    "nullable": true
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://api.example.com/stok-ikan"
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "prev_page_url": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "to": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -138,9 +222,18 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
                                         "message": {
                                             "type": "string",
                                             "example": "Unauthenticated."
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": null,
+                                            "nullable": true
                                         }
                                     },
                                     "type": "object"
@@ -148,8 +241,8 @@
                             }
                         }
                     },
-                    "403": {
-                        "description": "Forbidden - User doesn't have access (not UPTD type 2)",
+                    "500": {
+                        "description": "Internal server error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -160,7 +253,12 @@
                                         },
                                         "message": {
                                             "type": "string",
-                                            "example": "Access denied"
+                                            "example": "Internal server error"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": null,
+                                            "nullable": true
                                         }
                                     },
                                     "type": "object"

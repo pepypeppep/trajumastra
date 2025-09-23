@@ -35,7 +35,9 @@ class TransaksiService
                 ->orWhere('invoice_id', 'like', '%' . $request->keyword . '%');
         }
 
-        $data = $dataQuery->orderBy('created_at', 'desc')->paginate(10);
+        $perPage = $request->get('per_page', 10);
+
+        $data = $dataQuery->orderBy('created_at', 'desc')->paginate($perPage);
 
         return $data;
     }

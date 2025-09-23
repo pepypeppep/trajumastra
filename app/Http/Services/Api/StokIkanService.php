@@ -36,7 +36,14 @@ class StokIkanService
         }
 
         if ($uptdType == 2) {
-            $results = $data->get();
+            $perPage = $request->get('per_page', 10);
+
+            $results = $data->join('master_jenis_ikans', 'stok_ikans.jenis_ikan_id', '=', 'master_jenis_ikans.id')
+                ->orderBy('master_jenis_ikans.name', 'asc')
+                ->select('stok_ikans.*')
+                ->paginate($perPage);
+
+            $results->load('jenis_ikan');
         } else {
             $results = [];
         }
