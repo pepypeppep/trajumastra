@@ -16,7 +16,7 @@ class TransaksiController extends BaseApiController
      */
     /**
      * @OA\Get(
-     *     path="/api/transactions",
+     *     path="/api/transactionss",
      *     summary="Get all transactions",
      *     description="Retrieve paginated transactions list filtered by user's UPTD with optional search",
      *     operationId="getAllTransactions",
@@ -134,7 +134,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="first_page_url",
      *                 type="string",
-     *                 example="http://localhost/api/transactions?page=1"
+     *                 example="http://localhost/api/transactionss?page=1"
      *             ),
      *             @OA\Property(
      *                 property="from",
@@ -149,7 +149,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="last_page_url",
      *                 type="string",
-     *                 example="http://localhost/api/transactions?page=5"
+     *                 example="http://localhost/api/transactionss?page=5"
      *             ),
      *             @OA\Property(
      *                 property="links",
@@ -179,7 +179,7 @@ class TransaksiController extends BaseApiController
      *             @OA\Property(
      *                 property="path",
      *                 type="string",
-     *                 example="http://localhost/api/transactions"
+     *                 example="http://localhost/api/transactionss"
      *             ),
      *             @OA\Property(
      *                 property="per_page",
@@ -362,7 +362,7 @@ class TransaksiController extends BaseApiController
      */
     /**
      * @OA\Post(
-     *     path="/api/transaction",
+     *     path="/api/transactions",
      *     summary="Create a new transaction",
      *     description="Process and save a new fish transaction with multiple items",
      *     operationId="transaction.store",
@@ -427,9 +427,15 @@ class TransaksiController extends BaseApiController
      */
     public function store(CreateRequest $request)
     {
-        $product = $this->service->store($request->user(), $request->validated());
-
-        return $this->successResponse($product, "Product created successfully");
+        try {
+            $product = $this->service->store($request->user(), $request->validated());
+            return $this->successResponse($product, "Transaksi berhasil disimpan", 201);
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                config('app.debug') ? $e->getMessage() : 'Terjadi kesalahan saat menyimpan transaksi',
+                500
+            );
+        }
     }
 
     public function getImage(string $id)
@@ -440,9 +446,101 @@ class TransaksiController extends BaseApiController
     /**
      * Display the specified resource.
      */
+    /**
+     * @OA\Get(
+     *     path="/api/transactions/{id}",
+     *     summary="Get transaction by ID",
+     *     description="Retrieve a specific transaction with its details and UPTD information",
+     *     operationId="transaction.getById",
+     *     tags={"Transactions"},
+     *     security={{"bearer":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="Transaction ID",
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Transaction retrieved successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Transaction retrieved successfully"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="user_id", type="integer", example=1),
+     *                 @OA\Property(property="uptd_id", type="integer", example=1),
+     *                 @OA\Property(property="transaction_type", type="string", example="cash"),
+     *                 @OA\Property(property="name", type="string", example="Customer Name"),
+     *                 @OA\Property(property="total", type="number", format="float", example=150000.00),
+     *                 @OA\Property(property="created_at", type="string", format="date-time"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time"),
+     *                 @OA\Property(
+     *                     property="uptd",
+     *                     type="object",
+     *                     @OA\Property(property="id", type="integer", example=1),
+     *                     @OA\Property(property="name", type="string", example="UPTD Name"),
+     *                     @OA\Property(property="code", type="string", example="UPTD001")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="details",
+     *                     type="array",
+     *                     @OA\Items(
+     *                         type="object",
+     *                         @OA\Property(property="id", type="integer", example=1),
+     *                         @OA\Property(property="master_jenis_ikans_id", type="integer", example=1),
+     *                         @OA\Property(property="name", type="string", example="Ikan Mas"),
+     *                         @OA\Property(property="unit", type="string", example="kg"),
+     *                         @OA\Property(property="size", type="string", example="Large"),
+     *                         @OA\Property(property="price", type="number", format="float", example=25000.00),
+     *                         @OA\Property(property="weight", type="number", format="float", example=1.5),
+     *                         @OA\Property(property="quantity", type="integer", example=5),
+     *                         @OA\Property(property="total", type="number", format="float", example=125000.00)
+     *                     )
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="Transaction not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Transaction not found"),
+     *             @OA\Property(property="data", type="object", example=null)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal server error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="Internal server error"),
+     *             @OA\Property(property="data", type="object", example=null)
+     *         )
+     *     )
+     * )
+     */
     public function show(string $id)
     {
-        //
+        $data = $this->service->getById($id);
+
+        return $this->successResponse($data, "Transaction retrieved successfully");
     }
 
     /**
