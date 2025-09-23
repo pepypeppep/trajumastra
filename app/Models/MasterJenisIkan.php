@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class MasterJenisIkan extends Model
@@ -18,6 +19,16 @@ class MasterJenisIkan extends Model
     public function uptds(): BelongsToMany
     {
         return $this->belongsToMany(Uptd::class, 'uptd_jenis_ikan', 'jenis_ikan_id', 'uptd_id');
+    }
+
+    /**
+     * Get all of the harga_ikans for the MasterJenisIkan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function harga_ikans(): HasMany
+    {
+        return $this->hasMany(HargaIkan::class, 'jenis_ikan_id');
     }
 
     function getEconomicLevelAttribute($value)
