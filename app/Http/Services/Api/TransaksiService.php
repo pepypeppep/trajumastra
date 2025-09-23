@@ -75,7 +75,7 @@ class TransaksiService
     /* Get data by ID */
     public function getById(int $id)
     {
-        $data = Transaksi::with('uptd')->find($id);
+        $data = Transaksi::with('uptd.kalurahan', 'staff:id,name')->find($id);
 
         if (!$data) {
             return null;
