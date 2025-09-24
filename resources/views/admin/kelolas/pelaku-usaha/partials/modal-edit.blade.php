@@ -16,7 +16,7 @@
             @method('PUT')
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
-                <div class="mt-3">
+                {{-- <div class="mt-3">
                     <label for="user_id" class="inline-block text-base font-medium">Pengguna untuk dijadikan Ketua
                         Binaan <strong class="text-red-500">*</strong>
                     </label>
@@ -32,6 +32,32 @@
                             <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
                         @endforeach
                     </select>
+                </div> --}}
+
+                <div class="grid grid-cols-2 gap-4">
+                    {{-- Nama Pelaku Usaha --}}
+                    <div class="col-span">
+                        <div class="mt-3">
+                            <label for="name" class="inline-block text-base font-medium">
+                                Nama Pelaku Usaha <strong class="text-red-500">*</strong>
+                            </label>
+                            <input type="text" id="name" name="name"
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                placeholder="Masukkan Nama Pelaku Usaha" required>
+                        </div>
+                    </div>
+
+                    {{-- Email pelaku usaha --}}
+                    <div class="col-span">
+                        <div class="mt-3">
+                            <label for="email" class="inline-block text-base font-medium">
+                                Email Pelaku Usaha <strong class="text-red-500">*</strong>
+                            </label>
+                            <input type="email" id="email" name="email"
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                placeholder="Masukkan Email Pelaku Usaha" required>
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Kelurahan --}}
@@ -199,7 +225,9 @@
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
-                    $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
+                    // $('#form-edit').find('#user_id').val(response.user_id).trigger('change');
+                    $('#form-edit').find('#name').val(response.name);
+                    $('#form-edit').find('#email').val(response.email);
                     $('#form-edit').find('#address').val(response.address);
                     $('#form-edit').find('#npwp').val(response.npwp);
                     $('#form-edit').find('#siup').val(response.siup);

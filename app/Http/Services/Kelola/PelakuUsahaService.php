@@ -162,11 +162,13 @@ class PelakuUsahaService
             }
 
             $pelakuUsaha = PelakuUsaha::create([
-                'user_id' => $datas['user_id'],
+                // 'user_id' => $datas['user_id'],
                 'kalurahan_id' => $datas['kalurahan_id'],
                 'kelompok_binaan_id' => $datas['kelompok_binaan_id'],
                 'bentuk_usaha_id' => $datas['bentuk_usaha_id'],
                 'jenis_usaha_id' => $datas['jenis_usaha_id'],
+                'name' => $datas['name'],
+                'email' => $datas['email'],
                 'address' => $datas['address'],
                 'npwp' => $datas['npwp'],
                 'siup' => $datas['siup'],
@@ -206,12 +208,14 @@ class PelakuUsahaService
             }
             // Update data data
             $data->update([
-                'user_id' => $datas['user_id'] ?? $data['user_id'],
+                // 'user_id' => $datas['user_id'] ?? $data['user_id'],
                 'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
                 'kelompok_binaan_id' => $attributes['kelompok_binaan_id'] ?? $data->kelompok_binaan_id,
                 'bentuk_usaha_id' => $attributes['bentuk_usaha_id'] ?? $data->bentuk_usaha_id,
                 'jenis_usaha_id' => $attributes['jenis_usaha_id'] ?? $data->jenis_usaha_id,
+                'name' => $attributes['name'] ?? $data->name,
                 'address' => $attributes['address'] ?? $data->address,
+                'email' => $attributes['email'] ?? $data->email,
                 'npwp' => $attributes['npwp'] ?? $data->npwp,
                 'siup' => $attributes['siup'] ?? $data->siup,
                 'income_range' => $attributes['income_range'] ?? $data->income_range,
