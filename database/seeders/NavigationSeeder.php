@@ -349,8 +349,8 @@ class NavigationSeeder extends Seeder
                 'icon' => '',
                 'order' => 1,
                 'parent_id' => 200,
-                'active' => true,
-                'display' => true,
+                'active' => false,
+                'display' => false,
             ],
             // Kelola Stok Ikan
             [

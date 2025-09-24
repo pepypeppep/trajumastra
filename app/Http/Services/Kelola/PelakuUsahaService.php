@@ -19,8 +19,19 @@ class PelakuUsahaService
     /* Get alls */
     public function getAll(array $filters = [])
     {
-        $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha', 'user')
+        $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha')
             ->select('pelaku_usahas.*');
+
+        // Filter by keyword
+        if (isset($filters['keyword']) && $filters['keyword'] != '') {
+            $data->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['keyword'] . '%')
+                ->orWhere('email', 'like', '%' . $filters['keyword'] . '%')
+                ->orWhere('address', 'like', '%' . $filters['keyword'] . '%')
+                ->orWhere('npwp', 'like', '%' . $filters['keyword'] . '%')
+                ->orWhere('siup', 'like', '%' . $filters['keyword'] . '%');
+            });
+        }
         // Filter by kelompok binaan
         if (isset($filters['kelompok_binaan']) && $filters['kelompok_binaan'] != '') {
             if ($filters['kelompok_binaan'] == '__tanpa_kelompok__') {

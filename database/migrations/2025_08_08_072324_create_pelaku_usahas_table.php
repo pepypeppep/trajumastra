@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('pelaku_usahas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->unsignedBigInteger('user_id')->index()->nullable();
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('kalurahan_id')->index()->nullable();
             $table->foreign('kalurahan_id')->references('id')->on('kalurahans')->onDelete('set null');
             $table->unsignedBigInteger('kelompok_binaan_id')->index()->nullable();
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->foreign('bentuk_usaha_id')->references('id')->on('master_bentuk_usahas')->onDelete('set null');
             $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
             $table->foreign('jenis_usaha_id')->references('id')->on('master_jenis_usahas')->onDelete('set null');
-            $table->longText('address')->nullable(); // alamat sekretariat
+            $table->sting('name');
+            $table->longText('address')->nullable();
             $table->string('npwp')->nullable();
             $table->string('siup')->nullable();
             $table->string('phone')->nullable();

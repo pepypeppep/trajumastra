@@ -9,21 +9,9 @@
 @section('content-admin')
     <div class="card">
         <div class="card-body">
-            <div class="flex flex-wrap items-center mb-4 gap-4">
+            <div class="flex justify-between items-center mb-4 gap-4">
                 <!-- Judul -->
                 <h5 class="mb-0">Daftar Pelaku Usaha</h5>
-
-                <!-- Filter di kanan -->
-                <div class="ml-auto">
-                    <select id="filterKelompokBinaan"
-                        class="select2 form-input w-48 border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200">
-                        <option value="">Tampilkan Semua Data</option>
-                        <option value="__tanpa_kelompok__">Tanpa Kelompok Binaan</option>
-                        @foreach (\App\Enums\JenisKelompokBinaanEnum::cases() as $enum)
-                            <option value="{{ $enum->value }}">{{ $enum->label() }}</option>
-                        @endforeach
-                    </select>
-                </div>
 
                 <!-- Tombol Aksi -->
                 <div class="flex gap-2">
@@ -49,6 +37,26 @@
             </div>
             {{-- End: Additional Data Table Filter --}}
             <table id="data-table" class="display stripe group" style="width:100%">
+                <div class="grid items-center grid-cols-1 gap-5 xl:grid-cols-3">
+                    <div>
+                    </div>
+                    <div>
+                        <select
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            data-choices name="filterKelompokBinaan" id="filterKelompokBinaan">
+                            <option value="">Filter Kelompok Binaan</option>
+                            <option value="__tanpa_kelompok__">Tanpa Kelompok Binaan</option>
+                            @foreach (\App\Enums\JenisKelompokBinaanEnum::cases() as $enum)
+                                <option value="{{ $enum->value }}">{{ $enum->label() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <input type="text" id="keyword"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Masukkan kata kunci">
+                    </div>
+                </div>
                 <thead>
                     <tr>
                         <th class="text-left" style="width: 30%;">Nama Pelaku Usaha</th>
@@ -101,20 +109,13 @@
     {{-- Implement datatable --}}
     <script>
         // -- Start Load Datatable
-        var filter = {
-            kelompok_binaan: $('#filterKelompokBinaan').val()
-        }
-        loadTable(filter);
-        // Filter change
-        $('#filterKelompokBinaan').on('change', function() {
-            filter.kelompok_binaan = $(this).val();
-            $('#data-table').DataTable().destroy();
-            loadTable(filter);
-        });
+        loadTable();
 
-        function loadTable(filter) {
+        function loadTable() {
             var tbl = $('#data-table').DataTable({
                 processing: true,
+                searching: false,
+                lengthChange: false,
                 serverSide: true,
                 language: {
                     url: "{{ asset('assets/js/datatables/lang/id.json') }}",
@@ -123,12 +124,13 @@
                     url: "{{ route('kelola.pelaku-usaha.index') }}",
                     type: 'GET',
                     data: function(d) {
-                        d.kelompok_binaan = filter.kelompok_binaan;
+                        d.kelompok_binaan = $('#filterKelompokBinaan').val();
+                        d.keyword = $('#keyword').val();
                     }
                 },
                 columns: [{
-                        data: 'user.name',
-                        name: 'user.name',
+                        data: 'name',
+                        name: 'name',
                         searchable: true,
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-left'
@@ -139,8 +141,8 @@
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
                     }, {
-                        data: 'user.email',
-                        name: 'user.email',
+                        data: 'email',
+                        name: 'email',
                         searchable: true,
                         orderable: true,
                         className: 'border border-gray-300 dark:border-zink-50 text-center'
@@ -171,7 +173,21 @@
                     },
                     // etc ...
                 ],
-            })
+            });
+
+            // Filter change
+            $('#filterKelompokBinaan').on('change', function() {
+                console.log('filter changed');
+                tbl.ajax.reload();
+            });
+
+            let keywordTimer;
+            $('#keyword').on('keyup', function() {
+                clearTimeout(keywordTimer);
+                keywordTimer = setTimeout(function() {
+                    tbl.ajax.reload();
+                }, 500);
+            });
         }
         // -- End Load Datatable
     </script>
