@@ -7,7 +7,7 @@
                 class="transition-all duration-200 ease-linear text-slate-500 hover:text-red-500 dark:text-zink-200 dark:hover:text-red-500"><i
                     data-lucide="x" class="size-5"></i></button>
         </div>
-        <form action="{{ route('kelola.pelaku-usaha.store') }}" method="POST">
+        <form action="{{ route('kelola.pelaku-usaha.import') }}" method="POST" enctype="multipart/form-data" class="flex flex-col h-full">
             @csrf
             {{-- Start Modal Body --}}
             <div class="max-h-[calc(theme('height.screen')_-_180px)] p-4 overflow-y-auto">
@@ -17,7 +17,7 @@
                         <div class="font-bold text-xl">!!! PERHATIAN !!!</div>
                         <span class="font-bold">Sebelum mengimpor data pelaku usaha, pastikan untuk mengunduh template Excel yang telah disediakan dan mengisi data sesuai dengan format yang benar. </span>
                         <div class="mt-2">
-                            <a href="{{ route('kelola.pelaku-usaha.download-template') }}" target="_blank"
+                            <a href="{{ route('kelola.pelaku-usaha.download-template-import') }}" target="_blank"
                                 class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
                                 <i class="ri-download-2-line"></i> Download Template Excel
                             </a>

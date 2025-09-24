@@ -84,6 +84,15 @@ class KelolaPelakuUsahaController extends Controller
         return $this->pelakuUsahaService->delete($id);
     }
 
+    /** Download template for import data Pelaku Usaha */
+    public function downloadTemplateImport()
+    {
+        $this->setRule('kelola-pelaku-usaha.create');
+
+        // Call the service to handle the download
+        return $this->pelakuUsahaService->downloadTemplateImport();
+    }
+
     /**
      * Export to excel the specified resource from storage.
      */
@@ -93,8 +102,20 @@ class KelolaPelakuUsahaController extends Controller
 
         // Get all data for export
         $data = $this->pelakuUsahaService->getAll($request->all(), true);
-        
+
         // Call the service to handle the export
         return $this->pelakuUsahaService->export($data);
+    }
+
+    public function import(Request $request)
+    {
+        $this->setRule('kelola-pelaku-usaha.create');
+
+        $dataValidated = $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:20480', // Maksimal 20MB
+        ]);
+
+        // Call the service to handle the import
+        return $this->pelakuUsahaService->import($dataValidated);
     }
 }

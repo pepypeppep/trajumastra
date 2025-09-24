@@ -9,7 +9,9 @@ use App\Models\PelakuUsaha;
 use App\Models\KelompokBinaan;
 use App\Models\MasterJenisUsaha;
 use App\Models\MasterBentukUsaha;
+use App\Imports\PelakuUsahaImport;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Enums\JenisKelompokBinaanEnum;
 use App\Models\MasterRangePenghasilan;
 use Illuminate\Support\Facades\Storage;
@@ -254,6 +256,18 @@ class PelakuUsahaService
         }
     }
 
+    /* Download template for import data Pelaku Usaha */
+    public function downloadTemplateImport()
+    {
+        $filePath = public_path('assets/docs/template/template_import_pelaku_usaha.xlsx');
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath, 'template_import_pelaku_usaha.xlsx');
+        } else {
+            return redirect()->back()->withErrors(['error' => 'File template tidak ditemukan.']);
+        }
+    }
+
     /* Export data */
     public function export($data)
     {
@@ -334,5 +348,20 @@ class PelakuUsahaService
         $writer->save($tempFile);
 
         return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
+    }
+
+    /* Import data */
+    public function import($dataValidated)
+    {
+        // Jalankan import
+        try {
+            // dd($dataValidated);
+            // Excel::import(new PelakuUsahaImport, $dataValidated->file('file')->getRealPath());
+            $file = $dataValidated['file'];
+            Excel::import(new PelakuUsahaImport, $file->getRealPath());
+            return redirect()->back()->with('success', 'Data pelaku usaha berhasil diimpor.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Data pelaku usaha gagal diimpor. Error: ' . $e->getMessage()]);
+        }
     }
 }
