@@ -15,10 +15,11 @@
 
                 <!-- Tombol Aksi -->
                 <div class="flex gap-2">
-                    <a href="{{ route('kelola.pelaku-usaha.export') }}"
+                    <button data-url-get="{{ route('kelola.pelaku-usaha.export') }}"
+                        onclick="exportData(this)"
                         class="btn bg-green-500 text-white hover:bg-green-600">
                         <i class="ri-upload-2-line"></i> Export
-                    </a>
+                    </button>
                     <button type="button" data-modal-target="modal-import"
                         class="btn bg-red-500 text-white hover:bg-red-600">
                         <i class="ri-download-2-line"></i> Import
@@ -45,7 +46,7 @@
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                             data-choices name="filterKelompokBinaan" id="filterKelompokBinaan">
                             <option value="">Filter Kelompok Binaan</option>
-                            <option value="__tanpa_kelompok__">Tanpa Kelompok Binaan</option>
+                            <option value="tanpa_kelompok">Tanpa Kelompok Binaan</option>
                             @foreach (\App\Enums\JenisKelompokBinaanEnum::cases() as $enum)
                                 <option value="{{ $enum->value }}">{{ $enum->label() }}</option>
                             @endforeach
@@ -191,6 +192,38 @@
         }
         // -- End Load Datatable
     </script>
+
+    {{-- START : Action Export Data --}}
+    <script>
+        function exportData(button) {
+            var urlGet = $(button).data('url-get');
+            var kelompokBinaan = $('#filterKelompokBinaan').val();
+            var keyword = $('#keyword').val();
+
+            // Build query string
+            const params = new URLSearchParams();
+            if (kelompokBinaan) params.append('kelompok_binaan', kelompokBinaan);
+            if (keyword) params.append('keyword', keyword);
+
+            // Create Download URL
+            var urlWithParams = urlGet + '?' + params.toString();
+
+            // Open in new tab (triggers download)
+            window.open(urlWithParams, '_blank');
+
+            // Optional: Show success message after a short delay
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Berhasil mengekspor data!',
+                    icon: 'success',
+                    timer: 1000,
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                });
+            }, 1000);
+        }
+    </script>
+    {{-- END : Action Export Data --}}
 
     {{-- Start action delete data --}}
     <script>

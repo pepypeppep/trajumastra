@@ -24,7 +24,7 @@ class KelolaPelakuUsahaController extends Controller
         // Load data for data table (server side - AJAX)
          /* Get Filter By Kelompok Binaan */
         if (request()->ajax()) {
-            return $this->pelakuUsahaService->getAll(request()->all());
+            return $this->pelakuUsahaService->getAll(request()->all(), false);
         }
 
         /* Get all kalurahan */
@@ -82,5 +82,19 @@ class KelolaPelakuUsahaController extends Controller
         $this->setRule('kelola-pelaku-usaha.delete');
         // Delete Process
         return $this->pelakuUsahaService->delete($id);
+    }
+
+    /**
+     * Export to excel the specified resource from storage.
+     */
+    public function export(Request $request)
+    {
+        $this->setRule('kelola-pelaku-usaha.read');
+
+        // Get all data for export
+        $data = $this->pelakuUsahaService->getAll($request->all(), true);
+        
+        // Call the service to handle the export
+        return $this->pelakuUsahaService->export($data);
     }
 }

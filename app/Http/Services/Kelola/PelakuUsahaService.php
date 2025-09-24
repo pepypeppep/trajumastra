@@ -10,14 +10,18 @@ use App\Models\KelompokBinaan;
 use App\Models\MasterJenisUsaha;
 use App\Models\MasterBentukUsaha;
 use Illuminate\Support\Facades\DB;
+use App\Enums\JenisKelompokBinaanEnum;
 use App\Models\MasterRangePenghasilan;
 use Illuminate\Support\Facades\Storage;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yajra\DataTables\Facades\DataTables;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class PelakuUsahaService
 {
     /* Get alls */
-    public function getAll(array $filters = [])
+    public function getAll(array $filters = [], $isExport = false)
     {
         $data = PelakuUsaha::with('kalurahan', 'kelompokBinaan', 'bentukUsaha', 'jenisUsaha')
             ->select('pelaku_usahas.*');
@@ -34,7 +38,7 @@ class PelakuUsahaService
         }
         // Filter by kelompok binaan
         if (isset($filters['kelompok_binaan']) && $filters['kelompok_binaan'] != '') {
-            if ($filters['kelompok_binaan'] == '__tanpa_kelompok__') {
+            if ($filters['kelompok_binaan'] == 'tanpa_kelompok') {
                 $data->whereNull('kelompok_binaan_id');
             } else {
                 $data->whereHas('kelompokBinaan', function ($q) use ($filters) {
@@ -43,6 +47,15 @@ class PelakuUsahaService
             }
         }
 
+        // If export = true, return collection
+        if ($isExport) {
+            return [
+                'filters' => $filters,
+                'data' => $data->orderBy('name', 'asc')->get()
+            ];
+        }
+
+        // If export = false, return datatables
         return DataTables::eloquent($data)
             ->addIndexColumn()
             ->addColumn('kelompok_binaan_data', function ($row) {
@@ -235,5 +248,87 @@ class PelakuUsahaService
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => 'Pelaku usaha gagal dihapus. Error :' . $e->getMessage()]);
         }
+    }
+
+    /* Export data */
+    public function export($data)
+    {
+        // -- Load the Excel file template
+        $templatePath = public_path('assets/docs/template/template_export_pelaku_usaha.xlsx');
+        $spreadsheet = IOFactory::load($templatePath);
+        $sheet = $spreadsheet->getActiveSheet();        
+
+        // -- Set value for header
+        // Set filter info
+        $filters = $data['filters'];
+        $filterKelompokBinaan = '';
+        if (isset($filters['kelompok_binaan']) && $filters['kelompok_binaan'] != '') {
+            if ($filters['kelompok_binaan'] == 'tanpa_kelompok') {
+                $filterKelompokBinaan = 'Tanpa Kelompok Binaan';
+            } else {
+                $filterKelompokBinaan = JenisKelompokBinaanEnum::from($filters['kelompok_binaan'])->label();
+            }
+        }
+        $filterKeyword = isset($filters['keyword']) && $filters['keyword'] != '' ? 'Keyword "' . $filters['keyword'] . '"' : '';
+        $c2Value = 'Filter Bedasarkan ' . ($filterKelompokBinaan != '' ? $filterKelompokBinaan : 'Semua Kelompok Binaan ') . ($filterKeyword ? ' dan ' . $filterKeyword : '');
+        // Append to cell C2
+        $sheet->setCellValueExplicit('C2', (string)($c2Value), DataType::TYPE_STRING);
+        $sheet->getStyle('C2')->getAlignment()->setWrapText(true);
+        
+        // Set periode download info
+        $sheet->setCellValueExplicit('C4',': ' . (string)date('d-m-Y H:i:s'), DataType::TYPE_STRING);
+        
+        // -- Set value for body
+        // -- Set data process
+        $data = $data['data'];
+        $rowStart = 6; // Start row for data
+        $currentRow = $rowStart;
+        // Set data in each rows
+        foreach ($data as $index => $item) {
+            $sheet->setCellValueExplicit('A' . $currentRow, $index + 1, DataType::TYPE_NUMERIC);
+            $sheet->setCellValueExplicit('B' . $currentRow, $item->name ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('C' . $currentRow, $item->email ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('D' . $currentRow, $item->address ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('E' . $currentRow, $item->jenisUsaha->name ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('F' . $currentRow, $item->bentukusaha->name ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('G' . $currentRow, $item->kelompokBinaan ? $item->kelompokBinaan->name . ' (' . JenisKelompokBinaanEnum::from($item->kelompokBinaan->jenis_kelompok)->label() . ')' : '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('H' . $currentRow, $item->npwp ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('I' . $currentRow, $item->siup ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('J' . $currentRow, $item->income_range ?? '-', DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('K' . $currentRow, $item->have_ship == 1 ? 'Ya' : 'Tidak', DataType::TYPE_STRING);
+
+            // Apply border to the row
+            $sheet->getStyle("A{$currentRow}:K{$currentRow}")->applyFromArray([
+                    // Font Size
+                    'font' => [
+                        'size' => 6,
+                    ],
+                    // Alignment
+                    'alignment' => [
+                        'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    ],
+                    // Borders
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000'], // Black
+                        ],
+                    ]
+                ]);
+                $sheet->getRowDimension($currentRow)->setRowHeight(25); // Set row height
+
+            // Increment current row
+            $currentRow++;
+        }
+
+        // -- Save output
+        $writer = new Xlsx($spreadsheet);
+
+        // Simpan ke memory lalu kembalikan response download
+        $filename = 'Export kelompok usaha - ' . date('YmdHis') . '.xlsx';
+        $tempFile = tempnam(sys_get_temp_dir(), $filename);
+        $writer->save($tempFile);
+
+        return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
     }
 }
