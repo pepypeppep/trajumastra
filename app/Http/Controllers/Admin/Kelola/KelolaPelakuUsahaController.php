@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Kelola;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TemplateImportPelakuUsahaExport;
 use App\Http\Services\Kelola\PelakuUsahaService;
 use App\Http\Requests\Kelola\PelakuUsaha\CreateRequest;
 use App\Http\Requests\Kelola\PelakuUsaha\UpdateRequest;
@@ -89,8 +91,22 @@ class KelolaPelakuUsahaController extends Controller
     {
         $this->setRule('kelola-pelaku-usaha.create');
 
-        // Call the service to handle the download
-        return $this->pelakuUsahaService->downloadTemplateImport();
+        // Get reference data for validation lists
+        /* Get all kalurahan */
+        $kalurahans = $this->pelakuUsahaService->getAllKalurahan()->pluck('name')->all();
+        /* Get all jenis usaha */
+        $jenisUsahas = $this->pelakuUsahaService->getAllJenisUsaha()->pluck('name')->all();
+        /* Get all bentuk usaha */
+        $bentukUsahas = $this->pelakuUsahaService->getAllBentukUsaha()->pluck('name')->all();
+        /* Get all kelompok usaha */
+        $kelompokBinaans = $this->pelakuUsahaService->getAllKelompokBinaan()->pluck('name')->all();
+        /* Get all range penghasilan */
+        $rangePenghasilans = $this->pelakuUsahaService->getAllRangePenghasilan()->pluck('name')->all();
+
+        return Excel::download(
+            new TemplateImportPelakuUsahaExport($jenisUsahas, $bentukUsahas, $rangePenghasilans, $kelompokBinaans, $kalurahans),
+            'template_import_pelaku_usaha_with_dropdown_data_validation.xlsx'
+        );
     }
 
     /**

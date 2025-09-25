@@ -355,11 +355,16 @@ class PelakuUsahaService
     {
         // Jalankan import
         try {
-            // dd($dataValidated);
-            // Excel::import(new PelakuUsahaImport, $dataValidated->file('file')->getRealPath());
+
             $file = $dataValidated['file'];
-            Excel::import(new PelakuUsahaImport, $file->getRealPath());
-            return redirect()->back()->with('success', 'Data pelaku usaha berhasil diimpor.');
+
+            $handlerPelakuUsahaImport = new PelakuUsahaImport();
+            Excel::import($handlerPelakuUsahaImport, $file);
+            
+            $failed = $handlerPelakuUsahaImport->getFailedRows();
+
+            return redirect()->back()->with('success', 'Data pelaku usaha berhasil diimpor. Jumlah data yang gagal diimpor: ' . count($failed))
+                ->with('failedRows', $failed);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Data pelaku usaha gagal diimpor. Error: ' . $e->getMessage()]);
         }
