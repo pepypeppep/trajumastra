@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('bentuk_usaha_id')->references('id')->on('master_bentuk_usahas')->onDelete('set null');
             $table->unsignedBigInteger('jenis_usaha_id')->index()->nullable();
             $table->foreign('jenis_usaha_id')->references('id')->on('master_jenis_usahas')->onDelete('set null');
-            $table->sting('name');
+            $table->string('name');
             $table->longText('address')->nullable();
             $table->string('npwp')->nullable();
             $table->string('siup')->nullable();
