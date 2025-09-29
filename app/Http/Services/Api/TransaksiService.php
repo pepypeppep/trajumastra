@@ -160,13 +160,20 @@ class TransaksiService
         DB::beginTransaction();
 
         try {
-            $userId = $request->userId ?? 2;
+            $userId = $user->id;
             $user = User::with('uptd')->find($userId);
             $transactions = $attributes['transactions'];
             $savedTransactions = [];
             // $amount = 0;
             $retribution = 0;
             $total = 0;
+
+            $transaction = Transaksi::create([
+                'user_id' => $user->id,
+                'uptd_id' => $user->uptd_id,
+                'transaction_type' => $attributes['transaction_type'] ?? 'cash',
+                'name' => $user->name,
+            ]);
 
             foreach ($transactions as $transactionData) {
                 $fish = HargaIkan::with('jenis_ikan')->where('jenis_ikan_id', $transactionData['master_jenis_ikan_id'])->first();
@@ -192,13 +199,6 @@ class TransaksiService
                     $fishStock->decrement('stock', $transactionData['quantity']);
                 }
 
-                $transaction = Transaksi::create([
-                    'user_id' => $user->id,
-                    'uptd_id' => $user->uptd_id,
-                    'transaction_type' => $attributes['transaction_type'] ?? 'cash',
-                    'name' => $user->name,
-                ]);
-
                 $data = [
                     'master_jenis_ikans_id' => $transactionData['master_jenis_ikan_id'],
                     'name' => $fish->jenis_ikan->name,
@@ -213,21 +213,26 @@ class TransaksiService
                 if ($fish->jenis_ikan->type == 2) {
                     $priceTotal = $transactionData['quantity'] * $fish->price;
                     $data['total'] = $priceTotal;
+                    $retributionTotal = 0;
                 }
                 // If fish type is TPI set total from Retribution
                 else if ($fish->jenis_ikan->type == 1) {
-                    $data['total'] = $fish->retribution;
+                    $retributionTotal = $fish->retribution;
+                    $data['total'] = $retributionTotal;
+                    $priceTotal = 0;
                 }
 
                 $transaction->details()->create($data);
 
                 $total += $priceTotal;
+                $retribution += $retributionTotal;
 
-                $savedTransactions[] = $transaction;
+                $savedTransactions[] = Transaksi::with('details.jenis_ikan')->find($transaction->id);
             }
 
             $transaction->update([
-                'total' => $total
+                'total' => $total,
+                'retribution' => $retribution
             ]);
 
             DB::commit();
