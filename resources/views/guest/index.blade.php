@@ -17,7 +17,7 @@
 
     @include('guest.transaction')
 
-    @include('guest.newsletter')
+    {{-- @include('guest.newsletter') --}}
 @endsection
 
 @push('scripts')

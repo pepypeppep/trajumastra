@@ -34,7 +34,8 @@
                                 <div class="grow">
                                     <h6 class="mb-1"><a href="#!">{{ $stok->jenis_ikan->name }}</a></h6>
                                     <p class="text-slate-500 dark:text-zink-200"
-                                        style="margin-top: 0;margin-bottom: 0;">Stok: {{ $stok->stok ?? 0 }}</p>
+                                        style="margin-top: 0;margin-bottom: 0;">Retribusi:
+                                        {{ rupiah($stok->jenis_ikan->harga_ikan->retribution) }}</p>
                                 </div>
                             </div>
                         </div>

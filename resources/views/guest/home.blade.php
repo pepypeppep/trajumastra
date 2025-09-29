@@ -10,13 +10,13 @@
                     (Kemitraan Maju Masyarakat Perikanan Sejahtera)</p>
                 <p class="text-lg mb-7 text-slate-500 dark:text-zinc-400" data-aos="fade-right" data-aos-delay="600">
                     Digunakan sebagai master database, penjadwalan penyuluhan,transaksi pada TPI dan BBI untuk
-                    menghitung retribusi yang didapatkan dan menerbitkan surat rekomendasi BBM. </p>
-                <div class="flex items-center gap-2" data-aos="fade-right" data-aos-delay="800">
+                    menghitung retribusi yang didapatkan. </p>
+                {{-- <div class="flex items-center gap-2" data-aos="fade-right" data-aos-delay="800">
                     <a href="{{ route('pendaftaran') }}"
                         class="px-8 py-3 text-white border-0 text-15 btn bg-gradient-to-r from-custom-500 to-purple-500 hover:text-white hover:from-purple-500 hover:to-custom-500">Daftar
                         Sekarang <i data-lucide="user-plus"
                             class="inline-block align-middle size-4 rtl:mr-1 ltr:ml-1"></i></a>
-                </div>
+                </div> --}}
             </div>
             <div class="col-span-12 xl:col-span-7 2xl:col-start-8 2xl:col-span-6">
                 <div class="relative mt-10 xl:mt-0">

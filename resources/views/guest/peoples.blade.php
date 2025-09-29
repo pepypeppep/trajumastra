@@ -53,12 +53,12 @@
             <div class="relative lg:col-start-8 lg:col-span-5">
                 {{-- <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 bg-[url('../images/product/cta-2.png')] rounded-md"
                     data-aos="fade-left" data-aos-delay="400"> --}}
-                <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 rounded-md" data-aos="fade-left"
+                {{-- <div class="absolute right-0 bg-center bg-cover bottom-40 w-52 h-96 rounded-md" data-aos="fade-left"
                     data-aos-delay="400">
                     <div
                         class="absolute inset-0 bg-gradient-to-b from-purple-500/30 to-white dark:to-zinc-900 from-30%">
                     </div>
-                </div>
+                </div> --}}
                 <div class="mr-16">
                     <img src="{{ asset('assets/images/trajumastra_logo.svg') }}" alt=""
                         class="relative inline-block" data-aos="fade-up-right">

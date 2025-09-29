@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers\Admin\Laporan;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Laporan\TransaksiService;
 
 class TransaksiTpiController extends Controller
 {
+    public function __construct(protected TransaksiService $service) {}
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->setRule('laporan-transaksi-tpi.read');
-        return view('admin.laporans.transaksi-tpi.index');
+
+        if (request()->ajax()) {
+            return $this->service->getAll($request);
+        }
+
+        $uptds = $this->service->getUptd();
+        $revenue = $this->service->getRevenue(auth()->user());
+
+        return view('admin.laporans.transaksi-tpi.index', compact('revenue', 'uptds'));
     }
 
     /**
