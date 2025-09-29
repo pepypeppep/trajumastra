@@ -240,14 +240,19 @@ class TransaksiService
 
             DB::commit();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Transaksi berhasil disimpan',
-                'data' => [
-                    'transactions' => $savedTransactions,
-                    'total_items' => count($savedTransactions)
-                ]
-            ], 201);
+            return [
+                'transactions' => $savedTransactions,
+                'total_items' => count($savedTransactions)
+            ];
+
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'Transaksi berhasil disimpan',
+            //     'data' => [
+            //         'transactions' => $savedTransactions,
+            //         'total_items' => count($savedTransactions)
+            //     ]
+            // ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
 

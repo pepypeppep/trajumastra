@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Services\Api\TransaksiService;
 use App\Http\Controllers\Api\BaseApiController;
-use App\Http\Requests\Api\Transaksi\CreateRequest;
+use App\Http\Requests\Api\StokIkan\CreateRequest;
 use App\Http\Services\Api\StokIkanService;
 
 class StokIkanController extends BaseApiController
@@ -312,7 +312,7 @@ class StokIkanController extends BaseApiController
      *     )
      * )
      */
-    public function update(Request $request, string $id)
+    public function update(CreateRequest $request, string $id)
     {
         $data = $this->service->update($request, $id, $request->validated());
 
