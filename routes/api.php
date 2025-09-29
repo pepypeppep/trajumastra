@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::as('api.')
-    // ->middleware('auth:sso-api')
+    ->middleware('auth:sso-api')
     ->group(function () {
         Route::get('/whoami',  [SSOController::class, 'whoami'])->name('whoami');
 

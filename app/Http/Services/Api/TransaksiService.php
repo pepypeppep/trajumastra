@@ -18,11 +18,7 @@ class TransaksiService
     /* Get alls */
     public function getAll($request)
     {
-        if (env('LOGIN_TYPE') == 'sso') {
-            $userId = $request->user()->id;
-        } else {
-            $userId = $request->userId ?? 2;
-        }
+        $userId = $request->user()->id;
         $user = User::with('uptd')->find($userId);
         $dataQuery = Transaksi::with('details');
 
@@ -100,11 +96,7 @@ class TransaksiService
     /* Get products by User */
     public function getProductByUser(Request $request)
     {
-        if (env('LOGIN_TYPE') == 'sso') {
-            $userId = $request->user()->id;
-        } else {
-            $userId = $request->userId ?? 2;
-        }
+        $userId = $request->user()->id;
         $user = User::with('uptd')->find($userId);
         $uptdType = $user->uptd?->type;
 
