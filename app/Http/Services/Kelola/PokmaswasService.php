@@ -4,7 +4,7 @@ namespace App\Http\Services\Kelola;
 
 use App\Models\Kecamatan;
 use App\Models\KelompokBinaan;
-use App\Models\Masterbidang;
+use App\Models\MasterBidang;
 use Illuminate\Support\Facades\DB;
 use App\Enums\JenisKelompokBinaanEnum;
 use LaravelLang\Lang\Plugins\Breeze\Master;
