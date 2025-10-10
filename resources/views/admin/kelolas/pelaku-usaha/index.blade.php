@@ -251,6 +251,21 @@
     </script>
     {{-- End action delete data --}}
 
+    {{-- START: Show swal alert button download disable --}}
+    <script>
+        $(document).on('click', '.btn-disabled-download-attachment', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Gagal!',
+                text: "Tidak ada lampiran untuk diunduh.",
+                icon: 'error',
+                confirmButtonColor: '#6c757d',
+                confirmButtonText: 'Tutup'
+            });
+        });
+    </script>
+    {{-- END: Show swal alert button download disable --}}
+
     {{-- Start Select 2 --}}
     <script>
         // Init global Select2

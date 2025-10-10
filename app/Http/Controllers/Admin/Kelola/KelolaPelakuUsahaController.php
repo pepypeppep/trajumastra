@@ -86,6 +86,13 @@ class KelolaPelakuUsahaController extends Controller
         return $this->pelakuUsahaService->delete($id);
     }
 
+    /** Download attachment */
+    public function downloadAttachment($id)
+    {
+        $this->setRule('kelola-pelaku-usaha.read');
+        return $this->pelakuUsahaService->downloadAttachment($id);
+    }
+
     /** Download template for import data Pelaku Usaha */
     public function downloadTemplateImport()
     {
