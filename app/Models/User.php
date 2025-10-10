@@ -15,6 +15,8 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
+    protected $appends = ['admin_type'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -59,5 +61,16 @@ class User extends Authenticatable
     public function uptd(): BelongsTo
     {
         return $this->belongsTo(Uptd::class);
+    }
+
+    public function getAdminTypeAttribute()
+    {
+        if ($this->uptd->type == 1) {
+            return 'tpi';
+        }
+
+        if ($this->uptd->type == 2) {
+            return 'bbi';
+        }
     }
 }

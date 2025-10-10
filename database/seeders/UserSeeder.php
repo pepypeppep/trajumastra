@@ -109,38 +109,38 @@ class UserSeeder extends Seeder
         // Create Developer User Account
         $developerAccount = User::factory()->create([
             'name' => 'Trajumastra',
-            'username' => 'admin',
-            'email' => 'admin@admin.net'
+            'username' => 'user01',
+            'email' => 'user01@example.com'
         ]);
         $developerAccount->assignRole($developerRole);
 
         $petugasUPTDAccount = User::factory()->create([
             'uptd_id' => 1,
             'name' => 'Petugas UPTD',
-            'username' => 'admin_uptd',
-            'email' => 'uptd@uptd.net'
+            'username' => 'user02',
+            'email' => 'user02@example.com'
         ]);
         $petugasUPTDAccount->assignRole($petugasUPTDRole);
 
         $petugasTPIAccount = User::factory()->create([
             'uptd_id' => 7,
             'name' => 'Petugas TPI',
-            'username' => 'admin_tpi',
-            'email' => 'tpi@tpi.net'
+            'username' => 'user03',
+            'email' => 'user03@example.com'
         ]);
         $petugasTPIAccount->assignRole($petugasTPIRole);
 
         $penyuluhAccount = User::factory()->create([
             'name' => 'Penyuluh',
-            'username' => 'penyuluh',
-            'email' => 'penyuluh@penyuluh.net'
+            'username' => 'user04',
+            'email' => 'user04@example.com'
         ]);
         $penyuluhAccount->assignRole($penyuluhRole);
 
         $pelakuUsahaAccount = User::factory()->create([
             'name' => 'Pengusaha',
-            'username' => 'pengusaha',
-            'email' => 'pengusaha@pengusaha.net'
+            'username' => 'user05',
+            'email' => 'user05@example.com'
         ]);
         $pelakuUsahaAccount->assignRole($pelakuUsahaRole);
     }
