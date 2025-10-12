@@ -65,6 +65,10 @@ class User extends Authenticatable
 
     public function getAdminTypeAttribute()
     {
+        if (!$this->uptd) {
+            return 'N/A UPTD not set';
+        }
+
         if ($this->uptd->type == 1) {
             return 'tpi';
         }
