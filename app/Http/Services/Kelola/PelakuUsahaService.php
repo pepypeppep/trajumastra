@@ -172,7 +172,7 @@ class PelakuUsahaService
             // DB Transaction
             DB::beginTransaction();
             // Check attachment
-            if ($datas['attachment'] != null) {
+            if (isset($datas['attachment']) && $datas['attachment'] != null) {
                 $attachmentName = strtotime(now()) . '.' . $datas['attachment']->getClientOriginalExtension();
                 $attachmentPath = Storage::disk('local')->put('pelaku_usaha/' . $attachmentName, file_get_contents($datas['attachment']));
                 $attachment = 'pelaku_usaha/' . $attachmentName;
@@ -214,7 +214,7 @@ class PelakuUsahaService
             // Get data
             $data = PelakuUsaha::findOrFail($id);
             // Check attachment
-            if ($attributes['attachment'] != null) {
+            if (isset($datas['attachment']) && $attributes['attachment'] != null) {
                 $attachmentName = strtotime(now()) . '.' . $attributes['attachment']->getClientOriginalExtension();
                 $attachmentPath = Storage::disk('local')->put('pelaku_usaha/' . $attachmentName, file_get_contents($attributes['attachment']));
                 $attachment = 'pelaku_usaha/' . $attachmentName;
