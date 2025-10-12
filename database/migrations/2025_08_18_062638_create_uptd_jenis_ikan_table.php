@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('uptd_jenis_ikan', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('uptd_id');
-            $table->unsignedBigInteger('jenis_ikan_id');
+            // $table->unsignedBigInteger('uptd_id');
+            // $table->unsignedBigInteger('jenis_ikan_id');
+            $table->foreignId('uptd_id')
+                ->constrained('uptds')
+                ->onDelete('cascade'); // Jika data UPTD dihapus, maka data di tabel pivot ini akan terhapus juga
+            $table->foreignId('jenis_ikan_id')
+                ->constrained('master_jenis_ikans')
+                ->onDelete('restrict'); // Menolak penghapusan data Master Jenis Ikan jika masih ada relasi data master jenis ikan di tabel ini
             $table->timestamps();
         });
     }

@@ -74,7 +74,7 @@ class TransaksiService
 
                 // Btn View
                 if (auth()->user()->can('laporan-transaksi-bbi.update')) {
-                    $btnView = '<button href="javascript:void(0);" title="Ubah data transaksi" id="btn-modal-show"
+                    $btnView = '<button type="button" title="Ubah data transaksi" id="btn-modal-show"
                         data-id="' . $row->id . '"  data-url-action="' . route('laporan.transaksi-bbi.update', $row->id) . '" data-url-get="' . route('laporan.transaksi-bbi.show', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-sky-500 border-sky-500 hover:text-white hover:bg-sky-600 hover:border-sky-600 focus:text-white focus:bg-sky-600 focus:border-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:border-sky-600 active:ring active:ring-sky-100 dark:ring-sky-400/20">
                         <i class="ri-eye-line"></i>

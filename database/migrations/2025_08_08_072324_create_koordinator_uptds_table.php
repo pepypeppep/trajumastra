@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('koordinator_uptds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->unsignedBigInteger('uptd_id')->index()->nullable();
-            $table->foreign('uptd_id')->references('id')->on('uptds')->onDelete('cascade');
+            $table->foreign('uptd_id')->references('id')->on('uptds')->onDelete('restrict');
             $table->timestamps();
         });
     }

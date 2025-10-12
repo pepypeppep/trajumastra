@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +11,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaksi extends Model
 {
     protected $guarded = ['id'];
+
+    protected static function booted()
+    {
+        static::deleting(function ($transaksi) {
+            if ($transaksi->details()->exists()) {
+                throw new Exception("Penghapusan data Transaksi tidak bisa dilakukan karena data telah digunakan pada data Detail Transaksi.");
+            }
+        });
+    }
 
     /**
      * Get the staff that owns the Transaksi

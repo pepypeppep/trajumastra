@@ -40,6 +40,20 @@
     @endif
 </script>
 
+{{-- Alert Action Disabled Button Delete --}}
+<script>
+    // Show error by type
+    $(document).on('click', '#btn-disabled-delete', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Tidak dapat menghapus data',
+            text: "Data telah digunakan pada data lain!",
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        })
+    });
+</script>
+
 {{-- Alert Action Confirmation --}}
 <script>
     function confirmDelete(button) {

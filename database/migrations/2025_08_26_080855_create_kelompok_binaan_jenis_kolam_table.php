@@ -14,8 +14,17 @@ return new class extends Migration
         /* Khusus untuk kelompok binaan POKDAKAN. Karena HANYA POKDAKAN yang memiliki data Kolam */
         Schema::create('kelompok_binaan_jenis_kolam', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kelompok_binaan_id')->comment('ID Kelompok Binaan dengan jenis_kelompok = pokdakan');
-            $table->unsignedBigInteger('jenis_aset_id');
+            // $table->unsignedBigInteger('kelompok_binaan_id')->comment('ID Kelompok Binaan dengan jenis_kelompok = pokdakan');
+            // $table->unsignedBigInteger('jenis_aset_id');
+
+            $table->foreignId('kelompok_binaan_id')
+                ->comment('ID Kelompok Binaan dengan jenis_kelompok = pokdakan')
+                ->constrained('kelompok_binaans')
+                ->onDelete('cascade'); // Jika data kelompok binaan dihapus, maka data di tabel pivot ini akan terhapus juga
+            $table->foreignId('jenis_aset_id')
+                ->constrained('master_jenis_asets')
+                ->onDelete('restrict'); // Menolak penghapusan data Master Jenis Aset jika masih ada relasi data master jenis aset di tabel ini
+
             $table->timestamps();
         });
     }
