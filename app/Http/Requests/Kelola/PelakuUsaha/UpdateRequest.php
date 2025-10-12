@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
             'kelompok_binaan_id' => 'exists:kelompok_binaans,id',
             'bentuk_usaha_id' => 'required|exists:master_bentuk_usahas,id',
             'jenis_usaha_id' => 'required|exists:master_jenis_usahas,id',
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
             'name' => 'required|string',
             'email' => 'required|string',
             'address' => 'required|string',
