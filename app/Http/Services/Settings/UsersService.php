@@ -28,7 +28,7 @@ class UsersService
                 return $row->getRoleNames()->isNotEmpty() ? $row->getRoleNames()->implode(', ') : '-';
             })
             ->addColumn('status', function ($row) {
-                if ($row->status == 1) {
+                if ($row->is_active == 1) {
                     return '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">Aktif</span>';
                 }
                 return '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">Tidak Aktif</span>';
