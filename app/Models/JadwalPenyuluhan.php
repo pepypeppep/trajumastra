@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use App\Models\Materi;
 use App\Models\MasterKategori;
 use App\Models\MasterJenisPenyuluhan;
@@ -12,6 +13,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class JadwalPenyuluhan extends Model
 {
     protected $guarded = ['id'];
+
+    protected static function booted()
+    {
+        // static::deleting(function ($jadwalPenyuluhan) {
+        //     if ($jadwalPenyuluhan->penyuluhs()->exists()) {
+        //         throw new Exception("Penghapusan data Jadwal Penyuluhan tidak bisa dilakukan karena data telah digunakan pada data Penyuluh.");
+        //     }
+        // });
+    }
 
     /* ============================= RELATIONSHIPS */
 

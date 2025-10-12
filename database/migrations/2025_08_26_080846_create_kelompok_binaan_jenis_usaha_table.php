@@ -13,8 +13,17 @@ return new class extends Migration
     {
         Schema::create('kelompok_binaan_jenis_usaha', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kelompok_binaan_id');
-            $table->unsignedBigInteger('jenis_usaha_id');
+            // $table->unsignedBigInteger('kelompok_binaan_id');
+            // $table->unsignedBigInteger('jenis_usaha_id');
+
+            $table->foreignId('kelompok_binaan_id')
+                ->constrained('kelompok_binaans')
+                ->onDelete('cascade'); // Jika data kelompok binaan dihapus, maka data di tabel pivot ini akan terhapus juga
+
+            $table->foreignId('jenis_usaha_id')
+                ->constrained('master_jenis_usahas')
+                ->onDelete('restrict'); // Menolak penghapusan data Master Jenis Usaha jika masih ada relasi data master jenis usaha di tabel ini
+
             $table->timestamps();
         });
     }

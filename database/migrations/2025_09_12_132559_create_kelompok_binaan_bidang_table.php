@@ -14,8 +14,18 @@ return new class extends Migration
         /* Khusus untuk kelompok binaan POKMASWAS. Karena HANYA POKMASWAS yang memiliki data Bidang */
         Schema::create('kelompok_binaan_bidang', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kelompok_binaan_id')->comment('ID Kelompok Binaan dengan jenis_kelompok = pokmaswas');
-            $table->unsignedBigInteger('master_bidang_id');
+            // $table->unsignedBigInteger('kelompok_binaan_id')->comment('ID Kelompok Binaan dengan jenis_kelompok = pokmaswas');
+            // $table->unsignedBigInteger('master_bidang_id');
+
+            $table->foreignId('kelompok_binaan_id')
+                ->comment('ID Kelompok Binaan dengan jenis_kelompok = pokmaswas')
+                ->constrained('kelompok_binaans')
+                ->onDelete('cascade'); // Jika data kelompok binaan dihapus, maka data di tabel pivot ini akan terhapus juga
+
+            $table->foreignId('master_bidang_id')
+                ->constrained('master_bidangs')
+                ->onDelete('restrict'); // Menolak penghapusan data Master Bidang jika masih ada relasi data master bidang di tabel ini
+
             $table->timestamps();
         });
     }

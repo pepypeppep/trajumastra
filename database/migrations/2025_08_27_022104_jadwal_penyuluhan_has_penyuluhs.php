@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('jadwal_penyuluhan_id')->index()->nullable();
             $table->foreign('jadwal_penyuluhan_id')->references('id')->on('jadwal_penyuluhans')->onDelete('cascade');
             $table->unsignedBigInteger('penyuluh_id')->index()->nullable();
-            $table->foreign('penyuluh_id')->references('id')->on('penyuluhs')->onDelete('cascade');
+            $table->foreign('penyuluh_id')->references('id')->on('penyuluhs')->onDelete('restrict');
             $table->timestamps();
             $table->softDeletes();
         });
