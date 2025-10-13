@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use App\Models\Kalurahan;
 use App\Models\PelakuUsaha;
 use App\Models\MasterBentukUsaha;
@@ -13,6 +14,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class KelompokUsaha extends Model
 {
     protected $guarded = ['id'];
+
+    protected static function booted()
+    {
+        static::deleting(function ($kelompokUsaha) {
+            if ($kelompokUsaha->pelakuUsaha()->exists()) {
+                throw new Exception("Penghapusan data Kelompok Usaha tidak bisa dilakukan karena data telah digunakan pada data Pelaku Usaha.");
+            }
+        });
+    }
 
     /* ============================= GENERAL RELATIONSHIPS */
 

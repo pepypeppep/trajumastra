@@ -120,7 +120,7 @@ class SSOController extends Controller
      */
     public function whoami(Request $request)
     {
-        $user = User::where('id', $request->user()->id)->first();
+        $user = User::with('uptd')->where('id', $request->user()->id)->first();
         return $user;
     }
 }

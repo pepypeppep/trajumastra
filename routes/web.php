@@ -117,6 +117,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('/pelaku-usaha/export', [KelolaPelakuUsahaController::class, 'export'])->name('pelaku-usaha.export');
         // Route::get('/pelaku-usaha/download-template-import', [KelolaPelakuUsahaController::class, 'downloadTemplateImport'])->name('pelaku-usaha.download-template-import');
         Route::get('/pelaku-usaha/download-template-importssss', [KelolaPelakuUsahaController::class, 'downloadTemplateImport'])->name('pelaku-usaha.download-template-import');
+        Route::get('/pelaku-usaha/download-attachment/{id}', [KelolaPelakuUsahaController::class, 'downloadAttachment'])->name('pelaku-usaha.download-attachment');
         Route::resource('pelaku-usaha', KelolaPelakuUsahaController::class)->names('pelaku-usaha');
         /* Kelola Jadwal Pendampingan */
         Route::get('/jadwal-pendampingan/attachment/{id}', [KelolaJadwalPendampinganController::class, 'attachmentDownload'])->name('jadwal-pendampingan.attachment-download');

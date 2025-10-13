@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,15 @@ class Uptd extends Model
 
     const TPI = 1;
     const UPTD = 2;
+
+    protected static function booted()
+    {
+        static::deleting(function ($uptd) {
+            if ($uptd->stok_ikans()->exists()) {
+                throw new Exception("Penghapusan data UPTD tidak bisa dilakukan karena data telah digunakan pada data Stok Ikan.");
+            }
+        });
+    }
 
     /**
      * Get the user that owns the Uptd
@@ -53,4 +63,10 @@ class Uptd extends Model
     {
         return $this->belongsToMany(MasterJenisIkan::class, 'uptd_jenis_ikan', 'uptd_id', 'jenis_ikan_id');
     }
+
+    /* Koordinator uptds Relationship */
+    // public function koordinator_uptds(): HasMany
+    // {
+    //     return $this->hasMany(KoordinatorUptd::class);
+    // }
 }

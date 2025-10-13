@@ -19,11 +19,7 @@ class StokIkanService
     /* Get alls */
     public function getAll($request)
     {
-        if (env('LOGIN_TYPE') == 'sso') {
-            $userId = $request->user()->id;
-        } else {
-            $userId = 2;
-        }
+        $userId = $request->user()->id;
         $user = User::with('uptd')->find($userId);
         $uptdType = $user->uptd?->type;
 
@@ -54,12 +50,7 @@ class StokIkanService
     /* Get data by ID */
     public function getById($request, $id)
     {
-        if (env('LOGIN_TYPE') == 'sso') {
-            $userId = $request->user()->id;
-        } else {
-            $userId = 2;
-        }
-
+        $userId = $request->user()->id;
         $user = User::with('uptd')->find($userId);
 
         $data = StokIkan::with('jenis_ikan')->where('uptd_id', $user->uptd_id)->find($id);
@@ -74,12 +65,7 @@ class StokIkanService
     /* Update data*/
     public function update($request, $id, array $attributes)
     {
-        if (env('LOGIN_TYPE') == 'sso') {
-            $userId = $request->user()->id;
-        } else {
-            $userId = 2;
-        }
-
+        $userId = $request->user()->id;
         $user = User::with('uptd')->find($userId);
 
         $data = StokIkan::with('jenis_ikan')->where('uptd_id', $user->uptd_id)->find($id);

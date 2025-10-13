@@ -185,7 +185,7 @@
                     </div>
                     <input type="file" id="attachment" name="attachment"
                         class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                        accept="application/pdf,image/jpeg,image/png,image/jpg" required>
+                        accept="application/pdf,image/jpeg,image/png,image/jpg">
                 </div>
                 {{-- End: Attachment --}}
             </div>
@@ -221,7 +221,7 @@
                 success: function(response) {
                     console.log(response);
                     // Modal title
-                    $('#modal-title').text('Ubah Data Pelaku Usaha - ' + response.user.name);
+                    $('#modal-title').text('Ubah Data Pelaku Usaha - ' + response.name);
                     // Set form action
                     $('#form-edit').attr('action', urlFormAction);
                     // Set value to form inputs
@@ -239,6 +239,7 @@
                     $('#form-edit').find('#kelompok_binaan_id').val(response.kelompok_binaan_id)
                         .trigger('change');
                     $('#form-edit').find('#income_range').val(response.income_range).trigger('change');
+                    $('#form-edit').find('#have_ship').val(response.have_ship).trigger('change');
 
                     // ==== Jenis Ikan (multiple select2 with tags) ====
                     let $jenisIkanSelect = $('#form-edit').find('select[name="jenis_ikan_id[]"]');

@@ -95,7 +95,22 @@ class PelakuUsahaService
                         </button>';
                 }
 
-                return $btnEdit . ' ' . $btnDelete;
+                // Btn download attachment
+                if ($row->attachment && Storage::disk('local')->exists($row->attachment)) {
+                    $btnDownload = '<a title="Download lampiran"
+                        href="' . route('kelola.pelaku-usaha.download-attachment', $row->id) . '" target="_blank"
+                        class="btn-download-attachment items-center px-3 py-2 text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">
+                        <i class="ri-file-text-line"></i>
+                        </a>';
+                }else {
+                    $btnDownload = '<a title="Tidak dapat mendownload lampiran, dikarenakan lampiran tidak tersedia"
+                        href="javascript:void(0);"
+                        class="btn-disabled-download-attachment items-center px-3 py-2 text-white btn bg-gray-500 border-gray-500 hover:text-white hover:bg-gray-600 hover:border-gray-600 focus:text-white focus:bg-gray-600 focus:border-gray-600 focus:ring focus:ring-gray-100 active:text-white active:bg-gray-600 active:border-gray-600 active:ring active:ring-gray-100 dark:ring-gray-400/20">
+                        <i class="ri-file-text-line"></i>
+                        </a>';
+                }
+
+                return $btnDownload . ' ' . $btnEdit . ' ' . $btnDelete;
             })
             ->escapeColumns([])
             ->make(true);
@@ -157,7 +172,7 @@ class PelakuUsahaService
             // DB Transaction
             DB::beginTransaction();
             // Check attachment
-            if ($datas['attachment'] != null) {
+            if (isset($datas['attachment']) && $datas['attachment'] != null) {
                 $attachmentName = strtotime(now()) . '.' . $datas['attachment']->getClientOriginalExtension();
                 $attachmentPath = Storage::disk('local')->put('pelaku_usaha/' . $attachmentName, file_get_contents($datas['attachment']));
                 $attachment = 'pelaku_usaha/' . $attachmentName;
@@ -199,7 +214,7 @@ class PelakuUsahaService
             // Get data
             $data = PelakuUsaha::findOrFail($id);
             // Check attachment
-            if ($attributes['attachment'] != null) {
+            if (isset($datas['attachment']) && $attributes['attachment'] != null) {
                 $attachmentName = strtotime(now()) . '.' . $attributes['attachment']->getClientOriginalExtension();
                 $attachmentPath = Storage::disk('local')->put('pelaku_usaha/' . $attachmentName, file_get_contents($attributes['attachment']));
                 $attachment = 'pelaku_usaha/' . $attachmentName;
@@ -253,6 +268,17 @@ class PelakuUsahaService
             // Return error response
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => 'Pelaku usaha gagal dihapus. Error :' . $e->getMessage()]);
+        }
+    }
+
+    /* Download attachment */
+    public function downloadAttachment($id)
+    {
+        $data = PelakuUsaha::findOrFail($id);
+        if ($data->attachment && Storage::disk('local')->exists($data->attachment)) {
+            return Storage::disk('local')->download($data->attachment, 'Lampiran Pelaku Usaha - ' . $data->email . '.' . pathinfo($data->attachment, PATHINFO_EXTENSION));
+        } else {
+            return redirect()->back()->withErrors(['error' => 'File lampiran tidak ditemukan.']);
         }
     }
 
