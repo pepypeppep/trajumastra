@@ -35,7 +35,8 @@ class StokIkanService
             $perPage = $request->get('per_page', 10);
 
             $results = $data->join('master_jenis_ikans', 'stok_ikans.jenis_ikan_id', '=', 'master_jenis_ikans.id')
-                ->orderBy('master_jenis_ikans.name', 'asc')
+                // ->orderBy('master_jenis_ikans.name', 'asc')
+                ->orderBy('stok_ikans.created_at', 'desc')
                 ->select('stok_ikans.*')
                 ->paginate($perPage);
 

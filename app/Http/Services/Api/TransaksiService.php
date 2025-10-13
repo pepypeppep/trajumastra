@@ -119,7 +119,7 @@ class TransaksiService
             $data->where('transaction_type', $request->transaction_type);
         }
 
-        $products = $data->get();
+        $products = $data->orderBy('created_at', 'desc')->get();
 
         return $products;
     }
