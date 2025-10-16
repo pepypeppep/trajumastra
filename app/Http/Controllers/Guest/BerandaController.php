@@ -84,4 +84,10 @@ class BerandaController extends Controller
     {
         //
     }
+
+    /* Privacy Policy */
+    public function privacyPolicy()
+    {
+        return view('guest.privacy-policy');
+    }
 }
