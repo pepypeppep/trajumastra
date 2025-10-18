@@ -27,8 +27,10 @@ class TransaksiService
         }
 
         if ($request->has('keyword')) {
-            $dataQuery->where('name', 'like', '%' . $request->keyword . '%')
-                ->orWhere('invoice_id', 'like', '%' . $request->keyword . '%');
+            $dataQuery->when($request->keyword, function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('invoice_id', 'like', '%' . $request->keyword . '%');
+            });
         }
 
         $perPage = $request->get('per_page', 10);
