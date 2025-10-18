@@ -24,6 +24,7 @@ class UpdateRequest extends FormRequest
         return [
             'kalurahan_id' => 'required|exists:kalurahans,id',
             'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
             'dusun' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'latitude' => 'required|string|max:255',

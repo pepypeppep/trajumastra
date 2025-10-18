@@ -85,6 +85,7 @@ class UptdService
             $data = Uptd::create([
                 'kalurahan_id' => $attributes['kalurahan_id'],
                 'name' => $attributes['name'],
+                'phone' => $attributes['phone'],
                 'dusun' => $attributes['dusun'],
                 'address' => $attributes['address'],
                 // 'jenis_ikan_id' => $attributes['jenis_ikan_id'],
@@ -127,6 +128,7 @@ class UptdService
             $data->update([
                 'kalurahan_id' => $attributes['kalurahan_id'] ?? $data->kalurahan_id,
                 'name' => $attributes['name'] ?? $data->name,
+                'phone' => $attributes['phone'] ?? $data->phone,
                 'dusun' => $attributes['dusun'] ?? $data->dusun,
                 'address' => $attributes['address'] ?? $data->address,
                 // 'jenis_ikan_id' => $attributes['jenis_ikan_id'] ?? $data->jenis_ikan_id,
