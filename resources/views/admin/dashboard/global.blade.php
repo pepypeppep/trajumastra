@@ -258,7 +258,7 @@
                     class="flex items-center justify-center mx-auto text-yellow-500 bg-yellow-100 rounded-full size-14 dark:bg-yellow-500/20">
                     <i data-lucide="wallet-2"></i>
                 </div>
-                <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ 0 }}"
+                <h5 class="mt-4 mb-2"><span class="counter-value" data-target="{{ $dataCount['total_poklahsar'] }}"
                         id="total_poklahsar">0</span></h5>
                 <p class="text-slate-500 dark:text-zink-200">Poklahsar</p>
             </div>

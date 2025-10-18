@@ -29,6 +29,8 @@ class DashboardService
         $total_rekomendasi_bbm = SuratRekomendasiBbm::count();
         $total_uptd = Uptd::where('type', Uptd::UPTD)->count();
         $total_tpi = Uptd::where('type', Uptd::TPI)->count();
+        $total_poklahsar = KelompokBinaan::with('kecamatan.kabupaten', 'jenis_usahas')
+            ->where('jenis_kelompok', JenisKelompokBinaanEnum::POKLASHAR->value)->count();
 
         return [
             'total_pelaku_usaha' => $total_pelaku_usaha,
@@ -39,6 +41,7 @@ class DashboardService
             'total_rekomendasi_bbm' => $total_rekomendasi_bbm,
             'total_uptd' => $total_uptd,
             'total_tpi' => $total_tpi,
+            'total_poklahsar' => $total_poklahsar,
             'total_koordinator' => 0
         ];
     }
