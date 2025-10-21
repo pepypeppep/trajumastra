@@ -27,7 +27,7 @@ class TransaksiService
         }
 
         if ($request->has('keyword')) {
-            $dataQuery->when($request->keyword, function ($query) use ($request) {
+            $dataQuery->where(function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->keyword . '%')
                     ->orWhere('invoice_id', 'like', '%' . $request->keyword . '%');
             });
