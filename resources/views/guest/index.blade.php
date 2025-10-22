@@ -9,6 +9,8 @@
 
     @include('guest.news')
 
+    @include('guest.jadwal-pendampingan')
+
     @include('guest.peoples')
 
     @include('guest.bbi')

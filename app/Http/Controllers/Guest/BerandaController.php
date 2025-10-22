@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Http\Services\LandingService;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Guest\CreateRequest;
 
 class BerandaController extends Controller
@@ -18,6 +19,7 @@ class BerandaController extends Controller
     public function index(Request $request)
     {
         $news = $this->service->getNews();
+        $jadwalPenyuluhans = $this->service->getJadwalPenyuluhan();
         $bbis = $this->service->getBbi();
         $tpis = $this->service->getTpi();
         $transaksis = $this->service->getTransaction();
@@ -27,7 +29,7 @@ class BerandaController extends Controller
             return $pelakuUsahaChart;
         }
 
-        return view('guest.index', compact('news', 'bbis', 'tpis', 'transaksis'));
+        return view('guest.index', compact('news', 'bbis', 'tpis', 'transaksis', 'jadwalPenyuluhans'));
     }
 
     /**
@@ -53,13 +55,7 @@ class BerandaController extends Controller
         return $this->service->store($request->validated());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -90,4 +86,21 @@ class BerandaController extends Controller
     {
         return view('guest.privacy-policy');
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showJadwalPenyuluhanById(string $id)
+    {
+        $jadwal = $this->service->getJadwalPenyuluhanById($id);
+        
+        return $jadwal;
+    }
+
+    /* Download Jadwal Penyuluhan */
+    public function downloadJadwalPenyuluhanAttachment($id)
+    {
+        return $this->service->downloadJadwalPenyuluhanAttachment($id);
+    }
+
 }

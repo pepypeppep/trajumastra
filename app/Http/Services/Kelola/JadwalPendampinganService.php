@@ -11,7 +11,7 @@ use App\Models\JadwalPenyuluhan;
 use Illuminate\Support\Facades\DB;
 use App\Models\MasterJenisPenyuluhan;
 use Illuminate\Support\Facades\Storage;
-use App\Enums\JenisPenyuluhanStatusEnum;
+use App\Enums\JadwalPenyuluhanStatusEnum;
 use Yajra\DataTables\Facades\DataTables;
 
 class JadwalPendampinganService
@@ -48,12 +48,12 @@ class JadwalPendampinganService
                 return $content;
             })
             ->addColumn('status', function ($row) {
-                if($row->status == JenisPenyuluhanStatusEnum::VERIFIED->value){
-                    return '<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-500 rounded-full dark:bg-green-700 dark:text-green-500">'. JenisPenyuluhanStatusEnum::VERIFIED->label() .'</span>';
-                } elseif($row->status == JenisPenyuluhanStatusEnum::REJECTED->value){
-                    return '<span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-500 rounded-full dark:bg-red-700 dark:text-red-500">'. JenisPenyuluhanStatusEnum::REJECTED->label() .'</span>';
-                } elseif($row->status == JenisPenyuluhanStatusEnum::NEW->value) {
-                    return '<span class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-500 rounded-full dark:bg-yellow-700 dark:text-yellow-500">'. JenisPenyuluhanStatusEnum::NEW->label() .'</span>';
+                if($row->status == JadwalPenyuluhanStatusEnum::VERIFIED->value){
+                    return '<span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-500 rounded-full dark:bg-green-700 dark:text-green-500">'. JadwalPenyuluhanStatusEnum::VERIFIED->label() .'</span>';
+                } elseif($row->status == JadwalPenyuluhanStatusEnum::REJECTED->value){
+                    return '<span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-500 rounded-full dark:bg-red-700 dark:text-red-500">'. JadwalPenyuluhanStatusEnum::REJECTED->label() .'</span>';
+                } elseif($row->status == JadwalPenyuluhanStatusEnum::NEW->value) {
+                    return '<span class="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-500 rounded-full dark:bg-yellow-700 dark:text-yellow-500">'. JadwalPenyuluhanStatusEnum::NEW->label() .'</span>';
                 } else {
                     return '-';
                 }

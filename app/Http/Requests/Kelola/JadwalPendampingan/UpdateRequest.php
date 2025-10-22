@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Kelola\JadwalPendampingan;
 
 use Illuminate\Validation\Rules\Enum;
-use App\Enums\JenisPenyuluhanStatusEnum;
+use App\Enums\JadwalPenyuluhanStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -33,7 +33,7 @@ class UpdateRequest extends FormRequest
             'penyuluh_id.*' => 'exists:penyuluhs,id',
             'theme' => 'required|string',
             'quota' => 'required|numeric',
-            'status' => ['required', new Enum(JenisPenyuluhanStatusEnum::class)],
+            'status' => ['required', new Enum(JadwalPenyuluhanStatusEnum::class)],
             'attachment' => 'nullable|file|max:10240', // Maksimal 10MB
         ];
     }

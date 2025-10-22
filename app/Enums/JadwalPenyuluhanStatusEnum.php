@@ -1,7 +1,7 @@
 <?php
 namespace App\Enums;
 
-enum JenisPenyuluhanStatusEnum: string
+enum JadwalPenyuluhanStatusEnum: string
 {
     case NEW = 'new';
     case VERIFIED = 'verified';

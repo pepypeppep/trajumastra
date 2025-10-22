@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\JenisPenyuluhanStatusEnum;
+use App\Enums\JadwalPenyuluhanStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,10 +27,10 @@ return new class extends Migration
             $table->longText('theme')->nullable();
             $table->string('attachment')->nullable();
             $table->enum('status', [
-                    JenisPenyuluhanStatusEnum::NEW->value,
-                    JenisPenyuluhanStatusEnum::VERIFIED->value,
-                    JenisPenyuluhanStatusEnum::REJECTED->value,
-                ])->nullable()->default(JenisPenyuluhanStatusEnum::NEW->value);
+                    JadwalPenyuluhanStatusEnum::NEW->value,
+                    JadwalPenyuluhanStatusEnum::VERIFIED->value,
+                    JadwalPenyuluhanStatusEnum::REJECTED->value,
+                ])->nullable()->default(JadwalPenyuluhanStatusEnum::NEW->value);
             $table->string('user_request')->nullable();
             $table->longText('result')->nullable(); 
             $table->timestamps();

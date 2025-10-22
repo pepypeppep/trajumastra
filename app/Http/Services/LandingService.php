@@ -5,13 +5,16 @@ namespace App\Http\Services;
 use App\Models\Uptd;
 use App\Models\Kalurahan;
 use App\Models\Transaksi;
+use App\Models\PelakuUsaha;
 use App\Models\KelompokBinaan;
+use App\Models\JadwalPenyuluhan;
 use App\Models\MasterJenisUsaha;
 use App\Models\MasterBentukUsaha;
-use App\Models\MasterRangePenghasilan;
-use App\Models\PelakuUsaha;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use App\Models\MasterRangePenghasilan;
+use Illuminate\Support\Facades\Storage;
+use App\Enums\JadwalPenyuluhanStatusEnum;
 
 class LandingService
 {
@@ -132,6 +135,64 @@ class LandingService
             // Return error response
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors(['error' => 'Data gagal ditambahkan. Error :' . $e->getMessage()]);
+        }
+    }
+
+    /* GET : All Jadwal Penyuluhan */
+    public function getJadwalPenyuluhan()
+    {
+        $data = JadwalPenyuluhan::with('jenisPenyuluhan', 'kategori', 'penyuluhs')
+            ->where('status', JadwalPenyuluhanStatusEnum::VERIFIED->value)
+            ->orderBy('start', 'desc')
+            ->get();
+        
+        $data->map(function ($item) {
+            // Limit Name to 25 characters
+            if (strlen($item->name) > 25) {
+                $item->name = substr($item->name, 0, 25) . '...';
+            } else {
+                $item->name = $item->name;
+            }
+
+            // Limit Description to 50 characters
+            if (strlen($item->description) > 50) {
+                $item->description = substr($item->description, 0, 50) . '...';
+            } else {
+                $item->description = $item->description;
+            }
+            return $item;
+        });
+
+        return $data;
+    }
+
+    /* GET : Data jadwal penyuluhan by ID */
+    public function getJadwalPenyuluhanById($id)
+    {
+        $jadwal = JadwalPenyuluhan::with('jenisPenyuluhan', 'kategori', 'penyuluhs')
+            ->where('id', $id)
+            ->first();
+
+        $jadwal->penyuluhs->pluck('user.name');
+        // validation attachment file is exists
+        if ($jadwal->attachment && Storage::disk('local')->exists($jadwal->attachment)) {
+            $jadwal->attachment_can_download = true;
+        } else {
+            $jadwal->attachment_can_download = false;
+        }
+
+        return $jadwal;
+    }
+
+    /* Download Jadwal Penyuluhan Attachment */
+    public function downloadJadwalPenyuluhanAttachment($id)
+    {
+        $jadwal = JadwalPenyuluhan::findOrFail($id);
+
+        if ($jadwal->attachment && Storage::disk('local')->exists($jadwal->attachment)) {
+            return Storage::download($jadwal->attachment);
+        } else {
+            return redirect()->back()->withErrors(['error' => 'File lampiran tidak ditemukan.']);
         }
     }
 }

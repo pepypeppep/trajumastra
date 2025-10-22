@@ -51,6 +51,8 @@ Route::get('ssobypass', App\Http\Controllers\Auth\SSOBypass::class);
 
 /* ======================== GUEST */
 Route::resource('/', BerandaController::class)->names(['beranda']);
+Route::get('/jadwal-pendampingan/{id}', [BerandaController::class, 'showJadwalPenyuluhanById'])->name('guest.jadwal-pendampingan.show');
+Route::get('/jadwal-pendampingan/download-attachment/{id}', [BerandaController::class, 'downloadJadwalPenyuluhanAttachment'])->name('guest.jadwal-pendampingan.download-attachment');
 Route::get('/privacy-policy', [BerandaController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/register', [BerandaController::class, 'create'])->name('pendaftaran');
 Route::post('/register-store', [BerandaController::class, 'store'])->name('pendaftaran.store');
