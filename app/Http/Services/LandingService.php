@@ -155,10 +155,11 @@ class LandingService
             }
 
             // Limit Description to 50 characters
-            if (strlen($item->description) > 50) {
-                $item->description = substr($item->description, 0, 50) . '...';
+            if (strlen(strip_tags($item->description)) > 50) {
+                // Limit Description to 50 characters
+                $item->description = substr(strip_tags($item->description), 0, 50) . '...';
             } else {
-                $item->description = $item->description;
+                $item->description = strip_tags($item->description);
             }
             return $item;
         });
