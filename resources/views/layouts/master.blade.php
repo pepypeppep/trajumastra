@@ -49,34 +49,48 @@
                             </div>
                         @endif
                         @if (request()->routeIs('laporan.transaksi-tpi.*'))
-                            <div>
-                                <select
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    data-choices name="uptd_id" id="uptd_id"
-                                    onchange="window.location.href = '{{ request()->url() }}?uptd=' + this.value;">
-                                    <option value="">Pilih TPI</option>
-                                    @foreach ($tpis as $tpi)
-                                        <option value="{{ $tpi->id }}"
-                                            {{ request()->uptd == $tpi->id ? 'selected' : '' }}>{{ $tpi->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            @if (!auth()->user()->uptd_id)
+                                <div>
+                                    <select
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        data-choices name="uptd_id" id="uptd_id"
+                                        onchange="window.location.href = '{{ request()->url() }}?uptd=' + this.value;">
+                                        <option value="">Pilih TPI</option>
+                                        @foreach ($tpis as $tpi)
+                                            <option value="{{ $tpi->id }}"
+                                                {{ request()->uptd == $tpi->id ? 'selected' : '' }}>{{ $tpi->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
+                                <div>
+                                    <span
+                                        class="text-white font-semibold bg-orange-500 border-orange-500 btn hover:text-white hover:bg-orange-600 hover:border-orange-600 focus:text-white focus:bg-orange-600 focus:border-orange-600 focus:ring focus:ring-orange-100 active:text-white active:bg-orange-600 active:border-orange-600 active:ring active:ring-orange-100 dark:ring-orange-400/10">{{ str_replace('TPI ', '', auth()->user()->uptd->name) }}</span>
+                                </div>
+                            @endif
                         @endif
                         @if (request()->routeIs('laporan.transaksi-bbi.*'))
-                            <div>
-                                <select
-                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                    data-choices name="uptd_id" id="uptd_id"
-                                    onchange="window.location.href = '{{ request()->url() }}?uptd=' + this.value;">
-                                    <option value="">Pilih BBI</option>
-                                    @foreach ($bbis as $bbi)
-                                        <option value="{{ $bbi->id }}"
-                                            {{ request()->uptd == $bbi->id ? 'selected' : '' }}>{{ $bbi->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            @if (!auth()->user()->uptd_id)
+                                <div>
+                                    <select
+                                        class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                        data-choices name="uptd_id" id="uptd_id"
+                                        onchange="window.location.href = '{{ request()->url() }}?uptd=' + this.value;">
+                                        <option value="">Pilih BBI</option>
+                                        @foreach ($bbis as $bbi)
+                                            <option value="{{ $bbi->id }}"
+                                                {{ request()->uptd == $bbi->id ? 'selected' : '' }}>
+                                                {{ $bbi->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
+                                <div>
+                                    <span>{{ str_replace('BBI ', '', auth()->user()->uptd->name) }}</span>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>

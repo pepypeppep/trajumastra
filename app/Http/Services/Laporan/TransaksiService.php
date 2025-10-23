@@ -15,11 +15,11 @@ class TransaksiService
     {
         $user = $request->user();
         $query = Transaksi::with('uptd', 'staff')
-                    ->whereHas('uptd', function ($q) use ($request) {
-                    if ($request->type) {
-                        $q->where('type', $request->type);
-                    }
-                });
+            ->whereHas('uptd', function ($q) use ($request) {
+                if ($request->type) {
+                    $q->where('type', $request->type);
+                }
+            });
 
         // Keyword filter
         if ($request->keyword) {
@@ -36,8 +36,8 @@ class TransaksiService
         }
 
         // UPTD filter
-        if ($request->uptd_id) {
-            $query->where('uptd_id', $request->uptd_id);
+        if ($request->uptd) {
+            $query->where('uptd_id', $request->uptd);
         } elseif ($user->uptd_id) {
             $query->where('uptd_id', $user->uptd_id);
         }
@@ -65,6 +65,7 @@ class TransaksiService
         }
 
         $data = $query->orderByDesc('created_at');
+        // return $data->get();
 
         return DataTables::eloquent($data)
             ->addIndexColumn()
@@ -78,12 +79,20 @@ class TransaksiService
                 $btnView = '';
 
                 // Btn View
-                if (auth()->user()->can('laporan-transaksi-bbi.update')) {
-                    $btnView = '<button type="button" title="Ubah data transaksi" id="btn-modal-show"
+                if (auth()->user()->can('laporan-transaksi-bbi.update') || auth()->user()->can('laporan-transaksi-tpi.update')) {
+                    if (request()->routeIs('laporan.transaksi-tpi.*')) {
+                        $btnView = '<button type="button" title="Ubah data transaksi" id="btn-modal-show"
+                        data-id="' . $row->id . '"  data-url-action="' . route('laporan.transaksi-tpi.update', $row->id) . '" data-url-get="' . route('laporan.transaksi-tpi.show', $row->id) . '"
+                        class="items-center justify-center size-[37.5px] p-0 text-white btn bg-sky-500 border-sky-500 hover:text-white hover:bg-sky-600 hover:border-sky-600 focus:text-white focus:bg-sky-600 focus:border-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:border-sky-600 active:ring active:ring-sky-100 dark:ring-sky-400/20">
+                        <i class="ri-eye-line"></i>
+                        </button>';
+                    } elseif (request()->routeIs('laporan.transaksi-bbi.*')) {
+                        $btnView = '<button type="button" title="Ubah data transaksi" id="btn-modal-show"
                         data-id="' . $row->id . '"  data-url-action="' . route('laporan.transaksi-bbi.update', $row->id) . '" data-url-get="' . route('laporan.transaksi-bbi.show', $row->id) . '"
                         class="items-center justify-center size-[37.5px] p-0 text-white btn bg-sky-500 border-sky-500 hover:text-white hover:bg-sky-600 hover:border-sky-600 focus:text-white focus:bg-sky-600 focus:border-sky-600 focus:ring focus:ring-sky-100 active:text-white active:bg-sky-600 active:border-sky-600 active:ring active:ring-sky-100 dark:ring-sky-400/20">
                         <i class="ri-eye-line"></i>
                         </button>';
+                    }
                 }
 
                 return $btnView;
@@ -111,7 +120,7 @@ class TransaksiService
             $data = Uptd::orderBy('name')->get();
             return $data;
         }
-        
+
         $data = Uptd::where('type', $type)->orderBy('name')->get();
 
         if (!$data) {
@@ -122,7 +131,7 @@ class TransaksiService
     }
 
     /* Get data revenue */
-    public function getRevenue($user)
+    public function getRevenue($user, $request)
     {
         $id = $user->id;
 
@@ -131,7 +140,7 @@ class TransaksiService
 
         $query = Transaksi::query();
 
-        if (!$isSuperadmin) {
+        if (!$isSuperadmin || $user->uptd_id != null) {
             $koordinator = $user;
 
             if ($koordinator) {
@@ -139,6 +148,10 @@ class TransaksiService
             } else {
                 return $this->getEmptyRevenueData();
             }
+        }
+
+        if ($request->has('uptd')) {
+            $query->where('uptd_id', $request->uptd);
         }
 
         $countToday = (clone $query)->whereDate('created_at', Carbon::now()->day)->count();

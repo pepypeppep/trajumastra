@@ -24,7 +24,7 @@ class TransaksiTpiController extends Controller
 
         $uptds = $this->service->getUptd();
         $tpis = $this->service->getUptd(Uptd::TPI);
-        $revenue = $this->service->getRevenue(auth()->user());
+        $revenue = $this->service->getRevenue(auth()->user(), $request);
 
         return view('admin.laporans.transaksi-tpi.index', compact('revenue', 'uptds', 'tpis'));
     }
@@ -50,7 +50,11 @@ class TransaksiTpiController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $this->setRule('laporan-transaksi-tpi.read');
+
+        $data = $this->service->getById($id);
+
+        return view('admin.laporans.transaksi-tpi.partials.invoice', compact('data'));
     }
 
     /**
