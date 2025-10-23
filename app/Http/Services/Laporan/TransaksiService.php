@@ -64,7 +64,7 @@ class TransaksiService
             }
         }
 
-        $data = $query->orderByDesc('created_at');
+        $data = $query->orderByDesc('transaksis.created_at');
         // return $data->get();
 
         return DataTables::eloquent($data)
