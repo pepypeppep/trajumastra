@@ -27,7 +27,7 @@ class TransaksiUptdController extends Controller
         $bbis = $this->service->getUptd(Uptd::UPTD);
         $tpis = $this->service->getUptd(Uptd::TPI);
 
-        $revenue = $this->service->getRevenue(auth()->user());
+        $revenue = $this->service->getRevenue(auth()->user(), $request);
 
         return view('admin.laporans.transaksi-bbi.index', compact('revenue', 'uptds', 'bbis', 'tpis'));
     }

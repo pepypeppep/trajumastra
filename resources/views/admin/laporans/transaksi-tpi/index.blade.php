@@ -93,7 +93,7 @@
     <div class="card">
         <div class="card-body">
             <div class="flex justify-between items-center mb-4">
-                <h5 class="mb-0">Daftar Transaksi TPI {{ request('periode') ? '(' . request('periode') . ' ini)' : '' }}
+                <h5 class="mb-0">Daftar Transaksi {{ request('periode') ? '(' . request('periode') . ' ini)' : '' }}
                 </h5>
                 <button type="button" onclick="exportData();"
                     class="btn bg-custom-500 text-white hover:bg-custom-600 focus:bg-custom-600">
@@ -102,16 +102,19 @@
             </div>
             <table id="data-table" class="display stripe group" style="width:100%">
                 <div class="grid items-center grid-cols-1 gap-5 xl:grid-cols-3">
-                    <div>
-                        <select
-                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                            data-choices name="uptd_id" id="uptdx_id">
-                            <option value="">Pilih TPI</option>
-                            @foreach ($tpis as $tpi)
-                                <option value="{{ $tpi->id }}">{{ $tpi->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    {{-- @if (auth()->user()->uptd_id == null)
+                        <div>
+                            <select
+                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                data-choices name="uptd_id">
+                                <option value="">Pilih TPI</option>
+                                @foreach ($tpis as $tpi)
+                                    <option value="{{ $tpi->id }}">{{ $tpi->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif --}}
+                    <input type="hidden" id="uptdx_id" value="{{ request('uptd') ?? auth()->user()->uptd_id }}">
                     <div>
                         <input type="text" id="date"
                             class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
@@ -180,7 +183,7 @@
                     url: "{{ route('laporan.transaksi-tpi.index') }}?periode={{ request('periode') }}",
                     type: 'GET',
                     data: function(d) {
-                        d.uptd_id = $('#uptdx_id').val();
+                        d.uptd = $('#uptdx_id').val();
                         d.type = '1'; // TPI type
                         d.date = $('#date').val();
                         d.keyword = $('#keyword').val();
@@ -263,6 +266,8 @@
 
             // Create download URL
             const url = '{{ route('laporan.transaksi.export') }}?' + params.toString();
+            console.log("URL: " + url);
+
 
             // Open in new tab (triggers download)
             window.open(url, '_blank');
