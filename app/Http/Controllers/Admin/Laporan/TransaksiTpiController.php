@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Laporan;
 
+use App\Models\Uptd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Laporan\TransaksiService;
@@ -22,9 +23,10 @@ class TransaksiTpiController extends Controller
         }
 
         $uptds = $this->service->getUptd();
+        $tpis = $this->service->getUptd(Uptd::TPI);
         $revenue = $this->service->getRevenue(auth()->user());
 
-        return view('admin.laporans.transaksi-tpi.index', compact('revenue', 'uptds'));
+        return view('admin.laporans.transaksi-tpi.index', compact('revenue', 'uptds', 'tpis'));
     }
 
     /**

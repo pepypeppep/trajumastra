@@ -14,7 +14,12 @@ class TransaksiService
     public function getAll($request)
     {
         $user = $request->user();
-        $query = Transaksi::with('uptd', 'staff');
+        $query = Transaksi::with('uptd', 'staff')
+                    ->whereHas('uptd', function ($q) use ($request) {
+                    if ($request->type) {
+                        $q->where('type', $request->type);
+                    }
+                });
 
         // Keyword filter
         if ($request->keyword) {
@@ -100,9 +105,14 @@ class TransaksiService
     }
 
     /* Get data UPTD */
-    public function getUptd()
+    public function getUptd($type = null)
     {
-        $data = Uptd::orderBy('name')->get();
+        if ($type === null) {
+            $data = Uptd::orderBy('name')->get();
+            return $data;
+        }
+        
+        $data = Uptd::where('type', $type)->orderBy('name')->get();
 
         if (!$data) {
             return null;

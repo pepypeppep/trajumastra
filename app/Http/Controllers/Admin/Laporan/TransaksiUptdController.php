@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Http\Services\Laporan\TransaksiService;
+use App\Models\Uptd;
 
 class TransaksiUptdController extends Controller
 {
@@ -22,11 +23,13 @@ class TransaksiUptdController extends Controller
         if (request()->ajax()) {
             return $this->service->getAll($request);
         }
-
         $uptds = $this->service->getUptd();
+        $bbis = $this->service->getUptd(Uptd::UPTD);
+        $tpis = $this->service->getUptd(Uptd::TPI);
+
         $revenue = $this->service->getRevenue(auth()->user());
 
-        return view('admin.laporans.transaksi-bbi.index', compact('revenue', 'uptds'));
+        return view('admin.laporans.transaksi-bbi.index', compact('revenue', 'uptds', 'bbis', 'tpis'));
     }
 
     /**
